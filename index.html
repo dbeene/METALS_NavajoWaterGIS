@@ -9,12 +9,15 @@
     <link rel="stylesheet" type="text/css" href="css/dc.css">
     <link rel="stylesheet" type="text/css" href="css/leaflet.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="css/main.css"> 
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <!--Scripts-->
+    <script src="js/leaflet.js"></script>
+    <script src="js/main.js"></script>
+
 
 <body>
     <!--Fixed position website title with counter of data records displayed-->
-    <div class="fixed-top"> 
+    <div class="fixed-top">
         <!-- <div class="col-xs-12 dc-data-count dc-chart" id="data-count">  -->
         <h2>Unregulated Wells on Navajo Nation
             <!--<small>
@@ -26,13 +29,15 @@
     <!--Map frame-->
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-9">
-                <h4>Map Frame</h4>
-                <div id="map">
+            <div class="col-xs-12">
+                <div class="col-xs-9"> 
+                    <h4>Map Frame</h4>
+                    <div id="map"></div>
+                </div>
+                <div class="col-xs-3">
+                    <h4>Donut plots</h4>
+                </div>
             </div>
-            <div class="col-xs-3">
-                <h4>Donut plots</h4>
-            </div> 
         </div>
     </div>
     <!--Plots-->
@@ -41,15 +46,17 @@
             <div class="col-xs-6">
                 <h4>Histogram 1</h4><br>
                 <h4>Histogram 3</h4>
-            </div> 
+            </div>
             <div class="col-xs-6">
                 <h4>Histogram 2</h4><br>
                 <h4>Histogram 4</h4>
-            </div> <!--Histogram 2 & 4-->
+            </div>
+            <!--Histogram 2 & 4-->
         </div>
         <div class="col-xs-6">
             <h4>Correlogram</h4>
-        </div> <!--Correlogram-->
+        </div>
+        <!--Correlogram-->
     </div>
     <!--Data table-->
     <div class="col-md-12"></div>
