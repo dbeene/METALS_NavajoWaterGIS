@@ -6,4 +6,7 @@ window.onload = function () {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
     HikeBike_HikeBike.addTo(map);
+
+    var wellMap = L.geoJSON(nvWells);
+    wellMap.addTo(map);
 }
