@@ -59,6 +59,7 @@ window.onload = function () {
   //   pointToLayer: pointToCircle
   // }).addTo(map);
 
+  // function to cluster well points on zoom
   var wellsLayerGroup = L.geoJSON(nvWells, {
     onEachFeature: addPopups,
     pointToLayer: pointToCircle
