@@ -47,8 +47,9 @@ text {
   }
 /* custom scrollable popup styles*/
 .leaflet-popup-content-wrapper {
- background: #e7e7e7;
- border-radius: 2px;
+ background: #99f5e5;
+ border-radius: 16px;
+ border: 2px solid #2f21ad;
  }
 /* custom scrollable popup styles*/
 .leaflet-popup {
