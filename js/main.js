@@ -7,8 +7,30 @@ window.onload = function () {
   });
   HikeBike_HikeBike.addTo(map);
 
-  //change to circle
-  "use sctrict"; //JS strict mode
+  "use strict"; //JS strict mode
+
+  // Add chapters layer to map
+  var myStyle = {
+    "color": "#dbc38f",
+    "stroke-width": 0.5,
+    "fill-opacity": 1.0
+  }
+
+  $.getJSON("data/nnChapters.geojson", function (data) {
+    // L.geoJson(data).addTo(map);
+    var geojson = L.geoJson(data, {
+      style: myStyle,
+      onEachFeature: function (feature, layer) {
+        var chPopup = "Chapter:<br>" + feature.properties.Chapter
+        layer.bindPopup(chPopup);
+      }
+    });
+    geojson.addTo(map)
+  });
+
+
+  //change well markers to circle
+
   function pointToCircle(feature, latlng) {
     if (feature.properties.USE == "Independent") {
       fillCOlor_Var = "black";
