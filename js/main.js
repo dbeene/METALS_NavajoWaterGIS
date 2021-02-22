@@ -36,7 +36,7 @@ window.onload = function () {
       fillCOlor_Var = "yellow";
     }
     var geojsonMarkerOptions = {
-      radius: 8,
+      radius: 7,
       //fillColor: "#F46B06",
       fillColor: fillCOlor_Var,
       color: "black",
