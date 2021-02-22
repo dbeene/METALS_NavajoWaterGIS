@@ -54,9 +54,19 @@ window.onload = function () {
     layer.bindPopup(full_list);
   }
 
-  L.geoJSON(nvWells, {
+  // L.geoJSON(nvWells, {
+  //   onEachFeature: addPopups,
+  //   pointToLayer: pointToCircle
+  // }).addTo(map);
+
+  var wellsLayerGroup = L.geoJSON(nvWells, {
     onEachFeature: addPopups,
     pointToLayer: pointToCircle
-  }).addTo(map);
+  });
 
+  var clusters = L.markerClusterGroup();
+  clusters.addLayer(wellsLayerGroup);
+  map.addLayer(clusters);
+
+  map.fitBounds(wellsLayerGroup.getBounds());
 }
