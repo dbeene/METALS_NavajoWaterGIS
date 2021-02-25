@@ -17,6 +17,11 @@
     <script src="js/leaflet.markercluster.js"></script>
     <script src="js/main.js"></script>
     <script src="js/nnWells.js"></script>
+    <script type="text/javascript" src="js/d3.js"></script>
+    <script type="text/javascript" src="js/crossfilter.js"></script>
+    <script type="text/javascript" src="js/dc.js"></script>
+    <script type="text/javascript" src="js/underscore-min.js"></script>
+
 
 </head>
 
@@ -44,16 +49,21 @@
         <div class="row">
             <div class="col-xs-6">
                 <div class="col-xs-6">
+                    <div class="dc-chart" id="histogram1"></div>
                     <h4>Histogram 1</h4><br>
+                    <div class="dc-chart" id="histogram2"></div>
                     <h4>Histogram 3</h4>
                 </div>
                 <div class="col-xs-6">
+                    <div class="dc-chart" id="histogram3"></div>
                     <h4>Histogram 2</h4><br>
+                    <div class="dc-chart" id="histigram4"></div>
                     <h4>Histogram 4</h4>
                 </div>
                 <!--Histogram 2 & 4-->
             </div>
             <div class="col-xs-6">
+                <div class="dc-correlogram" id="correlogram"></div>
                 <h4>Correlogram</h4>
             </div>
             <!--Correlogram-->
@@ -61,11 +71,65 @@
     </div>
     <!--Data table-->
     <div class="container-fluid">
-        <div class="col-md-12">
-            <h4>Data Table</h4>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered table-striped" id="data-table">
+                    <h4>Data Table</h4>
+                    <thead>
+                        <tr class="header">
+                            <th>Well_ID</th>
+                            <th>Alkalyte1</th>
+                            <th>Alkalyte2</th>
+                            <th>Alkalyte3</th>
+                            <th>Alkalyte4</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
     </div>
 
+<script>
+    // create charts
+d3.json('data/nnWells.json', function (error, data) {
+    var wellData = data.features;
+    _.each(wellData, function (d) {
+        d.count = +d.count;
+        // round to the nearest 100
+        d.ca = Math.floor(+d.properties.Ca / 100) * 100;
+
+    });
+// set crossfilter
+    var ndx = crossfilter(wellData);
+    
+    var caDim = ndx.dimension(function (d) { return d.properties.Ca; });
+    // create groups (y-axis values)
+    var countPerca = caDim.group().reduceCount();
+    
+    //specify charts
+    var caCountChart = dc.barChart('#histogram1');
+
+    caCountChart
+        .width(300)
+        .height(300)
+        .dimension(caDim)
+        .group(countPerca)
+        .x(d3.scale.linear().domain([0,976]))
+        // .y(d3.scale.linear().domain([0,13]))
+        .elasticY(false)
+        .centerBar(true)
+        .barPadding(3)
+        .xAxisLabel('Calcium')
+        .yAxisLabel('Quantity')
+        .margins({ top:10, right:20, bottom: 50, left: 50});
+    caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
+    // caCountChart.yAxis().tickValues([0,3,6,9,12]);
+    
+    dc.renderAll();
+
+});
+
+</script>
 
 </body>
 
