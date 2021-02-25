@@ -117,7 +117,7 @@ d3.json('data/nnWells.json', function (error, data) {
         .dimension(caDim)
         .group(countPerca)
         .x(d3.scale.linear().domain([0,976]))
-        // .y(d3.scale.linear().domain([0,13]))
+        .y(d3.scale.linear().domain([0,13]))
         .elasticY(false)
         .centerBar(true)
         .barPadding(3)
@@ -125,7 +125,7 @@ d3.json('data/nnWells.json', function (error, data) {
         .yAxisLabel('Quantity')
         .margins({ top:10, right:20, bottom: 50, left: 50});
     caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-    // caCountChart.yAxis().tickValues([0,3,6,9,12]);
+    caCountChart.yAxis().tickValues([0,3,6,9,12]);
     
     dc.renderAll();
 
