@@ -1,4 +1,8 @@
 /* main.css: Add and override styles */
+body { 
+  padding-top: 75px; 
+}
+
 .fixed-top {
     padding-left: 40px;
     padding-right: 40px;
@@ -27,6 +31,7 @@ text {
 
 #map {
   height: 600px;
+  padding-top: 40px;
 }
 
 /* custom scrollable popup styles*/
@@ -65,3 +70,9 @@ text {
   max-height: 300px;
   overflow: auto;
   }
+
+.navbar-right {
+  padding-top: 15px;
+  padding-right: 20px;
+}
+
