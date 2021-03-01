@@ -16,7 +16,7 @@
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet.markercluster.js"></script>
-    <script src="js/main.js"></script>
+    <!-- <script src="js/main.js"></script> -->
     <script src="js/nnWells.js"></script>
     <script type="text/javascript" src="js/d3.js"></script>
     <script type="text/javascript" src="js/crossfilter.js"></script>
@@ -54,12 +54,12 @@
                     <div class="dc-chart" id="histogram1"></div>
                     <h4>Histogram 1</h4><br>
                     <div class="dc-chart" id="histogram2"></div>
-                    <h4>Histogram 3</h4>
+                    <h4>Histogram 2</h4>
                 </div>
                 <div class="col-xs-6">
                     <div class="dc-chart" id="histogram3"></div>
-                    <h4>Histogram 2</h4><br>
-                    <div class="dc-chart" id="histigram4"></div>
+                    <h4>Histogram 3</h4><br>
+                    <div class="dc-chart" id="histogram4"></div>
                     <h4>Histogram 4</h4>
                 </div>
                 <!--Histogram 2 & 4-->
@@ -80,10 +80,10 @@
                     <thead>
                         <tr class="header">
                             <th>Well_ID</th>
-                            <th>Alkalyte1</th>
-                            <th>Alkalyte2</th>
-                            <th>Alkalyte3</th>
-                            <th>Alkalyte4</th>
+                            <th>Analyte1</th>
+                            <th>Analyte2</th>
+                            <th>Analyte3</th>
+                            <th>Analyte4</th>
                         </tr>
                     </thead>
                 </table>
@@ -91,47 +91,166 @@
         </div>
     </div>
 
-<script>
-    // create charts
-d3.json('data/nnWells.json', function (error, data) {
-    var wellData = data.features;
-    _.each(wellData, function (d) {
-        d.count = +d.count;
-        // round to the nearest 100
-        d.ca = Math.floor(+d.properties.Ca / 100) * 100;
+    <script>
+        //base map
+        var map = L.map('map').setView([36.292, -110.090], 8);
+        var wellMarkers = new L.FeatureGroup();
+                        var HikeBike_HikeBike = L.tileLayer('https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        });
+                        HikeBike_HikeBike.addTo(map);
 
-    });
-// set crossfilter
-    var ndx = crossfilter(wellData);
-    
-    var caDim = ndx.dimension(function (d) { return d.properties.Ca; });
-    // create groups (y-axis values)
-    var countPerca = caDim.group().reduceCount();
-    
-    //specify charts
-    var caCountChart = dc.barChart('#histogram1');
+                        "use strict"; //JS strict mode
 
-    caCountChart
-        .width(300)
-        .height(300)
-        .dimension(caDim)
-        .group(countPerca)
-        .x(d3.scale.linear().domain([0,976]))
-        .y(d3.scale.linear().domain([0,13]))
-        .elasticY(false)
-        .centerBar(true)
-        .barPadding(3)
-        .xAxisLabel('Calcium')
-        .yAxisLabel('Quantity')
-        .margins({ top:10, right:20, bottom: 50, left: 50});
-    caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-    caCountChart.yAxis().tickValues([0,3,6,9,12]);
-    
-    dc.renderAll();
+                        // Add chapters layer to map
+                        var myStyle = {
+                            "color": "#dbc38f",
+                            "stroke-width": 0.5,
+                            "fill-opacity": 1.0
+                        }
 
-});
+                        $.getJSON("data/nnChapters.geojson", function (data) {
+                            // L.geoJson(data).addTo(map);
+                            var geojson = L.geoJson(data, {
+                                style: myStyle,
+                                onEachFeature: function (feature, layer) {
+                                    var chPopup = "Chapter:<br>" + feature.properties.Chapter
+                                    layer.bindPopup(chPopup);
+                                }
+                            });
+                            geojson.addTo(map)
+                        });
+        // create charts
+        d3.json('data/nnWells.json', function (error, data) {
+            var wellData = data.features;
+            _.each(wellData, function (d) {
+                d.count = +d.count;
+                // round to the nearest 200
+                d.ca = Math.round(+d.properties.Ca / 100) * 100;
+                d.u = Math.round(+d.properties.U / 100) * 100;
+                d.as = Math.round(+d.properties.As_ / 50) * 50;
+                d.ra_tot = d.properties.Ra_Total;
 
-</script>
+            });
+            // set crossfilter
+            var ndx = crossfilter(wellData);
+
+            var caDim = ndx.dimension(function (d) { return d.properties.Ca; });
+            var uDim = ndx.dimension(function (d) { return d.properties.U; });
+            var asDim = ndx.dimension(function (d) { return d.properties.As_; });
+            var ra_totDim = ndx.dimension(function (d) { return d.properties.Ra_Total; });
+
+            var allDim = ndx.dimension(function (d) { return d; });
+            // create groups (y-axis values)
+            var all = ndx.groupAll();
+            var countPerCa = caDim.group().reduceCount();
+            var countPerU = uDim.group().reduceCount();
+            var countPerAs = asDim.group().reduceCount();
+            var countPerRa_tot = ra_totDim.group().reduceCount();
+
+            //specify charts
+            var caCountChart = dc.barChart('#histogram1');
+            var uCountChart = dc.barChart('#histogram2');
+            var asCountChart = dc.barChart('#histogram3');
+            var ra_totCountChart = dc.barChart('#histogram4');
+
+            var dataTable = dc.dataTable('#data-table');
+
+            caCountChart
+                .width(200)
+                .height(200)
+                .dimension(caDim)
+                .group(countPerCa)
+                .x(d3.scale.linear().domain([0, 976]))
+                .y(d3.scale.linear().domain([0, 13]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Calcium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
+            caCountChart.yAxis().tickValues([0, 3, 6, 9, 12]);
+
+            uCountChart
+                .width(200)
+                .height(200)
+                .dimension(uDim)
+                .group(countPerU)
+                .x(d3.scale.linear().domain([0, 700]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Uranium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            uCountChart.xAxis().tickValues([0, 200, 400, 600, 800]);
+            uCountChart.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            asCountChart
+                .width(200)
+                .height(200)
+                .dimension(asDim)
+                .group(countPerAs)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Arsenic')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            asCountChart.xAxis().tickValues([0, 50, 100, 150, 200, 250, 300]);
+            asCountChart.yAxis().tickValues([0, 10, 20, 30]);
+
+            ra_totCountChart
+                .width(200)
+                .height(200)
+                .dimension(ra_totDim)
+                .group(countPerRa_tot)
+                .x(d3.scale.linear().domain([0, 1]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Radium_Total')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            ra_totCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+
+            dataTable
+                .dimension(allDim)
+                .group(function (d) { return 'dc.js insists on putting a row here so I remove it using JS'; })
+                .size(1000)
+                .columns([
+                    function (d) { return d.properties.well_id; },
+                    function (d) { return d.properties.Ca; },
+                    function (d) { return d.properties.U; },
+                    function (d) { return d.properties.As_; },
+                    function (d) { return d.properties.Ra_Total}
+                ])
+                .on('renderlet', function (table) {
+                    // each time table is rendered remove nasty extra row dc.js insists on adding
+                    table.select('tr.dc-table-group').remove();
+
+                    wellMarkers.clearLayers();
+                    _.each(allDim.top(Infinity), function (d) {
+                            var filLoc = d.coordinates;
+                            var id = d.properties.well_id;
+                            var ca = d.properties.Ca;
+                            var marker = L.marker(filLoc[0], filLoc[1]);d //NEED HELP HERE
+                            marker.bindPopup("<p>" + id + " " + ca + "<p>");
+                            //marker.bindPopup( "<dl><dt> WELL INFORMATION- NAVAJO NATION WELL" + "<dt>FID:" + feature.properties.FID + ";<dd>" + "<dt> OBJECTID:" + feature.properties.OBJECTID + ";<dd>" + "<dt> well_no:" + feature.properties.well_no + ";<dd>" + "<dt> well_id:" + feature.properties.well_id + ";<dd>" + "<dt> well_name:" + feature.properties.well_name + ";<dd>" + "<dt> owner:" + feature.properties.owner + ";<dd>" + "<dt> depth:" + feature.properties.depth + ";<dd>" + "<dt> aquifer_co:" + feature.properties.aquifer_co + ";<dd>" + "<dt> swl:" + feature.properties.swl + ";<dd>" + "<dt> pwsid:" + feature.properties.pwsid + ";<dd>" + "<dt> usgs_id:" + feature.properties.usgs_id + ";<dd>" + "<dt> data_sourc:" + feature.properties.data_sourc + ";<dd>" + "<dt> comments:" + feature.properties.comments + ";<dd>" + "<dt> aka2:" + feature.properties.aka2 + ";<dd>" + "<dt> aka3:" + feature.properties.aka3 + ";<dd>" + "<dt> chapid:" + feature.properties.chapid + ";<dd>" + "<dt> grazing_di:" + feature.properties.grazing_di + ";<dd>" + "<dt> welltype:" + feature.properties.welltype + ";<dd>" + "<dt> well_use:" + feature.properties.well_use + ";<dd>" + "<dt> well_statu:" + feature.properties.well_statu + ";<dd>" + "<dt> sdwa_type:" + feature.properties.sdwa_type + ";<dd>" + "<dt> nn_agency:" + feature.properties.nn_agency + ";<dd>" + "<dt> USE:" + feature.properties.USE + ";<dd>" + "<dt> FID_ :" + feature.properties.FID_ + ";<dd>" + "<dt> well_id_1:" + feature.properties.well_id_1 + ";<dd>" + "<dt> Alkalinity:" + feature.properties.Alkalinity + ";<dd>" + "<dt> Alkalini_1:" + feature.properties.Alkalini_1 + ";<dd>" + "<dt> As_:" + feature.properties.As_ + ";<dd>" + "<dt> Ba:" + feature.properties.Ba + ";<dd>" + "<dt> Be:" + feature.properties.Be + ";<dd>" + "<dt> Br_:" + feature.properties.Br_ + ";<dd>" + "<dt> Ca:" + feature.properties.Ca + ";<dd>" + "<dt> Cd:" + feature.properties.Cd + ";<dd>" + "<dt> Cl_:" + feature.properties.Cl_ + ";<dd>" + "<dt> Conductivity:" + feature.properties.Conductivi + ";<dd>" + "<dt> Cr:" + feature.properties.Cr + ";<dd>" + "<dt> DO:" + feature.properties.DO + ";<dd>" + "<dt> Electrical:" + feature.properties.Electrical + ";<dd>" + "<dt> Gross_alph:" + feature.properties.Gross_alph + ";<dd>" + "<dt> GrossAplha:" + feature.properties.GrossAplha + ";<dd>" + "<dt> GrossBeta:" + feature.properties.GrossBeta + ";<dd>" + "<dt> GrossBeta_:" + feature.properties.GrossBeta_ + ";<dd>" + "<dt> Hardness:" + feature.properties.Hardness + ";<dd>" + "<dt> Hardness_T:" + feature.properties.Hardness_T + ";<dd>" + "<dt> Hg:" + feature.properties.Hg + ";<dd>" + "<dt> Hydroxide:" + feature.properties.Hydroxide + ";<dd>" + "<dt> K:" + feature.properties.K + ";<dd>" + "<dt> Mg:" + feature.properties.Mg + ";<dd>" + "<dt> Mn:" + feature.properties.Mn + ";<dd>" + "<dt> Na:" + feature.properties.Na + ";<dd>" + "<dt> Na_Fractio:" + feature.properties.Na_Fractio + ";<dd>" + "<dt> Na_K:" + feature.properties.Na_K + ";<dd>" + "<dt> Nitrate:" + feature.properties.Nitrate + ";<dd>" + "<dt> Nitrate_Ni:" + feature.properties.Nitrate_Ni + ";<dd>" + "<dt> NO2_:" + feature.properties.NO2_ + ";<dd>" + "<dt> NO3_:" + feature.properties.NO3_ + ";<dd>" + "<dt> ORP:" + feature.properties.ORP + ";<dd>" + "<dt> Pb:" + feature.properties.Pb + ";<dd>" + "<dt> Ra_226:" + feature.properties.Ra_226 + ";<dd>" + "<dt> Ra_228:" + feature.properties.Ra_228 + ";<dd>" + "<dt> Ra_Total:" + feature.properties.Ra_Total + ";<dd>" + "<dt> Sb:" + feature.properties.Sb + ";<dd>" + "<dt> Se:" + feature.properties.Se + ";<dd>" + "<dt> Temperature:" + feature.properties.Temperatur + ";<dd>" + "<dt> Tl:" + feature.properties.Tl + ";<dd>" + "<dt> Turbidity:" + feature.properties.Turbidity + ";<dd>" + "<dt> U:" + feature.properties.U + ".<dt><dl>");
+                            wellMarkers.addLayer(marker);
+                    });
+                        map.addLayer(wellMarkers);
+                        map.fitBounds(wellMarkers.getBounds());
+                });
+        dc.renderAll();
+
+        });
+    </script>
 
 </body>
 
