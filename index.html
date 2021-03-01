@@ -14,19 +14,16 @@
     <link rel="stylesheet" type="text/css" href="css/MarkerCluster.css">
     <link rel="stylesheet" type="text/css" href="css/MarkerCluster.Default.css">
     <!--Scripts-->
-<<<<<<< HEAD
     <script src="js/jquery-3.5.1.min.js"></script>
     <script src="js/leaflet.js"></script>
     <script src="js/leaflet.markercluster.js"></script>
     <!-- <script src="js/main.js"></script> -->
     <script src="js/nnWells.js"></script>
-=======
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/leaflet.js"></script>
     <script type="text/javascript" src="js/leaflet.markercluster.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <script type="text/javascript" src="js/nnWells.js"></script>
->>>>>>> 44ab9cc3c0845554f08f2be6fa7403ab4ad6c0bf
     <script type="text/javascript" src="js/d3.js"></script>
     <script type="text/javascript" src="js/crossfilter.js"></script>
     <script type="text/javascript" src="js/dc.js"></script>
@@ -93,13 +90,11 @@
                     <h4>Histogram 1</h4><br>
                     <!--remove h1 when histogram is finished-->
                     <div class="dc-chart" id="histogram2"></div>
-<<<<<<< HEAD
                     <h4>Histogram 2</h4>
                 </div>
                 <div class="col-xs-6">
                     <div class="dc-chart" id="histogram3"></div>
                     <h4>Histogram 3</h4><br>
-=======
                     <h4>Histogram 3</h4>
                     <!--remove h1 when histogram is finished-->
                 </div>
@@ -107,7 +102,6 @@
                     <div class="dc-chart" id="histogram3"></div>
                     <h4>Histogram 2</h4><br>
                     <!--remove h1 when histogram is finished-->
->>>>>>> 44ab9cc3c0845554f08f2be6fa7403ab4ad6c0bf
                     <div class="dc-chart" id="histogram4"></div>
                     <h4>Histogram 4</h4>
                     <!--remove h1 when histogram is finished-->
@@ -141,7 +135,6 @@
     </div>
 
     <script>
-<<<<<<< HEAD
         //base map
         var map = L.map('map').setView([36.292, -110.090], 8);
         var wellMarkers = new L.FeatureGroup();
@@ -171,30 +164,24 @@
                             });
                             geojson.addTo(map)
                         });
-=======
->>>>>>> 44ab9cc3c0845554f08f2be6fa7403ab4ad6c0bf
         // create charts
         d3.json('data/nnWells.json', function (error, data) {
             var wellData = data.features;
             _.each(wellData, function (d) {
                 d.count = +d.count;
-<<<<<<< HEAD
                 // round to the nearest 200
                 d.ca = Math.round(+d.properties.Ca / 100) * 100;
                 d.u = Math.round(+d.properties.U / 100) * 100;
                 d.as = Math.round(+d.properties.As_ / 50) * 50;
                 d.ra_tot = d.properties.Ra_Total;
-=======
                 // round to the nearest 100
                 d.ca = Math.floor(+d.properties.Ca / 100) * 100;
->>>>>>> 44ab9cc3c0845554f08f2be6fa7403ab4ad6c0bf
 
             });
             // set crossfilter
             var ndx = crossfilter(wellData);
 
             var caDim = ndx.dimension(function (d) { return d.properties.Ca; });
-<<<<<<< HEAD
             var uDim = ndx.dimension(function (d) { return d.properties.U; });
             var asDim = ndx.dimension(function (d) { return d.properties.As_; });
             var ra_totDim = ndx.dimension(function (d) { return d.properties.Ra_Total; });
@@ -220,7 +207,6 @@
                 .height(200)
                 .dimension(caDim)
                 .group(countPerCa)
-=======
             // create groups (y-axis values)
             var countPerca = caDim.group().reduceCount();
 
@@ -232,23 +218,18 @@
                 .height(300)
                 .dimension(caDim)
                 .group(countPerca)
->>>>>>> 44ab9cc3c0845554f08f2be6fa7403ab4ad6c0bf
                 .x(d3.scale.linear().domain([0, 976]))
                 .y(d3.scale.linear().domain([0, 13]))
                 .elasticY(false)
                 .centerBar(true)
                 .barPadding(3)
                 .xAxisLabel('Calcium')
-<<<<<<< HEAD
                 .yAxisLabel('Count')
-=======
                 .yAxisLabel('Quantity')
->>>>>>> 44ab9cc3c0845554f08f2be6fa7403ab4ad6c0bf
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
             caCountChart.yAxis().tickValues([0, 3, 6, 9, 12]);
 
-<<<<<<< HEAD
             uCountChart
                 .width(200)
                 .height(200)
@@ -326,12 +307,10 @@
         dc.renderAll();
 
         });
-=======
             dc.renderAll();
 
         });
 
->>>>>>> 44ab9cc3c0845554f08f2be6fa7403ab4ad6c0bf
     </script>
 
 </body>
