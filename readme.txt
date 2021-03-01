@@ -1,7 +1,7 @@
 Navajo Nation Water Quality Interactive Map
 
 Examples of interactive plots:
-1. Overall layout, including histograms and crossfilter.js:
+1. Overall layout, including histograms, data-table and crossfilter.js:
 Austin Lyons "Dc.js Leaflet Untapped"
 https://github.com/austinlyons/dcjs-leaflet-untappd
 
