@@ -22,7 +22,7 @@
     <script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="js/leaflet.js"></script>
     <script type="text/javascript" src="js/leaflet.markercluster.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <!-- <script type="text/javascript" src="js/main.js"></script> -->
     <script type="text/javascript" src="js/nnWells.js"></script>
     <script type="text/javascript" src="js/d3.js"></script>
     <script type="text/javascript" src="js/crossfilter.js"></script>
@@ -95,12 +95,6 @@
                 <div class="col-xs-6">
                     <div class="dc-chart" id="histogram3"></div>
                     <h4>Histogram 3</h4><br>
-                    <h4>Histogram 3</h4>
-                    <!--remove h1 when histogram is finished-->
-                </div>
-                <div class="col-xs-6">
-                    <div class="dc-chart" id="histogram3"></div>
-                    <h4>Histogram 2</h4><br>
                     <!--remove h1 when histogram is finished-->
                     <div class="dc-chart" id="histogram4"></div>
                     <h4>Histogram 4</h4>
@@ -203,21 +197,10 @@
             var dataTable = dc.dataTable('#data-table');
 
             caCountChart
-                .width(200)
-                .height(200)
+                .width(250)
+                .height(250)
                 .dimension(caDim)
                 .group(countPerCa)
-            // create groups (y-axis values)
-            var countPerca = caDim.group().reduceCount();
-
-            //specify charts
-            var caCountChart = dc.barChart('#histogram1');
-
-            caCountChart
-                .width(300)
-                .height(300)
-                .dimension(caDim)
-                .group(countPerca)
                 .x(d3.scale.linear().domain([0, 976]))
                 .y(d3.scale.linear().domain([0, 13]))
                 .elasticY(false)
@@ -225,14 +208,13 @@
                 .barPadding(3)
                 .xAxisLabel('Calcium')
                 .yAxisLabel('Count')
-                .yAxisLabel('Quantity')
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
             caCountChart.yAxis().tickValues([0, 3, 6, 9, 12]);
 
             uCountChart
-                .width(200)
-                .height(200)
+                .width(250)
+                .height(250)
                 .dimension(uDim)
                 .group(countPerU)
                 .x(d3.scale.linear().domain([0, 700]))
@@ -243,12 +225,12 @@
                 .xAxisLabel('Uranium')
                 .yAxisLabel('Count')
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-            uCountChart.xAxis().tickValues([0, 200, 400, 600, 800]);
+            uCountChart.xAxis().tickValues([0, 200, 400, 600]);
             uCountChart.yAxis().tickValues([0, 5, 10, 15, 20]);
 
             asCountChart
-                .width(200)
-                .height(200)
+                .width(250)
+                .height(250)
                 .dimension(asDim)
                 .group(countPerAs)
                 .x(d3.scale.linear().domain([0, 282]))
@@ -259,12 +241,12 @@
                 .xAxisLabel('Arsenic')
                 .yAxisLabel('Count')
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-            asCountChart.xAxis().tickValues([0, 50, 100, 150, 200, 250, 300]);
+            asCountChart.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             asCountChart.yAxis().tickValues([0, 10, 20, 30]);
 
             ra_totCountChart
-                .width(200)
-                .height(200)
+                .width(250)
+                .height(250)
                 .dimension(ra_totDim)
                 .group(countPerRa_tot)
                 .x(d3.scale.linear().domain([0, 1]))
@@ -305,9 +287,6 @@
                     map.fitBounds(wellMarkers.getBounds());
                 });
             dc.renderAll();
-
-        });
-        dc.renderAll();
 
         });
 
