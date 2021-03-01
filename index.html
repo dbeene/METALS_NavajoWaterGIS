@@ -57,11 +57,54 @@
                 </ul>
                 <!--Modal Button-->
                 <ul class="nav navbar-nav navbar-right">
-                    <button type="button" class="btn btn-info btn-md btn-right" data-toggle="modal"
-                        data-target="#myModal">
-                        Data</button>
-                </ul>
+                    <button id="myBtn">About/Data</button>
+                    <!--The Modal-->
+                    <div id="myModal" class="modal">
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <span class="close">&times;</span>
+                                    <h2>About this Dataset:</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        The dataset used in this map has been cleaned and converted from long to wide
+                                        format. In total, the dataset includes details of 1101 wells with location
+                                        information from publicly available sources. Each data point in the table
+                                        represents an aggregation of all data points from the sources listed above.
+                                        Uranium measurements are converted from radioactive activity in picocuries per
+                                        liter (pCi/L) to mass in micrograms per liter (ug/L) by dividing pCi/L by an
+                                        assumed constant of 0.67. Multiple measurements for each well are combined
+                                        according to type, where primary standard analytes, which includes
+                                        radionuclides, metals, and metalloids, are aggregated by median value; water
+                                        chemistry analytes, which includes pH and hardness, are aggregated by the
+                                        arithmetic mean. Measurements that are below the detection limit (BDL) are
+                                        excluded from the dataset for two reasons: first, detection limits vary by the
+                                        lab and are not always reported, so imputation is inconsistent; second, because
+                                        the primary intent of this map is visualization we have opted to favor ease of
+                                        use over various sensitivity analyses. Information on data sources and cleaning
+                                        will be displayed and clearly articulated in a modal window.
+                                    </p>
+                                </div>
+                                <div class="modal-header">
+                                    <h2>Data:</h2>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Download the raw data here:
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <h3>UNM METALS SRP</h3> -->
+                                    <img src="css/images/metals-logo.png" width="65px" height="65px">
+                                </div>
+                            </div>
 
+                        </div>
+                    </div>
+                </ul>
+                <!--Data Counter-->
                 <ul class="nav navbar-nav navbar-right">
                     <span class="filter-count">1101</span> selected out of <span class="total-count">1101</span> wells
                     <a id="all" href="#">Reset All</a>
@@ -70,6 +113,7 @@
 
         </div>
     </nav>
+
     <!--Map frame-->
     <div class="container">
         <div class="row">
@@ -139,6 +183,33 @@
         HikeBike_HikeBike.addTo(map);
 
         "use strict"; //JS strict mode
+
+        // Modal window 
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks the button, open the modal 
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
 
         // Add chapters layer to map
         var myStyle = {
