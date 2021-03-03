@@ -26,6 +26,8 @@
     <script type="text/javascript" src="JS_CSS_downladed_libraries/crossfilter.js"></script>
     <script type="text/javascript" src="JS_CSS_downladed_libraries/dc.js"></script>
     <script type="text/javascript" src="JS_CSS_downladed_libraries/underscore-min.js"></script>
+    <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.6/minified/require.js"></script>
+
 
 </head>
 
@@ -78,14 +80,16 @@
                                         One of the main challenges in addressing this problem is the lack of available
                                         information to water users and decision-makers in the Navajo Nation about which
                                         wells are unsafe.<br><br>
-                                        Researchers at the <b>University of New Mexico METALS Superfund Research Program</b>
+                                        Researchers at the <b>University of New Mexico METALS Superfund Research
+                                            Program</b>
                                         have compiled a database of water quality measurements from 1101 wells within
                                         the reservation using data from the U.S. Geological Survey (USGS), Church Rock
                                         Uranium Monitoring Project (CRUMP), Navajo Nation Environmental Protection
                                         Agency (NNEPA), U.S. Centers for Disease Control (CDC), Tolani Lake Enterprises,
                                         Northern Arizona University (NAU), U.S. Army Corps of Engineers (ACOE), and
                                         other fellow researchers. <i>To date, none of these compiled data have been
-                                        disseminated publicly</i> and in a format that facilitates easy interpretation.
+                                            disseminated publicly</i> and in a format that facilitates easy
+                                        interpretation.
                                     </p>
                                 </div>
                                 <div class="modal-header">
@@ -124,9 +128,12 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>
-                                        <a href="https://dbeene.github.io/" target="_blank">Daniel Beene</a> (darbeene@salud.unm.edu), Team Member, University of New Mexico<br>
-                                        <a href="https://manideeppotluru.github.io/" target="_blank">Manideep Potluru</a> (mpotluru@unm.edu), Team Member, University of New Mexico<br>
-                                        <a href="https://www.lipingyang.org/" target="_blank">Dr. Liping Yang</a> (lipingyang@unm.edu), Ph.D., Project Advisor, University of New Mexico<br><br>
+                                        <a href="https://dbeene.github.io/" target="_blank">Daniel Beene</a>
+                                        (darbeene@salud.unm.edu), Team Member, University of New Mexico<br>
+                                        <a href="https://manideeppotluru.github.io/" target="_blank">Manideep
+                                            Potluru</a> (mpotluru@unm.edu), Team Member, University of New Mexico<br>
+                                        <a href="https://www.lipingyang.org/" target="_blank">Dr. Liping Yang</a>
+                                        (lipingyang@unm.edu), Ph.D., Project Advisor, University of New Mexico<br><br>
                                     </p>
                                 </div>
                                 <div class="modal-header">
@@ -134,7 +141,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>
-                                        <a href="https://github.com/austinlyons/dcjs-leaflet-untappd" target="_blank">Austin Lyons - Dc.js Leaflet Untapped</a><br>
+                                        <a href="https://github.com/austinlyons/dcjs-leaflet-untappd"
+                                            target="_blank">Austin Lyons - Dc.js Leaflet Untapped</a><br>
                                         <a href="" target="_blank">ref 2</a><br>
                                         <a href="" target="_blank">ref 3</a><br>
                                         <a href="" target="_blank">ref 4</a><br>
@@ -154,7 +162,8 @@
                                 <div class="modal-footer">
                                     <h3><a href="https://hsc.unm.edu/pharmacy/research/areas/metals/"
                                             target="_blank">UNM METALS Superfund Research Program Center
-                                            <img src="myCSS_styleFiles/images/metals-logo.png" width="65px" height="65px">
+                                            <img src="myCSS_styleFiles/images/metals-logo.png" width="65px"
+                                                height="65px">
                                     </h3></a>
                                 </div>
                             </div>
@@ -198,10 +207,7 @@
                 </div>
             </div>
             <!--Scatterplots-->
-            <div class="col-xs-6">
-                <div class="dc-correlogram" id="correlogram"></div>
-                <h4>Scatterplots</h4>
-            </div>
+            <div class="col-xs-6" id="scatterplot"></div>
         </div>
     </div>
     <!--Data table-->
@@ -223,8 +229,6 @@
             </div>
         </div>
     </div>
-
-
 </body>
 
 </html>
