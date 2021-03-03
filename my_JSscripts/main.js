@@ -183,8 +183,8 @@ d3.json('data/nnWells.json', function (error, data) {
             map.fitBounds(wellMarkers.getBounds());
         });
     dc.renderAll();
-
 });
+
 
 
 
@@ -243,5 +243,10 @@ d3.json('data/nnWells.json', function (error, data) {
   // var clusters = L.markerClusterGroup();
   // clusters.addLayer(wellsLayerGroup);
   // map.addLayer(clusters);
+
+// Scatterplot matrix //
+// source: https://observablehq.com/@d3/brushable-scatterplot-matrix
+
+
 
 }
