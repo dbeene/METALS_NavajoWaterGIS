@@ -15,13 +15,15 @@ https://github.com/austinlyons/dcjs-leaflet-untappd
 2. Scatterplot Matrix Brushing in dc.js
 https://dc-js.github.io/dc.js/examples/splom.html
 
+3. heatmap examples using dc.js
+  * https://dc-js.github.io/dc.js/examples/heatmap-filtering.html
+  * https://stackoverflow.com/questions/51122700/dc-js-rectangular-brush-for-heat-map. (working fiddleJS demo for this post: https://jsfiddle.net/gordonwoodhull/bs9to0hd/8/)
 
-
-3. dc.js DataTable download example
+4. dc.js DataTable download example
 http://dc-js.github.io/dc.js/examples/download-table.html
 
 
-4. Correlogram:
+5. Correlogram:
 Harry Stevens Correlation Matrix
 https://bl.ocks.org/HarryStevens/302d078a089caf5aeb13e480b86fdaeb
 
