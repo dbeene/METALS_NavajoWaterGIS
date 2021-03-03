@@ -35,7 +35,7 @@ https://bl.ocks.org/HarryStevens/302d078a089caf5aeb13e480b86fdaeb
   * https://stackoverflow.com/questions/44173693/using-different-d3-versions-on-same-html-page
   * https://chewett.co.uk/blog/2021/how-to-load-multiple-d3-versions-at-once/
 
-* if the conversion is too much work, then maybe we can condier to use heatmap, instead of scatterplot matrix (this is just a back up plan), see below for some heat map examples using dc.js
+* if the conversion is too much work, then maybe we can consider to use heatmap, instead of scatterplot matrix (this is just a back up plan), see below for some heatmap examples using dc.js
   * https://dc-js.github.io/dc.js/examples/heatmap-filtering.html
   * https://stackoverflow.com/questions/51122700/dc-js-rectangular-brush-for-heat-map. (working fiddleJS demo for this post: https://jsfiddle.net/gordonwoodhull/bs9to0hd/8/)
  
