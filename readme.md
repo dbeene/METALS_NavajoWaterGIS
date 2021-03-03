@@ -28,9 +28,12 @@ https://bl.ocks.org/HarryStevens/302d078a089caf5aeb13e480b86fdaeb
 
 # Dr. Yang added resources about dealing with differnt d3 versions
 * D3 API reference:
- *  https://github.com/d3/d3/blob/master/API.md
-   * For changes between major versions, see [CHANGES](https://github.com/d3/d3/blob/master/CHANGES.md); see also the [release notes](https://github.com/d3/d3/releases) and the [3.x reference](https://github.com/d3/d3-3.x-api-reference/blob/master/API-Reference.md).
-* TBA
+  * https://github.com/d3/d3/blob/master/API.md
+    * For changes between major versions, see [CHANGES](https://github.com/d3/d3/blob/master/CHANGES.md); see also the [release notes](https://github.com/d3/d3/releases) and the [3.x reference](https://github.com/d3/d3-3.x-api-reference/blob/master/API-Reference.md).
+* load multiple d3 version in one html file *(this might be one solution, but maybe not, because dc.js is based on d3.js, so it is not just a simply include different d3 version in one html file)*
+  * https://stackoverflow.com/questions/16156445/multiple-versions-of-a-script-on-the-same-page-d3-js
+  * https://stackoverflow.com/questions/44173693/using-different-d3-versions-on-same-html-page
+  * https://chewett.co.uk/blog/2021/how-to-load-multiple-d3-versions-at-once/
 
 
 
