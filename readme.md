@@ -26,3 +26,11 @@ Harry Stevens Correlation Matrix
 https://bl.ocks.org/HarryStevens/302d078a089caf5aeb13e480b86fdaeb
 
 
+# Dr. Yang added resources about dealing with differnt d3 versions
+* D3 API reference:
+ *  https://github.com/d3/d3/blob/master/API.md
+   * For changes between major versions, see [CHANGES](https://github.com/d3/d3/blob/master/CHANGES.md); see also the [release notes](https://github.com/d3/d3/releases) and the [3.x reference](https://github.com/d3/d3-3.x-api-reference/blob/master/API-Reference.md).
+* TBA
+
+
+
