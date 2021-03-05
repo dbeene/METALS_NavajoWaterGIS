@@ -36,23 +36,28 @@
     <!--Fixed position website title with counter of data records displayed-->
     <nav class="navbar navbar-default navbar-fixed-top fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Unregulated Wells on the Navajo Nation</a>
+            <div class="col-md-1">
+                <a href="https://hsc.unm.edu/pharmacy/research/areas/metals/"
+                target="_blank">
+                <img src="myCSS_styleFiles/images/metals-logo.png" width="65px"
+                    height="65px">            </div>
+            <div class=col-md-11">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Unregulated Wells on the Navajo Nation</a>
+                </div>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <!-- <ul class="nav navbar-nav">
                     <li><a href="https://hsc.unm.edu/pharmacy/research/areas/metals/" target="_blank">METALS Home</a>
                     </li>
-                    <!-- <li><a href="#">About</a></li> -->
-                    <!--<li><a href="#">Contact</a></li> -->
-                </ul>
+                </ul> -->
                 <!--Modal Button-->
                 <ul class="nav navbar-nav navbar-right">
                     <button id="myBtn">About/Data</button>
@@ -63,7 +68,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <span class="close">&times;</span>
-                                    <h2>About this Website:</h2>
+                                    <h2>About this Project:</h2>
                                 </div>
                                 <div class="modal-body">
                                     <p>
@@ -120,7 +125,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>
-                                        Download the raw data here:
+                                        Download the raw data <a href="data/resultsPublic.csv" target="_blank">here.</a>
                                     </p>
                                 </div>
                                 <div class="modal-header">

@@ -71,6 +71,11 @@ text {
   overflow: auto;
   }
 
+.navbar-brand {
+  padding-top: 20px;
+  font-size: x-large;
+}
+
 .navbar-right {
   padding-top: 15px;
   padding-right: 20px;
