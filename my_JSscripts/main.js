@@ -237,6 +237,11 @@ window.onload = function () {
                         + "<dt> U: " + d.properties.U + ".<dt><dl>");
                     wellMarkers.addLayer(marker);
                 });
+                // Cluster points on render
+                // var clusters = L.markerClusterGroup();
+                // clusters.addLayer(wellMarkers);
+                // map.addLayer(clusters);
+                // map.fitBounds(clusters.getBounds());
                 map.addLayer(wellMarkers);
                 map.fitBounds(wellMarkers.getBounds());
             });
