@@ -240,13 +240,23 @@ window.onload = function () {
                         + "<dt> U: " + d.properties.U + "<dt><dl>");
                     wellMarkers.addLayer(marker);
                 });
-                // Cluster points on render
+                // Option 1: Cluster points on render - not working
                 // var clusters = L.markerClusterGroup();
                 // clusters.addLayer(wellMarkers);
                 // map.addLayer(clusters);
                 // map.fitBounds(clusters.getBounds());
-                map.addLayer(wellMarkers);
-                map.fitBounds(wellMarkers.getBounds());
+
+                //working code, no clusters:
+                // map.addLayer(wellMarkers);
+                // map.fitBounds(wellMarkers.getBounds());
+
+                // Option 2: Cluster points and update filter using layersupport - not working
+                mcgLayerSupportGroup = L.markerClusterGroup.layerSupport(),
+                myLayerGroup = L.layerGroup(arrayOfMarkers);
+                mcgLayerSupportGroup.addTo(map);
+                mcgLayerSupportGroup.checkIn(myLayergroup);
+
+                myLayergroup.addTo(map);
             });
         dc.renderAll();
     });
