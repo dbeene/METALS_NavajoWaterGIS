@@ -1,4 +1,5 @@
 window.onload = function () {
+
     // Call leaflet map into map frame
     //base map
     var map = L.map('map').setView([36.292, -110.090], 8);
@@ -62,42 +63,68 @@ window.onload = function () {
         _.each(wellData, function (d) {
             d.count = +d.count;
             // round to the nearest 200
-            d.ca = Math.round(+d.properties.Ca / 100) * 100;
-            d.u = Math.round(+d.properties.U / 100) * 100;
-            d.as = Math.round(+d.properties.As_ / 50) * 50;
-            d.ra_tot = d.properties.Ra_Total;
-            // round to the nearest 100
-            d.ca = Math.floor(+d.properties.Ca / 100) * 100;
+            d.As_ = Math.round(+d.properties.As_ / 50) * 50;
+            d.Ba = Math.round(+d.properties.Ba / 1) * 1;
+            d.Ca = Math.round(+d.properties.Ca / 100) * 100;
+            d.Cl_ = Math.round(+d.properties.Cl_ / 1) * 1;
+            d.Cr = Math.round(+d.properties.Cr / 1) * 1;
+            d.GrossAlpha_U_Nat = Math.round(+d.properties.GrossAlpha_U_Nat / 1) * 1;
+            d.Nitrate = Math.round(+d.properties.Nitrate / 1) * 1;
+            d.Pb = Math.round(+d.properties.Pb / 1) * 1;
+            d.Ra_Total = Math.round(+d.properties.Ra_Total / 1) * 1;
+            d.Se = Math.round(+d.properties.Se / 1) * 1;
+            d.U = Math.round(+d.properties.U / 100) * 100;
 
         });
         // set crossfilter
         var ndx = crossfilter(wellData);
 
-        var caDim = ndx.dimension(function (d) { return d.properties.Ca; });
-        var uDim = ndx.dimension(function (d) { return d.properties.U; });
-        var asDim = ndx.dimension(function (d) { return d.properties.As_; });
-        var ra_totDim = ndx.dimension(function (d) { return d.properties.Ra_Total; });
+        //Dimensions
+        var As_Dim = ndx.dimension(function (d) { return d.properties.As_; });
+        var BaDim = ndx.dimension(function (d) { return d.properties.Ba; });
+        var CaDim = ndx.dimension(function (d) { return d.properties.Ca; });
+        var Cl_Dim = ndx.dimension(function (d) { return d.properties.Cl_; });
+        var CrDim = ndx.dimension(function (d) { return d.properties.Cr; });
+        var GrossAlpha_U_NatDim = ndx.dimension(function (d) { return d.properties.GrossAlpha_U_Nat; });
+        var NitrateDim = ndx.dimension(function (d) { return d.properties.Nitrate; });
+        var PbDim = ndx.dimension(function (d) { return d.properties.Pb; });
+        var Ra_TotalDim = ndx.dimension(function (d) { return d.properties.Ra_Total; });
+        var SeDim = ndx.dimension(function (d) { return d.properties.Se; });
+        var UDim = ndx.dimension(function (d) { return d.properties.U; });
 
         var allDim = ndx.dimension(function (d) { return d; });
+
         // create groups (y-axis values)
         var all = ndx.groupAll();
-        var countPerCa = caDim.group().reduceCount();
-        var countPerU = uDim.group().reduceCount();
-        var countPerAs = asDim.group().reduceCount();
-        var countPerRa_tot = ra_totDim.group().reduceCount();
+
+        //
+        var countPerAs_ = As_Dim.group().reduceCount();
+        var countPerBa = BaDim.group().reduceCount();
+        var countPerCa = CaDim.group().reduceCount();
+        var countPerCl_ = Cl_Dim.group().reduceCount();
+        var countPerCr = CrDim.group().reduceCount();
+        var countPerGrossAlpha_U_Nat = GrossAlpha_U_NatDim.group().reduceCount();
+        var countPerNitrate = NitrateDim.group().reduceCount();
+        var countPerPb = PbDim.group().reduceCount();
+        var countPerRa_Total = Ra_TotalDim.group().reduceCount();
+        var countPerSe = SeDim.group().reduceCount();
+        var countPerU = UDim.group().reduceCount();
 
         //specify charts
-        var caCountChart = dc.barChart('#histogram1');
-        var uCountChart = dc.barChart('#histogram2');
-        var asCountChart = dc.barChart('#histogram3');
-        var ra_totCountChart = dc.barChart('#histogram4');
 
+        var as_CountChart = dc.barChart('#histogram1');
+        var caCountChart = dc.barChart('#histogram2');
+        var ra_TotalCountChart = dc.barChart('#histogram3');
+        var uCountChart = dc.barChart('#histogram4');
+
+
+        //data table declare
         var dataTable = dc.dataTable('#data-table');
 
         caCountChart
             .width(250)
             .height(250)
-            .dimension(caDim)
+            .dimension(CaDim)
             .group(countPerCa)
             .x(d3.scale.linear().domain([0, 976]))
             .y(d3.scale.linear().domain([0, 13]))
@@ -113,7 +140,7 @@ window.onload = function () {
         uCountChart
             .width(250)
             .height(250)
-            .dimension(uDim)
+            .dimension(UDim)
             .group(countPerU)
             .x(d3.scale.linear().domain([0, 700]))
             .y(d3.scale.linear().domain([0, 20]))
@@ -126,11 +153,12 @@ window.onload = function () {
         uCountChart.xAxis().tickValues([0, 200, 400, 600]);
         uCountChart.yAxis().tickValues([0, 5, 10, 15, 20]);
 
-        asCountChart
+
+        as_CountChart
             .width(250)
             .height(250)
-            .dimension(asDim)
-            .group(countPerAs)
+            .dimension(As_Dim)
+            .group(countPerAs_)
             .x(d3.scale.linear().domain([0, 282]))
             .y(d3.scale.linear().domain([0, 30]))
             .elasticY(false)
@@ -139,14 +167,14 @@ window.onload = function () {
             .xAxisLabel('Arsenic')
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-        asCountChart.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-        asCountChart.yAxis().tickValues([0, 10, 20, 30]);
+        as_CountChart.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+        as_CountChart.yAxis().tickValues([0, 10, 20, 30]);
 
-        ra_totCountChart
+        ra_TotalCountChart
             .width(250)
             .height(250)
-            .dimension(ra_totDim)
-            .group(countPerRa_tot)
+            .dimension(Ra_TotalDim)
+            .group(countPerRa_Total)
             .x(d3.scale.linear().domain([0, 1]))
             .elasticY(false)
             .centerBar(true)
@@ -154,7 +182,7 @@ window.onload = function () {
             .xAxisLabel('Radium_Total')
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-        ra_totCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+        ra_TotalCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
 
         dataTable
             .dimension(allDim)
@@ -162,10 +190,10 @@ window.onload = function () {
             .size(1000)
             .columns([
                 function (d) { return d.properties.well_id; },
-                function (d) { return d.properties.Ca; },
-                function (d) { return d.properties.U; },
                 function (d) { return d.properties.As_; },
-                function (d) { return d.properties.Ra_Total }
+                function (d) { return d.properties.Ca; },
+                function (d) { return d.properties.Ra_Total },
+                function (d) { return d.properties.U; }
             ])
             .on('renderlet', function (table) {
                 // each time table is rendered remove nasty extra row dc.js insists on adding
@@ -247,16 +275,16 @@ window.onload = function () {
                 // map.fitBounds(clusters.getBounds());
 
                 //working code, no clusters:
-                // map.addLayer(wellMarkers);
-                // map.fitBounds(wellMarkers.getBounds());
+                map.addLayer(wellMarkers);
+                map.fitBounds(wellMarkers.getBounds());
 
                 // Option 2: Cluster points and update filter using layersupport - not working
-                mcgLayerSupportGroup = L.markerClusterGroup.layerSupport(),
-                myLayerGroup = L.layerGroup(arrayOfMarkers);
-                mcgLayerSupportGroup.addTo(map);
-                mcgLayerSupportGroup.checkIn(myLayergroup);
+                // mcgLayerSupportGroup = L.markerClusterGroup.layerSupport(),
+                // myLayerGroup = L.layerGroup(arrayOfMarkers);
+                // mcgLayerSupportGroup.addTo(map);
+                // mcgLayerSupportGroup.checkIn(myLayergroup);
 
-                myLayergroup.addTo(map);
+                // myLayergroup.addTo(map);
             });
         dc.renderAll();
     });
@@ -453,4 +481,945 @@ window.onload = function () {
 
 
 
+}
+function selectAnalyte() {
+
+    var selected1 = document.getElementById("selectbox1");
+    var input1 = selected1.options[selected1.selectedIndex].value;
+
+    var selected2 = document.getElementById("selectbox2");
+    var input2 = selected2.options[selected2.selectedIndex].value;
+
+    var selected3 = document.getElementById("selectbox3");
+    var input3 = selected3.options[selected3.selectedIndex].value;
+
+    var selected4 = document.getElementById("selectbox4");
+    var input4 = selected4.options[selected4.selectedIndex].value;
+
+    d3.json('data/nnWells.json', function (error, data) {
+        var wellData = data.features;
+        _.each(wellData, function (d) {
+            d.count = +d.count;
+            d.As_ = Math.round(+d.properties.As_ / 50) * 50;
+            d.Ba = Math.round(+d.properties.Ba / 1) * 1;
+            d.Ca = Math.round(+d.properties.Ca / 100) * 100;
+            d.Cl_ = Math.round(+d.properties.Cl_ / 1) * 1;
+            d.Cr = Math.round(+d.properties.Cr / 1) * 1;
+            d.GrossAlpha_U_Nat = Math.round(+d.properties.GrossAlpha_U_Nat / 1) * 1;
+            d.Nitrate = Math.round(+d.properties.Nitrate / 1) * 1;
+            d.Pb = Math.round(+d.properties.Pb / 1) * 1;
+            d.Ra_Total = Math.round(+d.properties.Ra_Total / 1) * 1;
+            d.Se = Math.round(+d.properties.Se / 1) * 1;
+            d.U = Math.round(+d.properties.U / 100) * 100;
+            d.None = 0;
+        });
+
+        //Crossfilter
+        var ndx = crossfilter(wellData);
+
+        var As_Dim = ndx.dimension(function (d) { return d.properties.As_; });
+        var BaDim = ndx.dimension(function (d) { return d.properties.Ba; });
+        var CaDim = ndx.dimension(function (d) { return d.properties.Ca; });
+        var Cl_Dim = ndx.dimension(function (d) { return d.properties.Cl_; });
+        var CrDim = ndx.dimension(function (d) { return d.properties.Cr; });
+        var GrossAlpha_U_NatDim = ndx.dimension(function (d) { return d.properties.GrossAlpha_U_Nat; });
+        var NitrateDim = ndx.dimension(function (d) { return d.properties.Nitrate; });
+        var PbDim = ndx.dimension(function (d) { return d.properties.Pb; });
+        var Ra_TotalDim = ndx.dimension(function (d) { return d.properties.Ra_Total; });
+        var SeDim = ndx.dimension(function (d) { return d.properties.Se; });
+        var UDim = ndx.dimension(function (d) { return d.properties.U; });
+        var NoneDim = ndx.dimension(function (d) { return d.None; });
+
+        var allDim = ndx.dimension(function (d) { return d; });
+
+        //countPerAnalyte
+        var countPerAs_ = As_Dim.group().reduceCount();
+        var countPerBa = BaDim.group().reduceCount();
+        var countPerCa = CaDim.group().reduceCount();
+        var countPerCl_ = Cl_Dim.group().reduceCount();
+        var countPerCr = CrDim.group().reduceCount();
+        var countPerGrossAlpha_U_Nat = GrossAlpha_U_NatDim.group().reduceCount();
+        var countPerNitrate = NitrateDim.group().reduceCount();
+        var countPerPb = PbDim.group().reduceCount();
+        var countPerRa_Total = Ra_TotalDim.group().reduceCount();
+        var countPerSe = SeDim.group().reduceCount();
+        var countPerU = UDim.group().reduceCount();
+        var countPerNone = NoneDim.group().reduceCount();
+
+        //Charts
+        var histogram1 = dc.barChart('#histogram1');
+        var histogram2 = dc.barChart('#histogram2');
+        var histogram3 = dc.barChart('#histogram3');
+        var histogram4 = dc.barChart('#histogram4');
+
+        if (input1 == "As_") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(As_Dim)
+                .group(countPerAs_)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Arsenic')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram1.yAxis().tickValues([0, 10, 20, 30]);
+        }
+        else if (input1 == "Ba") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(BaDim)
+                .group(countPerBa)
+                .x(d3.scale.linear().domain([0, 1500]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Barium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
+            histogram1.yAxis().tickValues([0, 10, 20, 30]);
+        }
+        else if (input1 == "Ca") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(CaDim)
+                .group(countPerCa)
+                .x(d3.scale.linear().domain([0, 970]))
+                .y(d3.scale.linear().domain([0, 13]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(20)
+                .xAxisLabel('Calcium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
+            histogram1.yAxis().tickValues([0, 3, 6, 9, 12]);
+        }
+        else if (input1 == "Cl_") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(Cl_Dim)
+                .group(countPerCl_)
+                .x(d3.scale.linear().domain([0, 41800]))
+                .y(d3.scale.linear().domain([0, 3]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Clorine')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
+            histogram1.yAxis().tickValues([0, 1, 2, 3]);
+        }
+        else if (input1 == "Cr") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(CrDim)
+                .group(countPerCr)
+                .x(d3.scale.linear().domain([0, 30]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Chromium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 10, 20, 30]);
+            histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+        else if (input1 == "GrossAlpha_U_Nat") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(GrossAlpha_U_NatDim)
+                .group(countPerGrossAlpha_U_Nat)
+                .x(d3.scale.linear().domain([0, 780]))
+                .y(d3.scale.linear().domain([0, 2]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('GrossAlpha_U_Nat')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 200, 400, 600, 800]);
+            histogram1.yAxis().tickValues([0, 1, 2]);
+        }
+        else if (input1 == "Nitrate") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(NitrateDim)
+                .group(countPerNitrate)
+                .x(d3.scale.linear().domain([0, 240]))
+                .y(d3.scale.linear().domain([0, 3]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Nitrate')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram1.yAxis().tickValues([0, 1, 2, 3]);
+        }
+        else if (input1 == "Pb") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(PbDim)
+                .group(countPerPb)
+                .x(d3.scale.linear().domain([0, 320]))
+                .y(d3.scale.linear().domain([0, 15]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Lead')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 100, 200, 300]);
+            histogram1.yAxis().tickValues([0, 5, 10, 15]);
+        }
+        else if (input1 == "Ra_Total") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(Ra_TotalDim)
+                .group(countPerRa_Total)
+                .x(d3.scale.linear().domain([0, 1]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Ra_Total')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+
+
+        }
+        else if (input1 == "Se") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(SeDim)
+                .group(countPerSe)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Selenium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+        else if (input1 == "U") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(UDim)
+                .group(countPerU)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Uranium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+
+        else if (input1 == "None") {
+
+            histogram1
+                .width(250)
+                .height(250)
+                .dimension(NoneDim)
+                .group(countPerNone)
+                //.range([0,20])
+                .x(d3.scale.linear().domain([0, 0]))
+                // .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('None')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram1.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
+            histogram1.yAxis().tickValues([0, 0, 0, 0]);
+        }
+
+        if (input2 == "As_") {
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(As_Dim)
+                .group(countPerAs_)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Arsenic')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram2.yAxis().tickValues([0, 10, 20, 30]);
+        }
+        else if (input2 == "Ba") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(BaDim)
+                .group(countPerBa)
+                .x(d3.scale.linear().domain([0, 1500]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Barium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
+            histogram2.yAxis().tickValues([0, 10, 20, 30]);
+        }
+        else if (input2 == "Ca") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(CaDim)
+                .group(countPerCa)
+                .x(d3.scale.linear().domain([0, 970]))
+                .y(d3.scale.linear().domain([0, 13]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(20)
+                .xAxisLabel('Calcium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
+            histogram2.yAxis().tickValues([0, 3, 6, 9, 12]);
+        }
+        else if (input2 == "Cl_") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(Cl_Dim)
+                .group(countPerCl_)
+                .x(d3.scale.linear().domain([0, 41800]))
+                .y(d3.scale.linear().domain([0, 3]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Clorine')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
+            histogram2.yAxis().tickValues([0, 1, 2, 3]);
+        }
+        else if (input2 == "Cr") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(CrDim)
+                .group(countPerCr)
+                .x(d3.scale.linear().domain([0, 30]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Chromium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 10, 20, 30]);
+            histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+        else if (input2 == "GrossAlpha_U_Nat") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(GrossAlpha_U_NatDim)
+                .group(countPerGrossAlpha_U_Nat)
+                .x(d3.scale.linear().domain([0, 780]))
+                .y(d3.scale.linear().domain([0, 2]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('GrossAlpha_U_Nat')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 200, 400, 600, 800]);
+            histogram2.yAxis().tickValues([0, 1, 2]);
+        }
+        else if (input2 == "Nitrate") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(NitrateDim)
+                .group(countPerNitrate)
+                .x(d3.scale.linear().domain([0, 240]))
+                .y(d3.scale.linear().domain([0, 3]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Nitrate')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram2.yAxis().tickValues([0, 1, 2, 3]);
+        }
+        else if (input2 == "Pb") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(PbDim)
+                .group(countPerPb)
+                .x(d3.scale.linear().domain([0, 320]))
+                .y(d3.scale.linear().domain([0, 15]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Lead')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 100, 200, 300]);
+            histogram2.yAxis().tickValues([0, 5, 10, 15]);
+        }
+        else if (input2 == "Ra_Total") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(Ra_TotalDim)
+                .group(countPerRa_Total)
+                .x(d3.scale.linear().domain([0, 1]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Ra_Total')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+        }
+        else if (input2 == "Se") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(SeDim)
+                .group(countPerSe)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Selenium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+        else if (input2 == "U") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(UDim)
+                .group(countPerU)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Uranium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+
+        else if (input2 == "None") {
+
+            histogram2
+                .width(250)
+                .height(250)
+                .dimension(NoneDim)
+                .group(countPerNone)
+                .x(d3.scale.linear().domain([0, 0]))
+                // .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('None')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram2.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
+            histogram2.yAxis().tickValues([0, 0, 0, 0]);
+        }
+
+        if (input3 == "As_") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(As_Dim)
+                .group(countPerAs_)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Arsenic')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram3.yAxis().tickValues([0, 10, 20, 30]);
+        }
+        else if (input3 == "Ba") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(BaDim)
+                .group(countPerBa)
+                .x(d3.scale.linear().domain([0, 1500]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Barium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
+            histogram3.yAxis().tickValues([0, 10, 20, 30]);
+        }
+        else if (input3 == "Ca") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(CaDim)
+                .group(countPerCa)
+                .x(d3.scale.linear().domain([0, 970]))
+                .y(d3.scale.linear().domain([0, 13]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(20)
+                .xAxisLabel('Calcium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
+            histogram3.yAxis().tickValues([0, 3, 6, 9, 12]);
+        }
+        else if (input3 == "Cl_") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(Cl_Dim)
+                .group(countPerCl_)
+                .x(d3.scale.linear().domain([0, 41800]))
+                .y(d3.scale.linear().domain([0, 3]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Clorine')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
+            histogram3.yAxis().tickValues([0, 1, 2, 3]);
+        }
+        else if (input3 == "Cr") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(CrDim)
+                .group(countPerCr)
+                .x(d3.scale.linear().domain([0, 30]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Chromium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 10, 20, 30]);
+            histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+        else if (input3 == "GrossAlpha_U_Nat") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(GrossAlpha_U_NatDim)
+                .group(countPerGrossAlpha_U_Nat)
+                .x(d3.scale.linear().domain([0, 780]))
+                .y(d3.scale.linear().domain([0, 2]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('GrossAlpha_U_Nat')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 200, 400, 600, 800]);
+            histogram3.yAxis().tickValues([0, 1, 2]);
+        }
+        else if (input3 == "Nitrate") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(NitrateDim)
+                .group(countPerNitrate)
+                .x(d3.scale.linear().domain([0, 240]))
+                .y(d3.scale.linear().domain([0, 3]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Nitrate')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram3.yAxis().tickValues([0, 1, 2, 3]);
+        }
+        else if (input3 == "Pb") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(PbDim)
+                .group(countPerPb)
+                .x(d3.scale.linear().domain([0, 320]))
+                .y(d3.scale.linear().domain([0, 15]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Lead')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 100, 200, 300]);
+            histogram3.yAxis().tickValues([0, 5, 10, 15]);
+        }
+        else if (input3 == "Ra_Total") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(Ra_TotalDim)
+                .group(countPerRa_Total)
+                .x(d3.scale.linear().domain([0, 1]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Ra_Total')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+        }
+        else if (input3 == "Se") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(SeDim)
+                .group(countPerSe)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Selenium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+        else if (input3 == "U") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(UDim)
+                .group(countPerU)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Uranium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+
+        else if (input3 == "None") {
+
+            histogram3
+                .width(250)
+                .height(250)
+                .dimension(NoneDim)
+                .group(countPerNone)
+                .x(d3.scale.linear().domain([0, 0]))
+                // .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('None')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram3.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
+            histogram3.yAxis().tickValues([0, 0, 0, 0]);
+        }
+
+        if (input4 == "As_") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(As_Dim)
+                .group(countPerAs_)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Arsenic')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram4.yAxis().tickValues([0, 10, 20, 30]);
+        }
+        else if (input4 == "Ba") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(BaDim)
+                .group(countPerBa)
+                .x(d3.scale.linear().domain([0, 1500]))
+                .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Barium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
+            histogram4.yAxis().tickValues([0, 10, 20, 30]);
+        }
+        else if (input4 == "Ca") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(CaDim)
+                .group(countPerCa)
+                .x(d3.scale.linear().domain([0, 970]))
+                .y(d3.scale.linear().domain([0, 13]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(20)
+                .xAxisLabel('Calcium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
+            histogram4.yAxis().tickValues([0, 3, 6, 9, 12]);
+
+        }
+        else if (input4 == "Cl_") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(Cl_Dim)
+                .group(countPerCl_)
+                .x(d3.scale.linear().domain([0, 41800]))
+                .y(d3.scale.linear().domain([0, 3]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Clorine')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
+            histogram4.yAxis().tickValues([0, 1, 2, 3]);
+        }
+        else if (input4 == "Cr") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(CrDim)
+                .group(countPerCr)
+                .x(d3.scale.linear().domain([0, 30]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Chromium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 10, 20, 30]);
+            histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+        else if (input4 == "GrossAlpha_U_Nat") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(GrossAlpha_U_NatDim)
+                .group(countPerGrossAlpha_U_Nat)
+                .x(d3.scale.linear().domain([0, 780]))
+                .y(d3.scale.linear().domain([0, 2]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('GrossAlpha_U_Nat')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 200, 400, 600, 800]);
+            histogram4.yAxis().tickValues([0, 1, 2]);
+        }
+        else if (input4 == "Nitrate") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(NitrateDim)
+                .group(countPerNitrate)
+                .x(d3.scale.linear().domain([0, 240]))
+                .y(d3.scale.linear().domain([0, 3]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Nitrate')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram4.yAxis().tickValues([0, 1, 2, 3]);
+        }
+        else if (input4 == "Pb") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(PbDim)
+                .group(countPerPb)
+                .x(d3.scale.linear().domain([0, 320]))
+                .y(d3.scale.linear().domain([0, 15]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Lead')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 100, 200, 300]);
+            histogram4.yAxis().tickValues([0, 5, 10, 15]);
+        }
+        else if (input4 == "Ra_Total") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(Ra_TotalDim)
+                .group(countPerRa_Total)
+                .x(d3.scale.linear().domain([0, 1]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Ra_Total')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+        }
+        else if (input4 == "Se") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(SeDim)
+                .group(countPerSe)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Selenium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+        else if (input4 == "U") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(UDim)
+                .group(countPerU)
+                .x(d3.scale.linear().domain([0, 282]))
+                .y(d3.scale.linear().domain([0, 20]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('Uranium')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
+            histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
+        }
+
+        else if (input4 == "None") {
+
+            histogram4
+                .width(250)
+                .height(250)
+                .dimension(NoneDim)
+                .group(countPerNone)
+                .x(d3.scale.linear().domain([0, 0]))
+                // .y(d3.scale.linear().domain([0, 30]))
+                .elasticY(false)
+                .centerBar(true)
+                .barPadding(3)
+                .xAxisLabel('None')
+                .yAxisLabel('Count')
+                .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+            histogram4.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
+            histogram4.yAxis().tickValues([0, 0, 0, 0]);
+        }
+
+        dc.renderAll();
+        //xdocument.getElementById("histogram1").innerHTML=histogram1;
+    });
 }
