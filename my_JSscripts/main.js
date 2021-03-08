@@ -174,89 +174,91 @@ window.onload = function () {
                 wellMarkers.clearLayers();
                 _.each(allDim.top(Infinity), function (d) {
                     var filLoc = d.properties;
-                    var id = d.properties.well_id;
+                    // var id = d.properties.well_id;
                     var marker = L.marker([filLoc.lat, filLoc.long]);
+
                     marker.bindPopup(
                         "<dl><dt> <h4><b>WELL INFORMATION- NAVAJO NATION WELL</b></h4><br>"
-                        + "<dt><b>FID</b>: " + d.properties.FID + ";<dd>"
-                        + "<dt> Well No.: " + d.properties.well_no + ";<dd>"
-                        + "<dt> Well ID: " + d.properties.well_id + ";<dd>"
-                        + "<dt> Well Name: " + d.properties.well_name + ";<dd>"
-                        + "<dt> Owner: " + d.properties.owner + ";<dd>"
-                        + "<dt> Depth: " + d.properties.depth + ";<dd>"
-                        + "<dt> Public Water Sys. ID: " + d.properties.pwsid + ";<dd>"
-                        + "<dt> USGS ID: " + d.properties.usgs_id + ";<dd>"
-                        + "<dt> Data Source: " + d.properties.data_sourc + ";<dd>"
-                        + "<dt> Comment(s): " + d.properties.comments + ";<dd>"
-                        + "<dt> Alternate Name 1: " + d.properties.aka2 + ";<dd>"
-                        + "<dt> Alternate Name 2: " + d.properties.aka3 + ";<dd>"
-                        + "<dt> Status: " + d.properties.well_statu + ";<dd>"
-                        + "<dt> Agency: " + d.properties.nn_agency + ";<dd>"
-                        + "<dt> Well Use: " + d.properties.USE + ";<dd>"
-                        + "<dt> Alkalinity: " + d.properties.Alkalinity + ";<dd>"
-                        + "<dt> Total Alkalinity: " + d.properties.Alkalinity_Total + ";<dd>"
-                        + "<dt> As: " + d.properties.As_ + ";<dd>"
-                        + "<dt> Ba: " + d.properties.Ba + ";<dd>"
-                        + "<dt> Be: " + d.properties.Be + ";<dd>"
-                        + "<dt> Br: " + d.properties.Br_ + ";<dd>"
-                        + "<dt> Ca: " + d.properties.Ca + ";<dd>"
-                        + "<dt> Cd: " + d.properties.Cd + ";<dd>"
-                        + "<dt> Cl :" + d.properties.Cl_ + ";<dd>"
-                        + "<dt> Conductivity: " + d.properties.Conductivity + ";<dd>"
-                        + "<dt> Cr: " + d.properties.Cr + ";<dd>"
-                        + "<dt> DO: " + d.properties.DO + ";<dd>"
-                        + "<dt> Electrical Conductivity: " + d.properties.ElectricalConductivity + ";<dd>"
-                        + "<dt> Gross Alpha 2 Sigma Comb. Uncertainty: " + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
-                        + "<dt> Gross Alpha: " + d.properties.GrossAlpha + ";<dd>"
-                        + "<dt> Gross Alpha: U Nat: " + d.properties.GrossAlpha_U_Nat + ";<dd>"
-                        + "<dt> Gross Beta 1: " + d.properties.GrossBeta + ";<dd>"
-                        + "<dt> Gross Beta: Cs 137: " + d.properties.GrossBeta_Cs137 + ";<dd>"
-                        + "<dt> Gross Beta: Sr Y90: " + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
-                        + "<dt> Hardness: " + d.properties.Hardness + ";<dd>"
-                        + "<dt> Total Hardness: " + d.properties.Hardness_Total + ";<dd>"
-                        + "<dt> Hg: " + d.properties.Hg + ";<dd>"
-                        + "<dt> Hydroxide: " + d.properties.Hydroxide + ";<dd>"
-                        + "<dt> K: " + d.properties.K + ";<dd>"
-                        + "<dt> Mg: " + d.properties.Mg + ";<dd>"
-                        + "<dt> Mn: " + d.properties.Mn + ";<dd>"
-                        + "<dt> Na: " + d.properties.Na + ";<dd>"
-                        + "<dt> Na Adsorption Ratio: " + d.properties.Na_AdsorptionRatio + ";<dd>"
-                        + "<dt> Na Fraction Cations: " + d.properties.Na_FractionCations + ";<dd>"
-                        + "<dt> Na_K: " + d.properties.Na_K + ";<dd>"
-                        + "<dt> Nitrate: " + d.properties.Nitrate + ";<dd>"
-                        + "<dt> Nitrate_Nitrite: " + d.properties.Nitrate_Nitrite + ";<dd>"
-                        + "<dt> NO2: " + d.properties.NO2_ + ";<dd>"
-                        + "<dt> NO3: " + d.properties.NO3_ + ";<dd>"
-                        + "<dt> ORP: " + d.properties.ORP + ";<dd>"
-                        + "<dt> Pb: " + d.properties.Pb + ";<dd>"
-                        + "<dt> Ra 226: " + d.properties.Ra_226 + ";<dd>"
-                        + "<dt> Ra 228: " + d.properties.Ra_228 + ";<dd>"
-                        + "<dt> Ra Total: " + d.properties.Ra_Total + ";<dd>"
-                        + "<dt> Sb: " + d.properties.Sb + ";<dd>"
-                        + "<dt> Se: " + d.properties.Se + ";<dd>"
-                        + "<dt> Temperature: " + d.properties.Temperature + ";<dd>"
-                        + "<dt> Tl: " + d.properties.Tl + ";<dd>"
-                        + "<dt> Turbidity: " + d.properties.Turbidity + ";<dd>"
-                        + "<dt> U: " + d.properties.U + "<dt><dl>");
+                        + "<dt><i>FID</i>: " + d.properties.FID + ";<dd>"
+                        + "<dt><i>Well No.</i>: " + d.properties.well_no + ";<dd>"
+                        + "<dt><i>Well ID</i>: " + d.properties.well_id + ";<dd>"
+                        + "<dt><i>Well Name</i>: " + d.properties.well_name + ";<dd>"
+                        + "<dt><i>Owner</i>: " + d.properties.owner + ";<dd>"
+                        + "<dt><i>Depth</i>: " + d.properties.depth + ";<dd>"
+                        + "<dt><i>Public Water Sys. ID</i>: " + d.properties.pwsid + ";<dd>"
+                        + "<dt><i>USGS ID</i>: " + d.properties.usgs_id + ";<dd>"
+                        + "<dt><i>Data Source</i>: " + d.properties.data_sourc + ";<dd>"
+                        + "<dt><i>Comment(s)</i>: " + d.properties.comments + ";<dd>"
+                        + "<dt><i>Alternate Name 1</i>: " + d.properties.aka2 + ";<dd>"
+                        + "<dt><i>Alternate Name 2</i>: " + d.properties.aka3 + ";<dd>"
+                        + "<dt><i>Status</i>: " + d.properties.well_statu + ";<dd>"
+                        + "<dt><i>Agency</i>: " + d.properties.nn_agency + ";<dd>"
+                        + "<dt><i>Well Use</i>: " + d.properties.USE + ";<dd>"
+                        + "<dt><i>Alkalinity</i>: " + d.properties.Alkalinity + ";<dd>"
+                        + "<dt><i>Total Alkalinity</i>: " + d.properties.Alkalinity_Total + ";<dd>"
+                        + "<dt><i>As</i>: " + d.properties.As_ + ";<dd>"
+                        + "<dt><i>Ba</i>: " + d.properties.Ba + ";<dd>"
+                        + "<dt><i>Be</i>: " + d.properties.Be + ";<dd>"
+                        + "<dt><i>Br</i>: " + d.properties.Br_ + ";<dd>"
+                        + "<dt><i>Ca</i>: " + d.properties.Ca + ";<dd>"
+                        + "<dt><i>Cd</i>: " + d.properties.Cd + ";<dd>"
+                        + "<dt><i>Cl :" + d.properties.Cl_ + ";<dd>"
+                        + "<dt><i>Conductivity</i>: " + d.properties.Conductivity + ";<dd>"
+                        + "<dt><i>Cr</i>: " + d.properties.Cr + ";<dd>"
+                        + "<dt><i>DO</i>: " + d.properties.DO + ";<dd>"
+                        + "<dt><i>Electrical Conductivity</i>: " + d.properties.ElectricalConductivity + ";<dd>"
+                        + "<dt><i>Gross Alpha 2 Sigma Comb. Uncertainty</i>: " + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
+                        + "<dt><i>Gross Alpha</i>: " + d.properties.GrossAlpha + ";<dd>"
+                        + "<dt><i>Gross Alpha: U Nat</i>: " + d.properties.GrossAlpha_U_Nat + ";<dd>"
+                        + "<dt><i>Gross Beta 1</i>: " + d.properties.GrossBeta + ";<dd>"
+                        + "<dt><i>Gross Beta: Cs 137</i>: " + d.properties.GrossBeta_Cs137 + ";<dd>"
+                        + "<dt><i>Gross Beta: Sr Y90</i>: " + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
+                        + "<dt><i>Hardness</i>: " + d.properties.Hardness + ";<dd>"
+                        + "<dt><i>Total Hardness</i>: " + d.properties.Hardness_Total + ";<dd>"
+                        + "<dt><i>Hg</i>: " + d.properties.Hg + ";<dd>"
+                        + "<dt><i>Hydroxide</i>: " + d.properties.Hydroxide + ";<dd>"
+                        + "<dt><i>K</i>: " + d.properties.K + ";<dd>"
+                        + "<dt><i>Mg</i>: " + d.properties.Mg + ";<dd>"
+                        + "<dt><i>Mn</i>: " + d.properties.Mn + ";<dd>"
+                        + "<dt><i>Na</i>: " + d.properties.Na + ";<dd>"
+                        + "<dt><i>Na Adsorption Ratio</i>: " + d.properties.Na_AdsorptionRatio + ";<dd>"
+                        + "<dt><i>Na Fraction Cations</i>: " + d.properties.Na_FractionCations + ";<dd>"
+                        + "<dt><i>Na_K</i>: " + d.properties.Na_K + ";<dd>"
+                        + "<dt><i>Nitrate</i>: " + d.properties.Nitrate + ";<dd>"
+                        + "<dt><i>Nitrate_Nitrite</i>: " + d.properties.Nitrate_Nitrite + ";<dd>"
+                        + "<dt><i>NO2</i>: " + d.properties.NO2_ + ";<dd>"
+                        + "<dt><i>NO3</i>: " + d.properties.NO3_ + ";<dd>"
+                        + "<dt><i>ORP</i>: " + d.properties.ORP + ";<dd>"
+                        + "<dt><i>Pb</i>: " + d.properties.Pb + ";<dd>"
+                        + "<dt><i>Ra 226</i>: " + d.properties.Ra_226 + ";<dd>"
+                        + "<dt><i>Ra 228</i>: " + d.properties.Ra_228 + ";<dd>"
+                        + "<dt><i>Ra Total</i>: " + d.properties.Ra_Total + ";<dd>"
+                        + "<dt><i>Sb</i>: " + d.properties.Sb + ";<dd>"
+                        + "<dt><i>Se</i>: " + d.properties.Se + ";<dd>"
+                        + "<dt><i>Temperature</i>: " + d.properties.Temperature + ";<dd>"
+                        + "<dt><i>Tl</i>: " + d.properties.Tl + ";<dd>"
+                        + "<dt><i>Turbidity</i>: " + d.properties.Turbidity + ";<dd>"
+                        + "<dt><i>U</i>: " + d.properties.U + "<dt><dl>");
                     wellMarkers.addLayer(marker);
                 });
+
+                // Add markers to map:
+                map.addLayer(wellMarkers);
+                map.fitBounds(wellMarkers.getBounds());
+
                 // Option 1: Cluster points on render - not working
                 // var clusters = L.markerClusterGroup();
                 // clusters.addLayer(wellMarkers);
                 // map.addLayer(clusters);
                 // map.fitBounds(clusters.getBounds());
 
-                //working code, no clusters:
-                // map.addLayer(wellMarkers);
-                // map.fitBounds(wellMarkers.getBounds());
-
                 // Option 2: Cluster points and update filter using layersupport - not working
-                mcgLayerSupportGroup = L.markerClusterGroup.layerSupport(),
-                myLayerGroup = L.layerGroup(arrayOfMarkers);
-                mcgLayerSupportGroup.addTo(map);
-                mcgLayerSupportGroup.checkIn(myLayergroup);
+                // mcgLayerSupportGroup = L.markerClusterGroup.layerSupport(),
+                // myLayerGroup = L.layerGroup(arrayOfMarkers);
+                // mcgLayerSupportGroup.addTo(map);
+                // mcgLayerSupportGroup.checkIn(myLayergroup);
+                // myLayergroup.addTo(map);
 
-                myLayergroup.addTo(map);
             });
         dc.renderAll();
     });
@@ -304,8 +306,8 @@ window.onload = function () {
 
                 // Color scale by well use
                 var color = d3.scaleOrdinal()
-                    .domain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
-                    .range(["#8c510a", "#bf812d", "#dfc27d", "#f6e8c3", "#c7eae5", "#80cdc1", "#35978f", "#01665e", "#003c30"])
+                    .domain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other"  , "Independent", "Recreation", "Domestic Irrigation"])
+                    .range(["#f6e8c3"   , "#01665e", "#dfc27d" , "#c7eae5"  , "#bf812d"    , "#01665e", "#8c510a"    , "#35978f"   , "#80cdc1"])
 
                 // Add charts
                 for (i in allVar) {
@@ -393,37 +395,37 @@ window.onload = function () {
 
     // function pointToCircle(feature, latlng) {
     //   if (feature.properties.USE == "Independent") {
-    //     fillCOlor_Var = "#01665e";
+    //     fillColor_Var = "#8c510a";
     //   }
     //   else if (feature.properties.USE == "Agriculture") {
-    //     fillCOlor_Var = "#c7eae5";
+    //     fillColor_Var = "#bf812d";
     //   }
     //   else if (feature.properties.USE == "Domestic") {
-    //     fillCOlor_Var = "#dfc27d";
+    //     fillColor_Var = "#dfc27d";
     //   }
     //   else if (feature.properties.USE == "Livestock") {
-    //     fillCOlor_Var = "#8c510a";
+    //     fillColor_Var = "#f6e8c3";
     //   }
     //   else if (feature.properties.USE == "Other") {
-    //     fillCOlor_Var = "#80cdc1";
+    //     fillColor_Var = "#01665e";
     //   }
     //   else if (feature.properties.USE == "Municipal") {
-    //     fillCOlor_Var = "#f6e8c3";
+    //     fillColor_Var = "#c7eae5";
     //   }
     //   else if (feature.properties.USE == "Domestic Irrigaiton") {
-    //     fillCOlor_Var = "#003c30";
+    //     fillColor_Var = "#80cdc1";
     //   }
     //   else if (feature.properties.USE == "Recreation") {
-    //     fillCOlor_Var = "#01665e";
+    //     fillColor_Var = "#35978f";
     //   }
     //   // if USE == Unknown
     //   else {
-    //     fillCOlor_Var = "bf812d";
+    //     fillColor_Var = "01665e";
     //   }
     //   var geojsonMarkerOptions = {
     //     radius: 7,
     //     //fillColor: "#F46B06",
-    //     fillColor: fillCOlor_Var,
+    //     fillColor: fillColor_Var,
     //     color: "black",
     //     weight: 1,
     //     opacity: 1,
