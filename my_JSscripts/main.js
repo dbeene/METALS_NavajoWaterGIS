@@ -11,6 +11,26 @@ window.onload = function () {
 
     "use strict"; //JS strict mode
 
+    // Add chapters layer to map -- need to render underneath circleMarkers
+    // var myStyle = {
+    //     "color": "#dbc38f",
+    //     "fillColor": "white",
+    //     "weight": 0.5,
+    //     "fillOpacity": 0.25
+    // }
+
+    // $.getJSON("data/nnChapters.geojson", function (data) {
+    //     // L.geoJson(data).addTo(map);
+    //     var geojson = L.geoJson(data, {
+    //         style: myStyle,
+    //         onEachFeature: function (feature, layer) {
+    //             var chPopup = "Chapter:<br>" + feature.properties.Chapter
+    //             layer.bindPopup(chPopup);
+    //         }
+    //     });
+    //     geojson.addTo(map)
+    // });
+
     // Modal window 
     // Get the modal
     var modal = document.getElementById("myModal");
@@ -38,24 +58,6 @@ window.onload = function () {
         }
     }
 
-    // Add chapters layer to map
-    var myStyle = {
-        "color": "#dbc38f",
-        "stroke-width": 0.5,
-        "fill-opacity": 1.0
-    }
-
-    $.getJSON("data/nnChapters.geojson", function (data) {
-        // L.geoJson(data).addTo(map);
-        var geojson = L.geoJson(data, {
-            style: myStyle,
-            onEachFeature: function (feature, layer) {
-                var chPopup = "Chapter:<br>" + feature.properties.Chapter
-                layer.bindPopup(chPopup);
-            }
-        });
-        geojson.addTo(map)
-    });
     // create charts
     d3.json('data/nnWells.json', function (error, data) {
         var wellData = data.features;
@@ -175,7 +177,42 @@ window.onload = function () {
                 _.each(allDim.top(Infinity), function (d) {
                     var filLoc = d.properties;
                     // var id = d.properties.well_id;
-                    var marker = L.marker([filLoc.lat, filLoc.long]);
+
+                    // Color based on well use
+                    function getColor(wUse) {
+                        switch (wUse) {
+                            case "Independent":
+                                return "#8c510a";
+                            case "Agriculture":
+                                return "#bf812d";
+                            case "Domestic":
+                                return "#dfc27d";
+                            case "Livestock":
+                                return "#f6e8c3";
+                            case "Other":
+                                return "#01665e";
+                            case "Municipal":
+                                return "#c7eae5";
+                            case "Domestic Irrigation":
+                                return "#80cdc1";
+                            case "Recreation":
+                                return "#35978f";
+                            default:
+                                return "#01665e";
+                        }
+                    }
+
+                    var markerOptions = {
+                        radius: 3.5,
+                        fillColor: getColor(d.properties.USE),
+                        color: "black",
+                        weight: 0,
+                        opacity: 1,
+                        fillOpacity: 0.7
+                    };
+
+                    // Add circle markers
+                    var marker = L.circleMarker([filLoc.lat, filLoc.long], markerOptions);
 
                     marker.bindPopup(
                         "<dl><dt> <h4><b>WELL INFORMATION- NAVAJO NATION WELL</b></h4><br>"
@@ -246,19 +283,6 @@ window.onload = function () {
                 map.addLayer(wellMarkers);
                 map.fitBounds(wellMarkers.getBounds());
 
-                // Option 1: Cluster points on render - not working
-                // var clusters = L.markerClusterGroup();
-                // clusters.addLayer(wellMarkers);
-                // map.addLayer(clusters);
-                // map.fitBounds(clusters.getBounds());
-
-                // Option 2: Cluster points and update filter using layersupport - not working
-                // mcgLayerSupportGroup = L.markerClusterGroup.layerSupport(),
-                // myLayerGroup = L.layerGroup(arrayOfMarkers);
-                // mcgLayerSupportGroup.addTo(map);
-                // mcgLayerSupportGroup.checkIn(myLayergroup);
-                // myLayergroup.addTo(map);
-
             });
         dc.renderAll();
     });
@@ -306,8 +330,8 @@ window.onload = function () {
 
                 // Color scale by well use
                 var color = d3.scaleOrdinal()
-                    .domain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other"  , "Independent", "Recreation", "Domestic Irrigation"])
-                    .range(["#f6e8c3"   , "#01665e", "#dfc27d" , "#c7eae5"  , "#bf812d"    , "#01665e", "#8c510a"    , "#35978f"   , "#80cdc1"])
+                    .domain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
+                    .range(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
 
                 // Add charts
                 for (i in allVar) {
