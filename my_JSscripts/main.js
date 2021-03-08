@@ -290,7 +290,7 @@ window.onload = function () {
     // Scatterplot matrix
     // Event handler for d3 version
 
-    function graphicviz(scatterplot) {
+    function graphicviz() {
         require.config({
             paths: {
                 d3: "JS_CSS_downladed_libraries/d3.v4.min"
@@ -300,8 +300,8 @@ window.onload = function () {
         require(["d3"], function (d3) {
             // Sample taken from https://www.d3-graph-gallery.com/graph/correlogram_scatter.html
             // Chart dimensions
-            var marginWhole = { top: 10, right: 10, bottom: 10, left: 10 },
-                sizeWhole = 500 - marginWhole.left - marginWhole.right
+            var marginWhole = { top: 10, right: 10, bottom: 10, left: 40 },
+                sizeWhole = 585 - marginWhole.left - marginWhole.right
 
             // Create SVG area
             var svg = d3.select("#scatterplot")
@@ -354,7 +354,7 @@ window.onload = function () {
                         yextent = d3.extent(data, function (d) { return +d[var2] })
                         var y = d3.scaleLinear()
                             .domain(yextent).nice()
-                            .range([size - 2 * mar, 0]);
+                            .range([size - 2 * mar, 10]);
 
                         // Add a 'g' at the right position
                         var tmp = svg
@@ -364,7 +364,13 @@ window.onload = function () {
                         // Add X and Y axis in tmp
                         tmp.append("g")
                             .attr("transform", "translate(" + 0 + "," + (size - mar * 2) + ")")
-                            .call(d3.axisBottom(x).ticks(3));
+                            .call(d3.axisBottom(x).ticks(3))
+                            .selectAll("text")
+                            .style("text-anchor", "end")
+                            .attr("dx", "-.8em")
+                            .attr("dy", ".15em")
+                            .attr("transform", "rotate(-30)");
+
                         tmp.append("g")
                             .call(d3.axisLeft(y).ticks(3));
 
@@ -376,12 +382,12 @@ window.onload = function () {
                             .append("circle")
                             .attr("cx", function (d) { return x(+d[var1]) })
                             .attr("cy", function (d) { return y(+d[var2]) })
-                            .attr("r", 3)
-                            .attr("fill", function (d) { return color(d.wellUse) })
+                            .attr("r", 2.5)
+                            .attr("fill", function (d) {
+                                return color(d.wellUse)
+                            })
                     }
                 }
-
-
 
                 // Add variable names on diagonal
 
@@ -395,17 +401,12 @@ window.onload = function () {
                             .append('g')
                             .attr("transform", "translate(" + position(var1) + "," + position(var2) + ")")
                             .append('text')
-                            .attr("x", size / 2)
-                            .attr("y", size / 2)
+                            .attr("x", size / 3.75)
+                            .attr("y", size / 1.7)
                             .text(var1)
-                            .attr("text-anchor", "middle")
-
                     }
                 }
-
-
             })
-
         });
     }
 
