@@ -318,197 +318,138 @@ window.onload = function () {
 
     // Scatterplot matrix
     // Event handler for d3 version
-
     function graphicviz() {
         require.config({
             paths: {
-                d3: "JS_CSS_downladed_libraries/d3.v4.min"
-            }
+                "d3": "JS_CSS_downladed_libraries/d3.v.6.3.1",
+                "dc": "JS_CSS_downladed_libraries/dc.v.4.2.4"
+            },
         });
 
-        require(["d3"], function (d3) {
-            // Sample taken from https://www.d3-graph-gallery.com/graph/correlogram_scatter.html
-            // Chart dimensions
-            var marginWhole = { top: 10, right: 10, bottom: 10, left: 40 },
-                sizeWhole = 585 - marginWhole.left - marginWhole.right
+        require(["d3", "dc"], function (d3, dc) {
+            var fields = ['As', 'Ca', 'Ra_Total', 'U'];
+            var rows = ['heading'].concat(fields.slice(0).reverse()),
+                cols = ['heading'].concat(fields);
 
-            // Create SVG area
-            var svg = d3.select("#scatterplot")
-                .append("svg")
-                .attr("width", sizeWhole + marginWhole.left + marginWhole.right)
-                .attr("height", sizeWhole + marginWhole.top + marginWhole.bottom)
-                .append("g")
-                .attr("transform", "translate(" + marginWhole.left + "," + marginWhole.top + ")");
+            if (location.search.indexOf('nowait') !== -1) {
+                dc.constants.EVENT_DELAY = 0;
+                d3.select('#wait-verb').text('remove')
+                d3.select('#wait-prep').text('with');
+                d3.select('#wait-url').attr('href', location.origin + location.pathname);
+            } else {
+                d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
+            }
 
+            d3.csv('data/data_correlogram.csv').then(function (analyte) {
+                analyte.forEach(function (d) {
+                    Object.keys(fields).forEach(function (ab) {
+                        d[fields[ab]] = +d[fields[ab]];
+                    });
+                });
+                var data = crossfilter(analyte);
 
-            d3.csv("data/data_correlogram.csv", function (data) {
+                function make_dimension(var1, var2) {
+                    return data.dimension(function (d) {
+                        return [d[var1], d[var2], d.wellUse];
+                    });
+                }
+                function key_part(i) {
+                    return function (kv) {
+                        return kv.key[i];
+                    };
+                }
 
-                // call in numeric variables - will need to change to crossfilter
-                var allVar = ["As", "Ca", "Ra_Total", "U"]
-                var numVar = allVar.length
+                var charts = [];
 
-                // Calculate chart size
-                mar = 20
-                size = sizeWhole / numVar
-
-                // Scales
-                // Create a scale: gives the position of each pair each variable
-                var position = d3.scalePoint()
-                    .domain(allVar)
-                    .range([0, sizeWhole - size])
-
-                // Color scale by well use
-                var color = d3.scaleOrdinal()
-                    .domain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
-                    .range(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
-
-                // Add charts
-                for (i in allVar) {
-                    for (j in allVar) {
-
-                        // Get current variable name
-                        var var1 = allVar[i]
-                        var var2 = allVar[j]
-
-                        // Skip diagonals 
-                        if (var1 === var2) { continue; }
-
-                        // Add X Scale of each graph
-                        xextent = d3.extent(data, function (d) { return +d[var1] })
-                        var x = d3.scaleLinear()
-                            .domain(xextent).nice()
-                            .range([0, size - 2 * mar]);
-
-                        // Add Y Scale of each graph
-                        yextent = d3.extent(data, function (d) { return +d[var2] })
-                        var y = d3.scaleLinear()
-                            .domain(yextent).nice()
-                            .range([size - 2 * mar, 10]);
-
-                        // Add a 'g' at the right position
-                        var tmp = svg
-                            .append('g')
-                            .attr("transform", "translate(" + (position(var1) + mar) + "," + (position(var2) + mar) + ")");
-
-                        // Add X and Y axis in tmp
-                        tmp.append("g")
-                            .attr("transform", "translate(" + 0 + "," + (size - mar * 2) + ")")
-                            .call(d3.axisBottom(x).ticks(3))
-                            .selectAll("text")
-                            .style("text-anchor", "end")
-                            .attr("dx", "-.8em")
-                            .attr("dy", ".15em")
-                            .attr("transform", "rotate(-30)");
-
-                        tmp.append("g")
-                            .call(d3.axisLeft(y).ticks(3));
-
-                        // Add circle
-                        tmp
-                            .selectAll("myCircles")
-                            .data(data)
-                            .enter()
-                            .append("circle")
-                            .attr("cx", function (d) { return x(+d[var1]) })
-                            .attr("cy", function (d) { return y(+d[var2]) })
-                            .attr("r", 2.5)
-                            .attr("fill", function (d) {
-                                return color(d.wellUse)
+                d3.select('#content')
+                    .selectAll('tr').data(rows)
+                    .enter().append('tr').attr('class', function (d) {
+                        return d === 'heading' ? 'heading row' : 'row';
+                    })
+                    .each(function (row, y) {
+                        d3.select(this).selectAll('td').data(cols)
+                            .enter().append('td').attr('class', function (d) {
+                                return d === 'heading' ? 'heading entry' : 'entry';
                             })
-                    }
-                }
-
-                // Add variable names on diagonal
-
-                for (i in allVar) {
-                    for (j in allVar) {
-                        if (i != j) { continue; }
-                        // Add text
-                        var var1 = allVar[i]
-                        var var2 = allVar[j]
-                        svg
-                            .append('g')
-                            .attr("transform", "translate(" + position(var1) + "," + position(var2) + ")")
-                            .append('text')
-                            .attr("x", size / 3.75)
-                            .attr("y", size / 1.7)
-                            .text(var1)
-                    }
-                }
-            })
+                            .each(function (col, x) {
+                                var cdiv = d3.select(this).append('div')
+                                if (row === 'heading') {
+                                    if (col !== 'heading')
+                                        cdiv.text(col.replace('_', ' '))
+                                    return;
+                                }
+                                else if (col === 'heading') {
+                                    cdiv.text(row.replace('_', ' '))
+                                    return;
+                                }
+                                cdiv.attr('class', 'chart-holder');
+                                var chart = new dc.ScatterPlot(cdiv);
+                                var dim = make_dimension(col, row),
+                                    group = dim.group();
+                                var showYAxis = x === 1, showXAxis = y === 4;
+                                chart
+                                    .transitionDuration(0)
+                                    .width(125 + (showYAxis ? 25 : 0))
+                                    .height(125 + (showXAxis ? 20 : 0))
+                                    .margins({
+                                        left: showYAxis ? 25 : 8,
+                                        top: 5,
+                                        right: 2.75,
+                                        bottom: showXAxis ? 20 : 5
+                                    })
+                                    .dimension(dim).group(group)
+                                    .keyAccessor(key_part(0))
+                                    .valueAccessor(key_part(1))
+                                    .colorAccessor(key_part(2))
+                                    .colorDomain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
+                                    .ordinalColors(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
+                                    .x(d3.scaleLinear()).xAxisPadding("0.001%")
+                                    .y(d3.scaleLinear()).yAxisPadding("0.001%")
+                                    .brushOn(true)
+                                    .elasticX(true)
+                                    .elasticY(true)
+                                    .symbolSize(5)
+                                    .nonemptyOpacity(0.7)
+                                    .emptySize(7)
+                                    .emptyColor('#ccc')
+                                    .emptyOpacity(0.7)
+                                    .excludedSize(7)
+                                    .excludedColor('#ccc')
+                                    .excludedOpacity(0.7)
+                                    .renderHorizontalGridLines(true)
+                                    .renderVerticalGridLines(true);
+                                chart.xAxis().ticks(3)
+                                chart.yAxis().ticks(6);
+                                chart.on('postRender', function (chart) {
+                                    // remove axes unless at left or bottom
+                                    if (!showXAxis)
+                                        chart.select('.x.axis').attr('display', 'none');
+                                    if (!showYAxis)
+                                        chart.select('.y.axis').attr('display', 'none');
+                                    // remove clip path, allow dots to display outside
+                                    chart.select('.chart-body').attr('clip-path', null);
+                                });
+                                // only filter on one chart at a time
+                                chart.on('filtered', function (_, filter) {
+                                    if (!filter)
+                                        return;
+                                    charts.forEach(function (c) {
+                                        if (c !== chart)
+                                            c.filter(null);
+                                    });
+                                });
+                                charts.push(chart);
+                            });
+                    });
+                dc.renderAll();
+            });
         });
     }
 
-    //Call The Function
+    //Call function to render scatterplot
     graphicviz(scatterplot);
 
-
-
-
-    //change well markers to circle
-
-    // function pointToCircle(feature, latlng) {
-    //   if (feature.properties.USE == "Independent") {
-    //     fillColor_Var = "#8c510a";
-    //   }
-    //   else if (feature.properties.USE == "Agriculture") {
-    //     fillColor_Var = "#bf812d";
-    //   }
-    //   else if (feature.properties.USE == "Domestic") {
-    //     fillColor_Var = "#dfc27d";
-    //   }
-    //   else if (feature.properties.USE == "Livestock") {
-    //     fillColor_Var = "#f6e8c3";
-    //   }
-    //   else if (feature.properties.USE == "Other") {
-    //     fillColor_Var = "#01665e";
-    //   }
-    //   else if (feature.properties.USE == "Municipal") {
-    //     fillColor_Var = "#c7eae5";
-    //   }
-    //   else if (feature.properties.USE == "Domestic Irrigaiton") {
-    //     fillColor_Var = "#80cdc1";
-    //   }
-    //   else if (feature.properties.USE == "Recreation") {
-    //     fillColor_Var = "#35978f";
-    //   }
-    //   // if USE == Unknown
-    //   else {
-    //     fillColor_Var = "01665e";
-    //   }
-    //   var geojsonMarkerOptions = {
-    //     radius: 7,
-    //     //fillColor: "#F46B06",
-    //     fillColor: fillColor_Var,
-    //     color: "black",
-    //     weight: 1,
-    //     opacity: 1,
-    //     fillOpacity: 0.7
-    //   };
-    //   var circleMarker = L.circleMarker(latlng, geojsonMarkerOptions);
-    //   return circleMarker;
-    // }
-
-
-    // // L.geoJSON(nvWells, {
-    // //   onEachFeature: addPopups,
-    // //   pointToLayer: pointToCircle
-    // // }).addTo(map);
-
-    // // function to cluster well points on zoom
-    // var wellsLayerGroup = L.geoJSON(nvWells, {
-    //   pointToLayer: pointToCircle
-    // });
-
-    // var clusters = L.markerClusterGroup();
-    // clusters.addLayer(wellsLayerGroup);
-    // map.addLayer(clusters);
-
-    // Scatterplot matrix //
-    // source: https://observablehq.com/@d3/brushable-scatterplot-matrix
-
-
-
+// Dropdowns
 }
 function selectAnalyte() {
 
