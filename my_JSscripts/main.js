@@ -3,8 +3,10 @@ window.onload = function () {
 
     // Call leaflet map into map frame
     //base map
+    //Global Variables - Map
     window.map = L.map('map').setView([36.292, -110.090], 8);
-    window. wellMarkers = new L.FeatureGroup();
+    //Global Variable - wellMarkers
+    window.wellMarkers = new L.FeatureGroup();
     var HikeBike_HikeBike = L.tileLayer('https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
