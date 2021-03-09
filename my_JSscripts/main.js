@@ -11,7 +11,8 @@ window.onload = function () {
     HikeBike_HikeBike.addTo(map);
 
     "use strict"; //JS strict mode
-
+    // Add control.scale to map
+    L.control.scale().addTo(map);
     // Add chapters layer to map -- need to render underneath circleMarkers
     var myStyle = {
         "color": "#dbc38f",
@@ -120,6 +121,7 @@ window.onload = function () {
         var caCountChart = dc.barChart('#histogram2');
         var ra_TotalCountChart = dc.barChart('#histogram3');
         var uCountChart = dc.barChart('#histogram4');
+        var dataCount = dc.dataCount('#data-count');
 
 
         //data table declare
@@ -189,6 +191,10 @@ window.onload = function () {
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
         ra_TotalCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
 
+        dataCount
+            .dimension(ndx)
+            .group(all);
+
         dataTable
             .dimension(allDim)
             .group(function (d) { return 'dc.js insists on putting a row here so I remove it using JS'; })
@@ -237,7 +243,7 @@ window.onload = function () {
                         radius: 3.5,
                         fillColor: getColor(d.properties.USE),
                         color: "black",
-                        weight: 0,
+                        weight: 0.4,
                         opacity: 1,
                         fillOpacity: 0.7
                     };
@@ -453,7 +459,7 @@ window.onload = function () {
     //Call function to render scatterplot
     graphicviz(scatterplot);
 
-// Dropdowns
+    // Dropdowns
 }
 function selectAnalyte() {
 
