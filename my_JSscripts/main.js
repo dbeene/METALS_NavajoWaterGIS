@@ -3,8 +3,8 @@ window.onload = function () {
 
     // Call leaflet map into map frame
     //base map
-    var map = L.map('map').setView([36.292, -110.090], 8);
-    var wellMarkers = new L.FeatureGroup();
+    window.map = L.map('map').setView([36.292, -110.090], 8);
+    window. wellMarkers = new L.FeatureGroup();
     var HikeBike_HikeBike = L.tileLayer('https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -532,7 +532,7 @@ function selectAnalyte() {
     var input4 = selected4.options[selected4.selectedIndex].value;
 
     //new wellMarkers2 for updated analytes after dropdown selection
-    var wellMarkers2 = new L.FeatureGroup();
+    // var wellMarkers2 = new L.FeatureGroup();
 
     d3.json('data/nnWells.json', function (error, data) {
         var wellData = data.features;
@@ -1578,7 +1578,7 @@ function selectAnalyte() {
                 // each time table is rendered remove nasty extra row dc.js insists on adding
                 table.select('tr.dc-table-group').remove();
 
-                wellMarkers2.clearLayers();
+                wellMarkers.clearLayers();
                 _.each(allDim.top(Infinity), function (d) {
                     var filLoc = d.properties;
                     // var id = d.properties.well_id;
@@ -1681,15 +1681,16 @@ function selectAnalyte() {
                         + "<dt><i>Tl</i>: " + d.properties.Tl + ";<dd>"
                         + "<dt><i>Turbidity</i>: " + d.properties.Turbidity + ";<dd>"
                         + "<dt><i>U</i>: " + d.properties.U + "<dt><dl>");
-                    wellMarkers2.addLayer(marker);
+                    wellMarkers.addLayer(marker);
                 });
 
-                // Add markers to map:
-                map.addLayer(wellMarkers2);  //Says map.addLayer is not a function for some reason.
-                map.fitBounds(wellMarkers2.getBounds());
-
                 //remove Layers from map
-                map.removeLayer(wellMarkers);   //Problem since wellMarkers is not global
+                // map.removeLayer(wellMarkers);   //Problem since wellMarkers is not global
+                
+                // Add markers to map:
+                map.addLayer(wellMarkers);  //Says map.addLayer is not a function for some reason.
+                map.fitBounds(wellMarkers.getBounds());
+
             });
 
         dc.renderAll();
