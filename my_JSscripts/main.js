@@ -1,3 +1,4 @@
+
 window.onload = function () {
 
     // Call leaflet map into map frame
@@ -66,15 +67,8 @@ window.onload = function () {
             d.count = +d.count;
             // round to the nearest 200
             d.As_ = Math.round(+d.properties.As_ / 50) * 50;
-            d.Ba = Math.round(+d.properties.Ba / 1) * 1;
             d.Ca = Math.round(+d.properties.Ca / 100) * 100;
-            d.Cl_ = Math.round(+d.properties.Cl_ / 1) * 1;
-            d.Cr = Math.round(+d.properties.Cr / 1) * 1;
-            d.GrossAlpha_U_Nat = Math.round(+d.properties.GrossAlpha_U_Nat / 1) * 1;
-            d.Nitrate = Math.round(+d.properties.Nitrate / 1) * 1;
-            d.Pb = Math.round(+d.properties.Pb / 1) * 1;
             d.Ra_Total = Math.round(+d.properties.Ra_Total / 1) * 1;
-            d.Se = Math.round(+d.properties.Se / 1) * 1;
             d.U = Math.round(+d.properties.U / 100) * 100;
 
         });
@@ -83,15 +77,8 @@ window.onload = function () {
 
         //Dimensions
         var As_Dim = ndx.dimension(function (d) { return d.properties.As_; });
-        var BaDim = ndx.dimension(function (d) { return d.properties.Ba; });
         var CaDim = ndx.dimension(function (d) { return d.properties.Ca; });
-        var Cl_Dim = ndx.dimension(function (d) { return d.properties.Cl_; });
-        var CrDim = ndx.dimension(function (d) { return d.properties.Cr; });
-        var GrossAlpha_U_NatDim = ndx.dimension(function (d) { return d.properties.GrossAlpha_U_Nat; });
-        var NitrateDim = ndx.dimension(function (d) { return d.properties.Nitrate; });
-        var PbDim = ndx.dimension(function (d) { return d.properties.Pb; });
         var Ra_TotalDim = ndx.dimension(function (d) { return d.properties.Ra_Total; });
-        var SeDim = ndx.dimension(function (d) { return d.properties.Se; });
         var UDim = ndx.dimension(function (d) { return d.properties.U; });
 
         var allDim = ndx.dimension(function (d) { return d; });
@@ -101,15 +88,8 @@ window.onload = function () {
 
         //
         var countPerAs_ = As_Dim.group().reduceCount();
-        var countPerBa = BaDim.group().reduceCount();
         var countPerCa = CaDim.group().reduceCount();
-        var countPerCl_ = Cl_Dim.group().reduceCount();
-        var countPerCr = CrDim.group().reduceCount();
-        var countPerGrossAlpha_U_Nat = GrossAlpha_U_NatDim.group().reduceCount();
-        var countPerNitrate = NitrateDim.group().reduceCount();
-        var countPerPb = PbDim.group().reduceCount();
         var countPerRa_Total = Ra_TotalDim.group().reduceCount();
-        var countPerSe = SeDim.group().reduceCount();
         var countPerU = UDim.group().reduceCount();
 
         //specify charts
@@ -118,7 +98,6 @@ window.onload = function () {
         var caCountChart = dc.barChart('#histogram2');
         var ra_TotalCountChart = dc.barChart('#histogram3');
         var uCountChart = dc.barChart('#histogram4');
-
 
         //data table declare
         var dataTable = dc.dataTable('#data-table');
@@ -187,16 +166,22 @@ window.onload = function () {
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
         ra_TotalCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
 
+        var column2 = function (d) { return d.properties.As_; };
+        var column3 = function (d) { return d.properties.Ca; };
+        var column4 = function (d) { return d.properties.Ra_Total; };
+        var column5 = function (d) { return d.properties.U; };
+
+
         dataTable
             .dimension(allDim)
             .group(function (d) { return 'dc.js insists on putting a row here so I remove it using JS'; })
             .size(1000)
             .columns([
                 function (d) { return d.properties.well_id; },
-                function (d) { return d.properties.As_; },
-                function (d) { return d.properties.Ca; },
-                function (d) { return d.properties.Ra_Total },
-                function (d) { return d.properties.U; }
+                column2,
+                column3,
+                column4,
+                column5
             ])
             .on('renderlet', function (table) {
                 // each time table is rendered remove nasty extra row dc.js insists on adding
@@ -507,22 +492,31 @@ window.onload = function () {
     // Scatterplot matrix //
     // source: https://observablehq.com/@d3/brushable-scatterplot-matrix
 
-
-
 }
+
+
+
+// This function is triggered on clicking the button
 function selectAnalyte() {
 
+    //the value if selected analyte from dropwdown 1 is stored in input 1
     var selected1 = document.getElementById("selectbox1");
     var input1 = selected1.options[selected1.selectedIndex].value;
 
+    //the value if selected analyte from dropwdown 2 is stored in input 2
     var selected2 = document.getElementById("selectbox2");
     var input2 = selected2.options[selected2.selectedIndex].value;
 
+    //the value if selected analyte from dropwdown 3 is stored in input 3
     var selected3 = document.getElementById("selectbox3");
     var input3 = selected3.options[selected3.selectedIndex].value;
 
+    //the value if selected analyte from dropwdown 4 is stored in input 4
     var selected4 = document.getElementById("selectbox4");
     var input4 = selected4.options[selected4.selectedIndex].value;
+
+    //new wellMarkers for updated analytes after dropdown selection
+    var wellMarkers2 = new L.FeatureGroup();
 
     d3.json('data/nnWells.json', function (error, data) {
         var wellData = data.features;
@@ -574,11 +568,18 @@ function selectAnalyte() {
         var countPerU = UDim.group().reduceCount();
         var countPerNone = NoneDim.group().reduceCount();
 
-        //Charts
+        //Dynamic Charts
         var histogram1 = dc.barChart('#histogram1');
         var histogram2 = dc.barChart('#histogram2');
         var histogram3 = dc.barChart('#histogram3');
         var histogram4 = dc.barChart('#histogram4');
+
+        var dataTableNew = dc.dataTable('#data-table');
+
+        var dataHistogram1;
+        var dataHistogram2;
+        var dataHistogram3;
+        var dataHistogram4;
 
         if (input1 == "As_") {
 
@@ -597,6 +598,9 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram1.yAxis().tickValues([0, 10, 20, 30]);
+
+            dataHistogram1 = function (d) { return d.properties.As_; };
+
         }
         else if (input1 == "Ba") {
 
@@ -615,6 +619,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
             histogram1.yAxis().tickValues([0, 10, 20, 30]);
+
+            dataHistogram1 = function (d) { return d.properties.Ba; };
         }
         else if (input1 == "Ca") {
 
@@ -633,6 +639,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
             histogram1.yAxis().tickValues([0, 3, 6, 9, 12]);
+
+            dataHistogram1 = function (d) { return d.properties.Ca; };
         }
         else if (input1 == "Cl_") {
 
@@ -651,6 +659,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
             histogram1.yAxis().tickValues([0, 1, 2, 3]);
+
+            dataHistogram1 = function (d) { return d.properties.Cl_; };
         }
         else if (input1 == "Cr") {
 
@@ -669,6 +679,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 10, 20, 30]);
             histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram1 = function (d) { return d.properties.Cr; };
         }
         else if (input1 == "GrossAlpha_U_Nat") {
 
@@ -687,6 +699,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 200, 400, 600, 800]);
             histogram1.yAxis().tickValues([0, 1, 2]);
+
+            dataHistogram1 = function (d) { return d.properties.GrossAlpha_U_Nat; };
         }
         else if (input1 == "Nitrate") {
 
@@ -705,6 +719,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram1.yAxis().tickValues([0, 1, 2, 3]);
+
+            dataHistogram1 = function (d) { return d.properties.Nitrate; };
         }
         else if (input1 == "Pb") {
 
@@ -723,6 +739,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 100, 200, 300]);
             histogram1.yAxis().tickValues([0, 5, 10, 15]);
+
+            dataHistogram1 = function (d) { return d.properties.Pb; };
         }
         else if (input1 == "Ra_Total") {
 
@@ -740,7 +758,7 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
 
-
+            dataHistogram1 = function (d) { return d.properties.Ra_Total; };
         }
         else if (input1 == "Se") {
 
@@ -759,6 +777,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram1 = function (d) { return d.properties.Se; };
         }
         else if (input1 == "U") {
 
@@ -777,6 +797,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram1 = function (d) { return d.properties.U; };
         }
 
         else if (input1 == "None") {
@@ -797,9 +819,12 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram1.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
             histogram1.yAxis().tickValues([0, 0, 0, 0]);
+
+            dataHistogram1 = function (d) { return d.properties.None; };
         }
 
         if (input2 == "As_") {
+
             histogram2
                 .width(250)
                 .height(250)
@@ -815,6 +840,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram2.yAxis().tickValues([0, 10, 20, 30]);
+
+            dataHistogram2 = function (d) { return d.properties.As_; };
         }
         else if (input2 == "Ba") {
 
@@ -824,7 +851,10 @@ function selectAnalyte() {
                 .dimension(BaDim)
                 .group(countPerBa)
                 .x(d3.scale.linear().domain([0, 1500]))
+                // .x(d3.scale.linear().range([0,50]))
                 .y(d3.scale.linear().domain([0, 30]))
+                // .y(d3.scale.linear().range([550,0]))
+                // .xAxis().ticks(20)
                 .elasticY(false)
                 .centerBar(true)
                 .barPadding(3)
@@ -833,6 +863,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
             histogram2.yAxis().tickValues([0, 10, 20, 30]);
+
+            dataHistogram2 = function (d) { return d.properties.Ba; };
         }
         else if (input2 == "Ca") {
 
@@ -851,6 +883,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
             histogram2.yAxis().tickValues([0, 3, 6, 9, 12]);
+
+            dataHistogram2 = function (d) { return d.properties.Ca; };
         }
         else if (input2 == "Cl_") {
 
@@ -869,6 +903,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
             histogram2.yAxis().tickValues([0, 1, 2, 3]);
+
+            dataHistogram2 = function (d) { return d.properties.Cl_; };
         }
         else if (input2 == "Cr") {
 
@@ -887,6 +923,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 10, 20, 30]);
             histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram2 = function (d) { return d.properties.Cr; };
         }
         else if (input2 == "GrossAlpha_U_Nat") {
 
@@ -905,6 +943,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 200, 400, 600, 800]);
             histogram2.yAxis().tickValues([0, 1, 2]);
+
+            dataHistogram2 = function (d) { return d.properties.GrossAlpha_U_Nat; };
         }
         else if (input2 == "Nitrate") {
 
@@ -923,6 +963,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram2.yAxis().tickValues([0, 1, 2, 3]);
+
+            dataHistogram2 = function (d) { return d.properties.Nitrate; };
         }
         else if (input2 == "Pb") {
 
@@ -941,6 +983,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 100, 200, 300]);
             histogram2.yAxis().tickValues([0, 5, 10, 15]);
+
+            dataHistogram2 = function (d) { return d.properties.Pb; };
         }
         else if (input2 == "Ra_Total") {
 
@@ -957,6 +1001,8 @@ function selectAnalyte() {
                 .yAxisLabel('Count')
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+
+            dataHistogram2 = function (d) { return d.properties.Ra_Total; };
         }
         else if (input2 == "Se") {
 
@@ -975,6 +1021,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram2 = function (d) { return d.properties.Se; };
         }
         else if (input2 == "U") {
 
@@ -993,6 +1041,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram2 = function (d) { return d.properties.U; };
         }
 
         else if (input2 == "None") {
@@ -1012,6 +1062,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram2.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
             histogram2.yAxis().tickValues([0, 0, 0, 0]);
+
+            dataHistogram2 = function (d) { return d.properties.None; };
         }
 
         if (input3 == "As_") {
@@ -1031,6 +1083,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram3.yAxis().tickValues([0, 10, 20, 30]);
+
+            dataHistogram3 = function (d) { return d.properties.As_; };
         }
         else if (input3 == "Ba") {
 
@@ -1049,6 +1103,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
             histogram3.yAxis().tickValues([0, 10, 20, 30]);
+
+            dataHistogram3 = function (d) { return d.properties.Ba; };
         }
         else if (input3 == "Ca") {
 
@@ -1067,6 +1123,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
             histogram3.yAxis().tickValues([0, 3, 6, 9, 12]);
+
+            dataHistogram3 = function (d) { return d.properties.Ca; };
         }
         else if (input3 == "Cl_") {
 
@@ -1085,6 +1143,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
             histogram3.yAxis().tickValues([0, 1, 2, 3]);
+
+            dataHistogram3 = function (d) { return d.properties.Cl_; };
         }
         else if (input3 == "Cr") {
 
@@ -1103,6 +1163,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 10, 20, 30]);
             histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram3 = function (d) { return d.properties.Cr; };
         }
         else if (input3 == "GrossAlpha_U_Nat") {
 
@@ -1121,6 +1183,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 200, 400, 600, 800]);
             histogram3.yAxis().tickValues([0, 1, 2]);
+
+            dataHistogram3 = function (d) { return d.properties.GrossAlpha_U_Nat; };
         }
         else if (input3 == "Nitrate") {
 
@@ -1139,6 +1203,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram3.yAxis().tickValues([0, 1, 2, 3]);
+
+            dataHistogram3 = function (d) { return d.properties.Nitrate; };
         }
         else if (input3 == "Pb") {
 
@@ -1157,6 +1223,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 100, 200, 300]);
             histogram3.yAxis().tickValues([0, 5, 10, 15]);
+
+            dataHistogram3 = function (d) { return d.properties.Pb; };
         }
         else if (input3 == "Ra_Total") {
 
@@ -1173,6 +1241,8 @@ function selectAnalyte() {
                 .yAxisLabel('Count')
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+
+            dataHistogram3 = function (d) { return d.properties.Ra_Total; };
         }
         else if (input3 == "Se") {
 
@@ -1191,6 +1261,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram3 = function (d) { return d.properties.Se; };
         }
         else if (input3 == "U") {
 
@@ -1209,6 +1281,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram3 = function (d) { return d.properties.U; };
         }
 
         else if (input3 == "None") {
@@ -1228,6 +1302,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram3.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
             histogram3.yAxis().tickValues([0, 0, 0, 0]);
+
+            dataHistogram3 = function (d) { return d.properties.None; };
         }
 
         if (input4 == "As_") {
@@ -1247,6 +1323,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram4.yAxis().tickValues([0, 10, 20, 30]);
+
+            dataHistogram4 = function (d) { return d.properties.As_; };
         }
         else if (input4 == "Ba") {
 
@@ -1265,6 +1343,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
             histogram4.yAxis().tickValues([0, 10, 20, 30]);
+
+            dataHistogram4 = function (d) { return d.properties.Ba; };
         }
         else if (input4 == "Ca") {
 
@@ -1284,6 +1364,7 @@ function selectAnalyte() {
             histogram4.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
             histogram4.yAxis().tickValues([0, 3, 6, 9, 12]);
 
+            dataHistogram4 = function (d) { return d.properties.Ca; };
         }
         else if (input4 == "Cl_") {
 
@@ -1302,6 +1383,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
             histogram4.yAxis().tickValues([0, 1, 2, 3]);
+
+            dataHistogram4 = function (d) { return d.properties.Cl_; };
         }
         else if (input4 == "Cr") {
 
@@ -1320,6 +1403,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 10, 20, 30]);
             histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram4 = function (d) { return d.properties.Cr; };
         }
         else if (input4 == "GrossAlpha_U_Nat") {
 
@@ -1338,6 +1423,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 200, 400, 600, 800]);
             histogram4.yAxis().tickValues([0, 1, 2]);
+
+            dataHistogram4 = function (d) { return d.properties.GrossAlpha_U_Nat; };
         }
         else if (input4 == "Nitrate") {
 
@@ -1356,6 +1443,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram4.yAxis().tickValues([0, 1, 2, 3]);
+
+            dataHistogram4 = function (d) { return d.properties.Nitrate; };
         }
         else if (input4 == "Pb") {
 
@@ -1374,6 +1463,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 100, 200, 300]);
             histogram4.yAxis().tickValues([0, 5, 10, 15]);
+
+            dataHistogram4 = function (d) { return d.properties.Pb; };
         }
         else if (input4 == "Ra_Total") {
 
@@ -1390,6 +1481,8 @@ function selectAnalyte() {
                 .yAxisLabel('Count')
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+
+            dataHistogram4 = function (d) { return d.properties.Ra_Total; };
         }
         else if (input4 == "Se") {
 
@@ -1408,6 +1501,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram4 = function (d) { return d.properties.Se; };
         }
         else if (input4 == "U") {
 
@@ -1426,6 +1521,8 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
             histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
+
+            dataHistogram4 = function (d) { return d.properties.U; };
         }
 
         else if (input4 == "None") {
@@ -1445,7 +1542,138 @@ function selectAnalyte() {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             histogram4.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
             histogram4.yAxis().tickValues([0, 0, 0, 0]);
+
+            dataHistogram4 = function (d) { return d.properties.None; };
         }
+
+        dataTableNew
+            .dimension(allDim)
+            .group(function (d) { return 'dc.js insists on putting a row here so I remove it using JS'; })
+            .size(1001)
+            .columns([
+                function (d) { return d.properties.well_id; },
+                dataHistogram1,
+                dataHistogram2,
+                dataHistogram3,
+                dataHistogram4
+            ])
+            .on('renderlet', function (table) {
+                // each time table is rendered remove nasty extra row dc.js insists on adding
+                table.select('tr.dc-table-group').remove();
+
+                wellMarkers2.clearLayers();
+                _.each(allDim.top(Infinity), function (d) {
+                    var filLoc = d.properties;
+                    // var id = d.properties.well_id;
+
+                    // Color based on well use
+                    function getColor(wUse) {
+                        switch (wUse) {
+                            case "Independent":
+                                return "#8c510a";
+                            case "Agriculture":
+                                return "#bf812d";
+                            case "Domestic":
+                                return "#dfc27d";
+                            case "Livestock":
+                                return "#f6e8c3";
+                            case "Other":
+                                return "#01665e";
+                            case "Municipal":
+                                return "#c7eae5";
+                            case "Domestic Irrigation":
+                                return "#80cdc1";
+                            case "Recreation":
+                                return "#35978f";
+                            default:
+                                return "#01665e";
+                        }
+                    }
+
+                    var markerOptions = {
+                        radius: 3.5,
+                        fillColor: getColor(d.properties.USE),
+                        color: "black",
+                        weight: 0,
+                        opacity: 1,
+                        fillOpacity: 0.7
+                    };
+
+                    // Add circle markers
+                    var marker = L.circleMarker([filLoc.lat, filLoc.long], markerOptions);
+
+                    marker.bindPopup(
+                        "<dl><dt> <h4><b>WELL INFORMATION- NAVAJO NATION WELL</b></h4><br>"
+                        + "<dt><i>FID</i>: " + d.properties.FID + ";<dd>"
+                        + "<dt><i>Well No.</i>: " + d.properties.well_no + ";<dd>"
+                        + "<dt><i>Well ID</i>: " + d.properties.well_id + ";<dd>"
+                        + "<dt><i>Well Name</i>: " + d.properties.well_name + ";<dd>"
+                        + "<dt><i>Owner</i>: " + d.properties.owner + ";<dd>"
+                        + "<dt><i>Depth</i>: " + d.properties.depth + ";<dd>"
+                        + "<dt><i>Public Water Sys. ID</i>: " + d.properties.pwsid + ";<dd>"
+                        + "<dt><i>USGS ID</i>: " + d.properties.usgs_id + ";<dd>"
+                        + "<dt><i>Data Source</i>: " + d.properties.data_sourc + ";<dd>"
+                        + "<dt><i>Comment(s)</i>: " + d.properties.comments + ";<dd>"
+                        + "<dt><i>Alternate Name 1</i>: " + d.properties.aka2 + ";<dd>"
+                        + "<dt><i>Alternate Name 2</i>: " + d.properties.aka3 + ";<dd>"
+                        + "<dt><i>Status</i>: " + d.properties.well_statu + ";<dd>"
+                        + "<dt><i>Agency</i>: " + d.properties.nn_agency + ";<dd>"
+                        + "<dt><i>Well Use</i>: " + d.properties.USE + ";<dd>"
+                        + "<dt><i>Alkalinity</i>: " + d.properties.Alkalinity + ";<dd>"
+                        + "<dt><i>Total Alkalinity</i>: " + d.properties.Alkalinity_Total + ";<dd>"
+                        + "<dt><i>As</i>: " + d.properties.As_ + ";<dd>"
+                        + "<dt><i>Ba</i>: " + d.properties.Ba + ";<dd>"
+                        + "<dt><i>Be</i>: " + d.properties.Be + ";<dd>"
+                        + "<dt><i>Br</i>: " + d.properties.Br_ + ";<dd>"
+                        + "<dt><i>Ca</i>: " + d.properties.Ca + ";<dd>"
+                        + "<dt><i>Cd</i>: " + d.properties.Cd + ";<dd>"
+                        + "<dt><i>Cl :" + d.properties.Cl_ + ";<dd>"
+                        + "<dt><i>Conductivity</i>: " + d.properties.Conductivity + ";<dd>"
+                        + "<dt><i>Cr</i>: " + d.properties.Cr + ";<dd>"
+                        + "<dt><i>DO</i>: " + d.properties.DO + ";<dd>"
+                        + "<dt><i>Electrical Conductivity</i>: " + d.properties.ElectricalConductivity + ";<dd>"
+                        + "<dt><i>Gross Alpha 2 Sigma Comb. Uncertainty</i>: " + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
+                        + "<dt><i>Gross Alpha</i>: " + d.properties.GrossAlpha + ";<dd>"
+                        + "<dt><i>Gross Alpha: U Nat</i>: " + d.properties.GrossAlpha_U_Nat + ";<dd>"
+                        + "<dt><i>Gross Beta 1</i>: " + d.properties.GrossBeta + ";<dd>"
+                        + "<dt><i>Gross Beta: Cs 137</i>: " + d.properties.GrossBeta_Cs137 + ";<dd>"
+                        + "<dt><i>Gross Beta: Sr Y90</i>: " + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
+                        + "<dt><i>Hardness</i>: " + d.properties.Hardness + ";<dd>"
+                        + "<dt><i>Total Hardness</i>: " + d.properties.Hardness_Total + ";<dd>"
+                        + "<dt><i>Hg</i>: " + d.properties.Hg + ";<dd>"
+                        + "<dt><i>Hydroxide</i>: " + d.properties.Hydroxide + ";<dd>"
+                        + "<dt><i>K</i>: " + d.properties.K + ";<dd>"
+                        + "<dt><i>Mg</i>: " + d.properties.Mg + ";<dd>"
+                        + "<dt><i>Mn</i>: " + d.properties.Mn + ";<dd>"
+                        + "<dt><i>Na</i>: " + d.properties.Na + ";<dd>"
+                        + "<dt><i>Na Adsorption Ratio</i>: " + d.properties.Na_AdsorptionRatio + ";<dd>"
+                        + "<dt><i>Na Fraction Cations</i>: " + d.properties.Na_FractionCations + ";<dd>"
+                        + "<dt><i>Na_K</i>: " + d.properties.Na_K + ";<dd>"
+                        + "<dt><i>Nitrate</i>: " + d.properties.Nitrate + ";<dd>"
+                        + "<dt><i>Nitrate_Nitrite</i>: " + d.properties.Nitrate_Nitrite + ";<dd>"
+                        + "<dt><i>NO2</i>: " + d.properties.NO2_ + ";<dd>"
+                        + "<dt><i>NO3</i>: " + d.properties.NO3_ + ";<dd>"
+                        + "<dt><i>ORP</i>: " + d.properties.ORP + ";<dd>"
+                        + "<dt><i>Pb</i>: " + d.properties.Pb + ";<dd>"
+                        + "<dt><i>Ra 226</i>: " + d.properties.Ra_226 + ";<dd>"
+                        + "<dt><i>Ra 228</i>: " + d.properties.Ra_228 + ";<dd>"
+                        + "<dt><i>Ra Total</i>: " + d.properties.Ra_Total + ";<dd>"
+                        + "<dt><i>Sb</i>: " + d.properties.Sb + ";<dd>"
+                        + "<dt><i>Se</i>: " + d.properties.Se + ";<dd>"
+                        + "<dt><i>Temperature</i>: " + d.properties.Temperature + ";<dd>"
+                        + "<dt><i>Tl</i>: " + d.properties.Tl + ";<dd>"
+                        + "<dt><i>Turbidity</i>: " + d.properties.Turbidity + ";<dd>"
+                        + "<dt><i>U</i>: " + d.properties.U + "<dt><dl>");
+                    wellMarkers2.addLayer(marker);
+                });
+
+                // Add markers to map:
+                map.addLayer(wellMarkers2);  //Says map.addLayer is not a function for some reason.
+                map.fitBounds(wellMarkers2.getBounds());
+
+                //remove Layers from map
+                map.removeLayer(wellMarkers);   //Problem since wellMarkers is not global
+            });
 
         dc.renderAll();
         //xdocument.getElementById("histogram1").innerHTML=histogram1;
