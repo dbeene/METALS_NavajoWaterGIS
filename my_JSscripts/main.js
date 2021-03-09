@@ -12,26 +12,29 @@ window.onload = function () {
     HikeBike_HikeBike.addTo(map);
 
     "use strict"; //JS strict mode
-
+    // Add control.scale to map
+    L.control.scale().addTo(map);
     // Add chapters layer to map -- need to render underneath circleMarkers
-    // var myStyle = {
-    //     "color": "#dbc38f",
-    //     "fillColor": "white",
-    //     "weight": 0.5,
-    //     "fillOpacity": 0.25
-    // }
+    var myStyle = {
+        "color": "#dbc38f",
+        "fillColor": "white",
+        "weight": 0.6,
+        "fillOpacity": 0.4
+    }
 
-    // $.getJSON("data/nnChapters.geojson", function (data) {
-    //     // L.geoJson(data).addTo(map);
-    //     var geojson = L.geoJson(data, {
-    //         style: myStyle,
-    //         onEachFeature: function (feature, layer) {
-    //             var chPopup = "Chapter:<br>" + feature.properties.Chapter
-    //             layer.bindPopup(chPopup);
-    //         }
-    //     });
-    //     geojson.addTo(map)
-    // });
+    $.getJSON("data/nnChapters.geojson", function (data) {
+        // L.geoJson(data).addTo(map);
+        var geojson = L.geoJson(data, {
+            style: myStyle,
+            onEachFeature: function (feature, layer) {
+                var chPopup = "Chapter:<br>" + feature.properties.Chapter
+                layer.bindPopup(chPopup);
+            }
+        });
+
+        geojson.addTo(map)
+        geojson.bringToBack();
+    });
 
     // Modal window 
     // Get the modal
@@ -98,6 +101,7 @@ window.onload = function () {
         var caCountChart = dc.barChart('#histogram2');
         var ra_TotalCountChart = dc.barChart('#histogram3');
         var uCountChart = dc.barChart('#histogram4');
+        var dataCount = dc.dataCount('#data-count');
 
         //data table declare
         var dataTable = dc.dataTable('#data-table');
@@ -171,6 +175,9 @@ window.onload = function () {
         var column4 = function (d) { return d.properties.Ra_Total; };
         var column5 = function (d) { return d.properties.U; };
 
+        dataCount
+            .dimension(ndx)
+            .group(all);
 
         dataTable
             .dimension(allDim)
@@ -220,7 +227,7 @@ window.onload = function () {
                         radius: 3.5,
                         fillColor: getColor(d.properties.USE),
                         color: "black",
-                        weight: 0,
+                        weight: 0.4,
                         opacity: 1,
                         fillOpacity: 0.7
                     };
@@ -230,69 +237,71 @@ window.onload = function () {
 
                     marker.bindPopup(
                         "<dl><dt> <h4><b>WELL INFORMATION- NAVAJO NATION WELL</b></h4><br>"
-                        + "<dt><i>FID</i>: " + d.properties.FID + ";<dd>"
-                        + "<dt><i>Well No.</i>: " + d.properties.well_no + ";<dd>"
-                        + "<dt><i>Well ID</i>: " + d.properties.well_id + ";<dd>"
-                        + "<dt><i>Well Name</i>: " + d.properties.well_name + ";<dd>"
-                        + "<dt><i>Owner</i>: " + d.properties.owner + ";<dd>"
-                        + "<dt><i>Depth</i>: " + d.properties.depth + ";<dd>"
-                        + "<dt><i>Public Water Sys. ID</i>: " + d.properties.pwsid + ";<dd>"
-                        + "<dt><i>USGS ID</i>: " + d.properties.usgs_id + ";<dd>"
-                        + "<dt><i>Data Source</i>: " + d.properties.data_sourc + ";<dd>"
-                        + "<dt><i>Comment(s)</i>: " + d.properties.comments + ";<dd>"
-                        + "<dt><i>Alternate Name 1</i>: " + d.properties.aka2 + ";<dd>"
-                        + "<dt><i>Alternate Name 2</i>: " + d.properties.aka3 + ";<dd>"
-                        + "<dt><i>Status</i>: " + d.properties.well_statu + ";<dd>"
-                        + "<dt><i>Agency</i>: " + d.properties.nn_agency + ";<dd>"
-                        + "<dt><i>Well Use</i>: " + d.properties.USE + ";<dd>"
-                        + "<dt><i>Alkalinity</i>: " + d.properties.Alkalinity + ";<dd>"
-                        + "<dt><i>Total Alkalinity</i>: " + d.properties.Alkalinity_Total + ";<dd>"
-                        + "<dt><i>As</i>: " + d.properties.As_ + ";<dd>"
-                        + "<dt><i>Ba</i>: " + d.properties.Ba + ";<dd>"
-                        + "<dt><i>Be</i>: " + d.properties.Be + ";<dd>"
-                        + "<dt><i>Br</i>: " + d.properties.Br_ + ";<dd>"
-                        + "<dt><i>Ca</i>: " + d.properties.Ca + ";<dd>"
-                        + "<dt><i>Cd</i>: " + d.properties.Cd + ";<dd>"
-                        + "<dt><i>Cl :" + d.properties.Cl_ + ";<dd>"
-                        + "<dt><i>Conductivity</i>: " + d.properties.Conductivity + ";<dd>"
-                        + "<dt><i>Cr</i>: " + d.properties.Cr + ";<dd>"
-                        + "<dt><i>DO</i>: " + d.properties.DO + ";<dd>"
-                        + "<dt><i>Electrical Conductivity</i>: " + d.properties.ElectricalConductivity + ";<dd>"
-                        + "<dt><i>Gross Alpha 2 Sigma Comb. Uncertainty</i>: " + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
-                        + "<dt><i>Gross Alpha</i>: " + d.properties.GrossAlpha + ";<dd>"
-                        + "<dt><i>Gross Alpha: U Nat</i>: " + d.properties.GrossAlpha_U_Nat + ";<dd>"
-                        + "<dt><i>Gross Beta 1</i>: " + d.properties.GrossBeta + ";<dd>"
-                        + "<dt><i>Gross Beta: Cs 137</i>: " + d.properties.GrossBeta_Cs137 + ";<dd>"
-                        + "<dt><i>Gross Beta: Sr Y90</i>: " + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
-                        + "<dt><i>Hardness</i>: " + d.properties.Hardness + ";<dd>"
-                        + "<dt><i>Total Hardness</i>: " + d.properties.Hardness_Total + ";<dd>"
-                        + "<dt><i>Hg</i>: " + d.properties.Hg + ";<dd>"
-                        + "<dt><i>Hydroxide</i>: " + d.properties.Hydroxide + ";<dd>"
-                        + "<dt><i>K</i>: " + d.properties.K + ";<dd>"
-                        + "<dt><i>Mg</i>: " + d.properties.Mg + ";<dd>"
-                        + "<dt><i>Mn</i>: " + d.properties.Mn + ";<dd>"
-                        + "<dt><i>Na</i>: " + d.properties.Na + ";<dd>"
-                        + "<dt><i>Na Adsorption Ratio</i>: " + d.properties.Na_AdsorptionRatio + ";<dd>"
-                        + "<dt><i>Na Fraction Cations</i>: " + d.properties.Na_FractionCations + ";<dd>"
-                        + "<dt><i>Na_K</i>: " + d.properties.Na_K + ";<dd>"
-                        + "<dt><i>Nitrate</i>: " + d.properties.Nitrate + ";<dd>"
-                        + "<dt><i>Nitrate_Nitrite</i>: " + d.properties.Nitrate_Nitrite + ";<dd>"
-                        + "<dt><i>NO2</i>: " + d.properties.NO2_ + ";<dd>"
-                        + "<dt><i>NO3</i>: " + d.properties.NO3_ + ";<dd>"
-                        + "<dt><i>ORP</i>: " + d.properties.ORP + ";<dd>"
-                        + "<dt><i>Pb</i>: " + d.properties.Pb + ";<dd>"
-                        + "<dt><i>Ra 226</i>: " + d.properties.Ra_226 + ";<dd>"
-                        + "<dt><i>Ra 228</i>: " + d.properties.Ra_228 + ";<dd>"
-                        + "<dt><i>Ra Total</i>: " + d.properties.Ra_Total + ";<dd>"
-                        + "<dt><i>Sb</i>: " + d.properties.Sb + ";<dd>"
-                        + "<dt><i>Se</i>: " + d.properties.Se + ";<dd>"
-                        + "<dt><i>Temperature</i>: " + d.properties.Temperature + ";<dd>"
-                        + "<dt><i>Tl</i>: " + d.properties.Tl + ";<dd>"
-                        + "<dt><i>Turbidity</i>: " + d.properties.Turbidity + ";<dd>"
-                        + "<dt><i>U</i>: " + d.properties.U + "<dt><dl>");
+                        + "<dt><span style='font-weight:bolder'>FID: </span>" + d.properties.FID + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Well No.: </span>" + d.properties.well_no + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Well ID: </span>" + d.properties.well_id + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Well Name: </span>" + d.properties.well_name + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Owner: </span>" + d.properties.owner + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Depth: </span>" + d.properties.depth + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Public Water Sys. ID: </span>" + d.properties.pwsid + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>USGS ID: </span>" + d.properties.usgs_id + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Data Source: </span>" + d.properties.data_sourc + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Comment(s): </span>" + d.properties.comments + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Alternate Name 1: </span>" + d.properties.aka2 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Alternate Name 2: </span>" + d.properties.aka3 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Status: </span>" + d.properties.well_statu + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Agency: </span>" + d.properties.nn_agency + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Well Use: </span>" + d.properties.USE + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Alkalinity: </span>" + d.properties.Alkalinity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Total Alkalinity: </span>" + d.properties.Alkalinity_Total + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>As: </span>" + d.properties.As_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ba: </span>" + d.properties.Ba + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Be: </span>" + d.properties.Be + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Br: </span>" + d.properties.Br_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ca: </span>" + d.properties.Ca + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cd: </span>" + d.properties.Cd + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cl :" + d.properties.Cl_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Conductivity: </span>" + d.properties.Conductivity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cr: </span>" + d.properties.Cr + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>DO: </span>" + d.properties.DO + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Electrical Conductivity: </span>" + d.properties.ElectricalConductivity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha 2 Sigma Comb. Uncertainty: </span>" + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha: </span>" + d.properties.GrossAlpha + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha: U Nat: </span>" + d.properties.GrossAlpha_U_Nat + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta 1: </span>" + d.properties.GrossBeta + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta: Cs 137: </span>" + d.properties.GrossBeta_Cs137 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta: Sr Y90: </span>" + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hardness: </span>" + d.properties.Hardness + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Total Hardness: </span>" + d.properties.Hardness_Total + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hg: </span>" + d.properties.Hg + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hydroxide: </span>" + d.properties.Hydroxide + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>K: </span>" + d.properties.K + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Mg: </span>" + d.properties.Mg + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Mn: </span>" + d.properties.Mn + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na: </span>" + d.properties.Na + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na Adsorption Ratio: </span>" + d.properties.Na_AdsorptionRatio + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na Fraction Cations: </span>" + d.properties.Na_FractionCations + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na_K: </span>" + d.properties.Na_K + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Nitrate: </span>" + d.properties.Nitrate + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Nitrate_Nitrite: </span>" + d.properties.Nitrate_Nitrite + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>NO2: </span>" + d.properties.NO2_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>NO3: </span>" + d.properties.NO3_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>ORP: </span>" + d.properties.ORP + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Pb: </span>" + d.properties.Pb + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra 226: </span>" + d.properties.Ra_226 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra 228: </span>" + d.properties.Ra_228 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra Total: </span>" + d.properties.Ra_Total + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Sb: </span>" + d.properties.Sb + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Se: </span>" + d.properties.Se + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Temperature: </span>" + d.properties.Temperature + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Tl: </span>" + d.properties.Tl + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Turbidity: </span>" + d.properties.Turbidity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>U: </span>" + d.properties.U + "<dt><dl>");
                     wellMarkers.addLayer(marker);
                 });
-
+                // New Map pane so markers render on top of geojson (chapters)
+                map.createPane('markers');
+                map.getPane('markers').style.zIndex = 650;
                 // Add markers to map:
                 map.addLayer(wellMarkers);
                 map.fitBounds(wellMarkers.getBounds());
@@ -303,128 +312,135 @@ window.onload = function () {
 
     // Scatterplot matrix
     // Event handler for d3 version
-
     function graphicviz() {
         require.config({
             paths: {
-                d3: "JS_CSS_downladed_libraries/d3.v4.min"
-            }
+                "d3": "JS_CSS_downladed_libraries/d3.v.6.3.1",
+                "dc": "JS_CSS_downladed_libraries/dc.v.4.2.4"
+            },
         });
 
-        require(["d3"], function (d3) {
-            // Sample taken from https://www.d3-graph-gallery.com/graph/correlogram_scatter.html
-            // Chart dimensions
-            var marginWhole = { top: 10, right: 10, bottom: 10, left: 40 },
-                sizeWhole = 585 - marginWhole.left - marginWhole.right
+        require(["d3", "dc"], function (d3, dc) {
+            var fields = ['As', 'Ca', 'Ra_Total', 'U'];
+            var rows = ['heading'].concat(fields.slice(0).reverse()),
+                cols = ['heading'].concat(fields);
 
-            // Create SVG area
-            var svg = d3.select("#scatterplot")
-                .append("svg")
-                .attr("width", sizeWhole + marginWhole.left + marginWhole.right)
-                .attr("height", sizeWhole + marginWhole.top + marginWhole.bottom)
-                .append("g")
-                .attr("transform", "translate(" + marginWhole.left + "," + marginWhole.top + ")");
+            if (location.search.indexOf('nowait') !== -1) {
+                dc.constants.EVENT_DELAY = 0;
+                d3.select('#wait-verb').text('remove')
+                d3.select('#wait-prep').text('with');
+                d3.select('#wait-url').attr('href', location.origin + location.pathname);
+            } else {
+                d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
+            }
 
+            d3.csv('data/data_correlogram.csv').then(function (analyte) {
+                analyte.forEach(function (d) {
+                    Object.keys(fields).forEach(function (ab) {
+                        d[fields[ab]] = +d[fields[ab]];
+                    });
+                });
+                var data = crossfilter(analyte);
 
-            d3.csv("data/data_correlogram.csv", function (data) {
+                function make_dimension(var1, var2) {
+                    return data.dimension(function (d) {
+                        return [d[var1], d[var2], d.wellUse];
+                    });
+                }
+                function key_part(i) {
+                    return function (kv) {
+                        return kv.key[i];
+                    };
+                }
 
-                // call in numeric variables - will need to change to crossfilter
-                var allVar = ["As", "Ca", "Ra_Total", "U"]
-                var numVar = allVar.length
+                var charts = [];
 
-                // Calculate chart size
-                mar = 20
-                size = sizeWhole / numVar
-
-                // Scales
-                // Create a scale: gives the position of each pair each variable
-                var position = d3.scalePoint()
-                    .domain(allVar)
-                    .range([0, sizeWhole - size])
-
-                // Color scale by well use
-                var color = d3.scaleOrdinal()
-                    .domain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
-                    .range(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
-
-                // Add charts
-                for (i in allVar) {
-                    for (j in allVar) {
-
-                        // Get current variable name
-                        var var1 = allVar[i]
-                        var var2 = allVar[j]
-
-                        // Skip diagonals 
-                        if (var1 === var2) { continue; }
-
-                        // Add X Scale of each graph
-                        xextent = d3.extent(data, function (d) { return +d[var1] })
-                        var x = d3.scaleLinear()
-                            .domain(xextent).nice()
-                            .range([0, size - 2 * mar]);
-
-                        // Add Y Scale of each graph
-                        yextent = d3.extent(data, function (d) { return +d[var2] })
-                        var y = d3.scaleLinear()
-                            .domain(yextent).nice()
-                            .range([size - 2 * mar, 10]);
-
-                        // Add a 'g' at the right position
-                        var tmp = svg
-                            .append('g')
-                            .attr("transform", "translate(" + (position(var1) + mar) + "," + (position(var2) + mar) + ")");
-
-                        // Add X and Y axis in tmp
-                        tmp.append("g")
-                            .attr("transform", "translate(" + 0 + "," + (size - mar * 2) + ")")
-                            .call(d3.axisBottom(x).ticks(3))
-                            .selectAll("text")
-                            .style("text-anchor", "end")
-                            .attr("dx", "-.8em")
-                            .attr("dy", ".15em")
-                            .attr("transform", "rotate(-30)");
-
-                        tmp.append("g")
-                            .call(d3.axisLeft(y).ticks(3));
-
-                        // Add circle
-                        tmp
-                            .selectAll("myCircles")
-                            .data(data)
-                            .enter()
-                            .append("circle")
-                            .attr("cx", function (d) { return x(+d[var1]) })
-                            .attr("cy", function (d) { return y(+d[var2]) })
-                            .attr("r", 2.5)
-                            .attr("fill", function (d) {
-                                return color(d.wellUse)
+                d3.select('#content')
+                    .selectAll('tr').data(rows)
+                    .enter().append('tr').attr('class', function (d) {
+                        return d === 'heading' ? 'heading row' : 'row';
+                    })
+                    .each(function (row, y) {
+                        d3.select(this).selectAll('td').data(cols)
+                            .enter().append('td').attr('class', function (d) {
+                                return d === 'heading' ? 'heading entry' : 'entry';
                             })
-                    }
-                }
-
-                // Add variable names on diagonal
-
-                for (i in allVar) {
-                    for (j in allVar) {
-                        if (i != j) { continue; }
-                        // Add text
-                        var var1 = allVar[i]
-                        var var2 = allVar[j]
-                        svg
-                            .append('g')
-                            .attr("transform", "translate(" + position(var1) + "," + position(var2) + ")")
-                            .append('text')
-                            .attr("x", size / 3.75)
-                            .attr("y", size / 1.7)
-                            .text(var1)
-                    }
-                }
-            })
+                            .each(function (col, x) {
+                                var cdiv = d3.select(this).append('div')
+                                if (row === 'heading') {
+                                    if (col !== 'heading')
+                                        cdiv.text(col.replace('_', ' '))
+                                    return;
+                                }
+                                else if (col === 'heading') {
+                                    cdiv.text(row.replace('_', ' '))
+                                    return;
+                                }
+                                cdiv.attr('class', 'chart-holder');
+                                var chart = new dc.ScatterPlot(cdiv);
+                                var dim = make_dimension(col, row),
+                                    group = dim.group();
+                                var showYAxis = x === 1, showXAxis = y === 4;
+                                chart
+                                    .transitionDuration(0)
+                                    .width(125 + (showYAxis ? 25 : 0))
+                                    .height(125 + (showXAxis ? 20 : 0))
+                                    .margins({
+                                        left: showYAxis ? 25 : 8,
+                                        top: 5,
+                                        right: 2.75,
+                                        bottom: showXAxis ? 20 : 5
+                                    })
+                                    .dimension(dim).group(group)
+                                    .keyAccessor(key_part(0))
+                                    .valueAccessor(key_part(1))
+                                    .colorAccessor(key_part(2))
+                                    .colorDomain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
+                                    .ordinalColors(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
+                                    .x(d3.scaleLinear()).xAxisPadding("0.001%")
+                                    .y(d3.scaleLinear()).yAxisPadding("0.001%")
+                                    .brushOn(true)
+                                    .elasticX(true)
+                                    .elasticY(true)
+                                    .symbolSize(5)
+                                    .nonemptyOpacity(0.7)
+                                    .emptySize(7)
+                                    .emptyColor('#ccc')
+                                    .emptyOpacity(0.7)
+                                    .excludedSize(7)
+                                    .excludedColor('#ccc')
+                                    .excludedOpacity(0.7)
+                                    .renderHorizontalGridLines(true)
+                                    .renderVerticalGridLines(true);
+                                chart.xAxis().ticks(3)
+                                chart.yAxis().ticks(6);
+                                chart.on('postRender', function (chart) {
+                                    // remove axes unless at left or bottom
+                                    if (!showXAxis)
+                                        chart.select('.x.axis').attr('display', 'none');
+                                    if (!showYAxis)
+                                        chart.select('.y.axis').attr('display', 'none');
+                                    // remove clip path, allow dots to display outside
+                                    chart.select('.chart-body').attr('clip-path', null);
+                                });
+                                // only filter on one chart at a time
+                                chart.on('filtered', function (_, filter) {
+                                    if (!filter)
+                                        return;
+                                    charts.forEach(function (c) {
+                                        if (c !== chart)
+                                            c.filter(null);
+                                    });
+                                });
+                                charts.push(chart);
+                            });
+                    });
+                dc.renderAll();
+            });
         });
     }
 
-    //Call The Function
+    //Call function to render scatterplot
     graphicviz(scatterplot);
 
 
@@ -515,7 +531,7 @@ function selectAnalyte() {
     var selected4 = document.getElementById("selectbox4");
     var input4 = selected4.options[selected4.selectedIndex].value;
 
-    //new wellMarkers for updated analytes after dropdown selection
+    //new wellMarkers2 for updated analytes after dropdown selection
     var wellMarkers2 = new L.FeatureGroup();
 
     d3.json('data/nnWells.json', function (error, data) {
@@ -1546,6 +1562,7 @@ function selectAnalyte() {
             dataHistogram4 = function (d) { return d.properties.None; };
         }
 
+        //Code for DataTable
         dataTableNew
             .dimension(allDim)
             .group(function (d) { return 'dc.js insists on putting a row here so I remove it using JS'; })
@@ -1556,7 +1573,7 @@ function selectAnalyte() {
                 dataHistogram2,
                 dataHistogram3,
                 dataHistogram4
-            ])
+            ]) //Code to make dataTable data Alter the Map wells
             .on('renderlet', function (table) {
                 // each time table is rendered remove nasty extra row dc.js insists on adding
                 table.select('tr.dc-table-group').remove();
