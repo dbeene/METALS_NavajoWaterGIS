@@ -301,7 +301,7 @@ window.onload = function () {
                         + "<dt><span style='font-weight:bolder'>Turbidity: </span> </dt> <dd>" + d.properties.Turbidity + ";<dd>"
                         + "<dt><span style='font-weight:bolder'>U: </span> </dt> <dd>" + d.properties.U + "<dt><dl>"
                         + "</dl>"
-                        );
+                    );
                     wellMarkers.addLayer(marker);
                 });
                 // New Map pane so markers render on top of geojson (chapters)
@@ -1560,73 +1560,76 @@ function selectAnalyte() {
                     var marker = L.circleMarker([filLoc.lat, filLoc.long], markerOptions);
 
                     marker.bindPopup(
-                        "<dl><dt> <h4><b>WELL INFORMATION- NAVAJO NATION WELL</b></h4><br>"
-                        + "<dt><i>FID</i>: " + d.properties.FID + ";<dd>"
-                        + "<dt><i>Well No.</i>: " + d.properties.well_no + ";<dd>"
-                        + "<dt><i>Well ID</i>: " + d.properties.well_id + ";<dd>"
-                        + "<dt><i>Well Name</i>: " + d.properties.well_name + ";<dd>"
-                        + "<dt><i>Owner</i>: " + d.properties.owner + ";<dd>"
-                        + "<dt><i>Depth</i>: " + d.properties.depth + ";<dd>"
-                        + "<dt><i>Public Water Sys. ID</i>: " + d.properties.pwsid + ";<dd>"
-                        + "<dt><i>USGS ID</i>: " + d.properties.usgs_id + ";<dd>"
-                        + "<dt><i>Data Source</i>: " + d.properties.data_sourc + ";<dd>"
-                        + "<dt><i>Comment(s)</i>: " + d.properties.comments + ";<dd>"
-                        + "<dt><i>Alternate Name 1</i>: " + d.properties.aka2 + ";<dd>"
-                        + "<dt><i>Alternate Name 2</i>: " + d.properties.aka3 + ";<dd>"
-                        + "<dt><i>Status</i>: " + d.properties.well_statu + ";<dd>"
-                        + "<dt><i>Agency</i>: " + d.properties.nn_agency + ";<dd>"
-                        + "<dt><i>Well Use</i>: " + d.properties.USE + ";<dd>"
-                        + "<dt><i>Alkalinity</i>: " + d.properties.Alkalinity + ";<dd>"
-                        + "<dt><i>Total Alkalinity</i>: " + d.properties.Alkalinity_Total + ";<dd>"
-                        + "<dt><i>As</i>: " + d.properties.As_ + ";<dd>"
-                        + "<dt><i>Ba</i>: " + d.properties.Ba + ";<dd>"
-                        + "<dt><i>Be</i>: " + d.properties.Be + ";<dd>"
-                        + "<dt><i>Br</i>: " + d.properties.Br_ + ";<dd>"
-                        + "<dt><i>Ca</i>: " + d.properties.Ca + ";<dd>"
-                        + "<dt><i>Cd</i>: " + d.properties.Cd + ";<dd>"
-                        + "<dt><i>Cl :" + d.properties.Cl_ + ";<dd>"
-                        + "<dt><i>Conductivity</i>: " + d.properties.Conductivity + ";<dd>"
-                        + "<dt><i>Cr</i>: " + d.properties.Cr + ";<dd>"
-                        + "<dt><i>DO</i>: " + d.properties.DO + ";<dd>"
-                        + "<dt><i>Electrical Conductivity</i>: " + d.properties.ElectricalConductivity + ";<dd>"
-                        + "<dt><i>Gross Alpha 2 Sigma Comb. Uncertainty</i>: " + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
-                        + "<dt><i>Gross Alpha</i>: " + d.properties.GrossAlpha + ";<dd>"
-                        + "<dt><i>Gross Alpha: U Nat</i>: " + d.properties.GrossAlpha_U_Nat + ";<dd>"
-                        + "<dt><i>Gross Beta 1</i>: " + d.properties.GrossBeta + ";<dd>"
-                        + "<dt><i>Gross Beta: Cs 137</i>: " + d.properties.GrossBeta_Cs137 + ";<dd>"
-                        + "<dt><i>Gross Beta: Sr Y90</i>: " + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
-                        + "<dt><i>Hardness</i>: " + d.properties.Hardness + ";<dd>"
-                        + "<dt><i>Total Hardness</i>: " + d.properties.Hardness_Total + ";<dd>"
-                        + "<dt><i>Hg</i>: " + d.properties.Hg + ";<dd>"
-                        + "<dt><i>Hydroxide</i>: " + d.properties.Hydroxide + ";<dd>"
-                        + "<dt><i>K</i>: " + d.properties.K + ";<dd>"
-                        + "<dt><i>Mg</i>: " + d.properties.Mg + ";<dd>"
-                        + "<dt><i>Mn</i>: " + d.properties.Mn + ";<dd>"
-                        + "<dt><i>Na</i>: " + d.properties.Na + ";<dd>"
-                        + "<dt><i>Na Adsorption Ratio</i>: " + d.properties.Na_AdsorptionRatio + ";<dd>"
-                        + "<dt><i>Na Fraction Cations</i>: " + d.properties.Na_FractionCations + ";<dd>"
-                        + "<dt><i>Na_K</i>: " + d.properties.Na_K + ";<dd>"
-                        + "<dt><i>Nitrate</i>: " + d.properties.Nitrate + ";<dd>"
-                        + "<dt><i>Nitrate_Nitrite</i>: " + d.properties.Nitrate_Nitrite + ";<dd>"
-                        + "<dt><i>NO2</i>: " + d.properties.NO2_ + ";<dd>"
-                        + "<dt><i>NO3</i>: " + d.properties.NO3_ + ";<dd>"
-                        + "<dt><i>ORP</i>: " + d.properties.ORP + ";<dd>"
-                        + "<dt><i>Pb</i>: " + d.properties.Pb + ";<dd>"
-                        + "<dt><i>Ra 226</i>: " + d.properties.Ra_226 + ";<dd>"
-                        + "<dt><i>Ra 228</i>: " + d.properties.Ra_228 + ";<dd>"
-                        + "<dt><i>Ra Total</i>: " + d.properties.Ra_Total + ";<dd>"
-                        + "<dt><i>Sb</i>: " + d.properties.Sb + ";<dd>"
-                        + "<dt><i>Se</i>: " + d.properties.Se + ";<dd>"
-                        + "<dt><i>Temperature</i>: " + d.properties.Temperature + ";<dd>"
-                        + "<dt><i>Tl</i>: " + d.properties.Tl + ";<dd>"
-                        + "<dt><i>Turbidity</i>: " + d.properties.Turbidity + ";<dd>"
-                        + "<dt><i>U</i>: " + d.properties.U + "<dt><dl>");
+                        "<dl><dt> <h5><b><i>WELL INFORMATION- NAVAJO NATION WELL</i></b></h5><br>"
+                        + "<dl>"
+                        + "<dt><span style='font-weight:bolder'>FID: </span> </dt> <dd>" + d.properties.FID + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Well No.: </span> </dt> <dd>" + d.properties.well_no + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Well ID: </span> </dt> <dd>" + d.properties.well_id + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Well Name: </span> </dt> <dd>" + d.properties.well_name + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Owner: </span> </dt> <dd>" + d.properties.owner + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Depth: </span> </dt> <dd>" + d.properties.depth + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Public Water Sys. ID: </span> </dt> <dd>" + d.properties.pwsid + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>USGS ID: </span> </dt> <dd>" + d.properties.usgs_id + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Data Source: </span> </dt> <dd>" + d.properties.data_sourc + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Comment(s): </span> </dt> <dd>" + d.properties.comments + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Alternate Name 1: </span> </dt> <dd>" + d.properties.aka2 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Alternate Name 2: </span> </dt> <dd>" + d.properties.aka3 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Status: </span> </dt> <dd>" + d.properties.well_statu + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Agency: </span> </dt> <dd>" + d.properties.nn_agency + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Well Use: </span> </dt> <dd>" + d.properties.USE + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Alkalinity: </span> </dt> <dd>" + d.properties.Alkalinity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Total Alkalinity: </span> </dt> <dd>" + d.properties.Alkalinity_Total + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>As: </span> </dt> <dd>" + d.properties.As_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ba: </span> </dt> <dd>" + d.properties.Ba + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Be: </span> </dt> <dd>" + d.properties.Be + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Br: </span> </dt> <dd>" + d.properties.Br_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ca: </span> </dt> <dd>" + d.properties.Ca + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cd: </span> </dt> <dd>" + d.properties.Cd + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cl :" + d.properties.Cl_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Conductivity: </span> </dt> <dd>" + d.properties.Conductivity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cr: </span> </dt> <dd>" + d.properties.Cr + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>DO: </span> </dt> <dd>" + d.properties.DO + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Electrical Conductivity: </span> </dt> <dd>" + d.properties.ElectricalConductivity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha 2 Sigma Comb. Uncertainty: </span> </dt> <dd>" + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha: </span> </dt> <dd>" + d.properties.GrossAlpha + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha: U Nat: </span> </dt> <dd>" + d.properties.GrossAlpha_U_Nat + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta 1: </span> </dt> <dd>" + d.properties.GrossBeta + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta: Cs 137: </span> </dt> <dd>" + d.properties.GrossBeta_Cs137 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta: Sr Y90: </span> </dt> <dd>" + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hardness: </span> </dt> <dd>" + d.properties.Hardness + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Total Hardness: </span> </dt> <dd>" + d.properties.Hardness_Total + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hg: </span> </dt> <dd>" + d.properties.Hg + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hydroxide: </span> </dt> <dd>" + d.properties.Hydroxide + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>K: </span> </dt> <dd>" + d.properties.K + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Mg: </span> </dt> <dd>" + d.properties.Mg + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Mn: </span> </dt> <dd>" + d.properties.Mn + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na: </span> </dt> <dd>" + d.properties.Na + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na Adsorption Ratio: </span> </dt> <dd>" + d.properties.Na_AdsorptionRatio + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na Fraction Cations: </span> </dt> <dd>" + d.properties.Na_FractionCations + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na_K: </span> </dt> <dd>" + d.properties.Na_K + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Nitrate: </span> </dt> <dd>" + d.properties.Nitrate + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Nitrate_Nitrite: </span> </dt> <dd>" + d.properties.Nitrate_Nitrite + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>NO2: </span> </dt> <dd>" + d.properties.NO2_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>NO3: </span> </dt> <dd>" + d.properties.NO3_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>ORP: </span> </dt> <dd>" + d.properties.ORP + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Pb: </span> </dt> <dd>" + d.properties.Pb + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra 226: </span> </dt> <dd>" + d.properties.Ra_226 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra 228: </span> </dt> <dd>" + d.properties.Ra_228 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra Total: </span> </dt> <dd>" + d.properties.Ra_Total + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Sb: </span> </dt> <dd>" + d.properties.Sb + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Se: </span> </dt> <dd>" + d.properties.Se + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Temperature: </span> </dt> <dd>" + d.properties.Temperature + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Tl: </span> </dt> <dd>" + d.properties.Tl + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Turbidity: </span> </dt> <dd>" + d.properties.Turbidity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>U: </span> </dt> <dd>" + d.properties.U + "<dt><dl>"
+                        + "</dl>"
+                    );
                     wellMarkers.addLayer(marker);
                 });
 
                 //remove Layers from map
                 // map.removeLayer(wellMarkers);   //Problem since wellMarkers is not global
-                
+
                 // Add markers to map:
                 map.addLayer(wellMarkers);  //Says map.addLayer is not a function for some reason.
                 map.fitBounds(wellMarkers.getBounds());
@@ -1636,7 +1639,7 @@ function selectAnalyte() {
         dc.renderAll();
         //xdocument.getElementById("histogram1").innerHTML=histogram1;
     });
-     // Scatterplot matrix
+    // Scatterplot matrix
     // Event handler for d3 version
     function graphicviz() {
         require.config({
