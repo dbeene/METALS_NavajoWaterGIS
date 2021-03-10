@@ -442,6 +442,7 @@ window.onload = function () {
                                 charts.push(chart);
                             });
                     });
+                    alert(charts.length);
                 dc.renderAll();
             });
         });
@@ -1657,7 +1658,23 @@ function selectAnalyte() {
 
         // Scatterplot matrix
     // Event handler for d3 version
-    function graphicviz2() {
+    function graphicviz() {
+
+        var selected1 = document.getElementById("selectbox1");
+        var input1 = selected1.options[selected1.selectedIndex].value;
+    
+        //the value if selected analyte from dropwdown 2 is stored in input 2
+        var selected2 = document.getElementById("selectbox2");
+        var input2 = selected2.options[selected2.selectedIndex].value;
+    
+        //the value if selected analyte from dropwdown 3 is stored in input 3
+        var selected3 = document.getElementById("selectbox3");
+        var input3 = selected3.options[selected3.selectedIndex].value;
+    
+        //the value if selected analyte from dropwdown 4 is stored in input 4
+        var selected4 = document.getElementById("selectbox4");
+        var input4 = selected4.options[selected4.selectedIndex].value;
+        
         require.config({
             paths: {
                 "d3": "JS_CSS_downladed_libraries/d3.v.6.3.1",
@@ -1665,7 +1682,7 @@ function selectAnalyte() {
             },
         });
         require(["d3", "dc"], function (d3, dc) {
-            var fields = ['Ca', 'As', 'Ra_Total', 'U'];
+            var fields = ["Ca", "As_", "Ra_Total", "U"]; //should add input1, input2, input3, and input4 for the analytes to work dynamically
             var rows = ['heading'].concat(fields.slice(0).reverse()),
                 cols = ['heading'].concat(fields);
 
@@ -1698,7 +1715,7 @@ function selectAnalyte() {
                 }
 
                 var charts = [];
-
+                
                 d3.select('#content')
                     .selectAll('tr').data(rows)
                     .enter().append('tr').attr('class', function (d) {
@@ -1767,8 +1784,10 @@ function selectAnalyte() {
                                     // remove clip path, allow dots to display outside
                                     chart.select('.chart-body').attr('clip-path', null);
                                 });
+                                charts.push(chart);
                                 // only filter on one chart at a time
                                 chart.on('filtered', function (_, filter) {
+
                                     if (!filter)
                                         return;
                                     charts.forEach(function (c) {
@@ -1776,14 +1795,16 @@ function selectAnalyte() {
                                             c.filter(null);
                                     });
                                 });
-                                charts.push(chart);
+                                //charts.push(chart);
+                               
                             });
                     });
+                    alert(charts.length);
                 dc.renderAll();
             });
         });
     }
 
     //Call function to render scatterplot
-    graphicviz2();
+    graphicviz();
 }
