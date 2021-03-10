@@ -1682,7 +1682,7 @@ function selectAnalyte() {
             },
         });
         require(["d3", "dc"], function (d3, dc) {
-            var fields = ["Ca", "As_", "Ra_Total", "U"]; //should add input1, input2, input3, and input4 for the analytes to work dynamically
+            var fields = [input1, input2, input3, input4]; //should add input1, input2, input3, and input4 for the analytes to work dynamically
             var rows = ['heading'].concat(fields.slice(0).reverse()),
                 cols = ['heading'].concat(fields);
 
