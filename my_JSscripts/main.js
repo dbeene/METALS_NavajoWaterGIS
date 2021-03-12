@@ -385,6 +385,12 @@ window.onload = function () {
                 var charts = [];
 
                 d3.select('#content')
+                .selectAll('tr')
+                .data(data)
+                .exit()
+                .remove();
+
+                d3.select('#content')
                     .selectAll('tr').data(rows)
                     .enter().append('tr').attr('class', function (d) {
                         return d === 'heading' ? 'heading row' : 'row';
@@ -433,11 +439,11 @@ window.onload = function () {
                                     .elasticY(true)
                                     .symbolSize(5)
                                     .nonemptyOpacity(0.7)
-                                    .emptySize(7)
-                                    .emptyColor('#ccc')
+                                    .emptySize(1)
+                                    .emptyColor('#000000')
                                     .emptyOpacity(0.7)
-                                    .excludedSize(7)
-                                    .excludedColor('#ccc')
+                                    .excludedSize(1)
+                                    .excludedColor('#000000')
                                     .excludedOpacity(0.7)
                                     .renderHorizontalGridLines(true)
                                     .renderVerticalGridLines(true);
