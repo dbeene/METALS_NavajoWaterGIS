@@ -115,7 +115,7 @@ window.onload = function () {
             .dimension(CaDim)
             .group(countPerCa)
             .x(d3.scale.linear().domain([0, 976]))
-            // .x(d3.scale.linear().range([0,90]))
+            .x(d3.scale.linear().range([0,90]))
             .y(d3.scale.linear().domain([0, 13]))
             .elasticY(false)
             .centerBar(true)
@@ -317,17 +317,9 @@ window.onload = function () {
         dc.renderAll();
     });
 
-    //global variable that have initial inputs of default analytes and will have the dropdown analytes after click.
-    window.input1 = "As_";
-    window.input2 = "Ca";
-    window.input3 = "Ra_Total";
-    window.input4 = "U";
-
-
     // Scatterplot matrix
     // Event handler for d3 version
-    window.updateScatterplotMatrix = function() {
-
+    function graphicviz() {
         require.config({
             paths: {
                 "d3": "JS_CSS_downladed_libraries/d3.v.6.3.1",
@@ -459,29 +451,33 @@ window.onload = function () {
     }
 
     //Call function to render scatterplot
-    updateScatterplotMatrix();
+    graphicviz();
 
     // Scatterplot matrix //
     // source: https://observablehq.com/@d3/brushable-scatterplot-matrix
 
-    // This function is triggered on clicking the button
-  window.selectAnalyte = function() {
+}
+
+
+
+// This function is triggered on clicking the button
+function selectAnalyte() {
 
     //the value if selected analyte from dropwdown 1 is stored in input 1
-    selected1 = document.getElementById("selectbox1");
-    input1 = selected1.options[selected1.selectedIndex].value;
+    var selected1 = document.getElementById("selectbox1");
+    var input1 = selected1.options[selected1.selectedIndex].value;
 
     //the value if selected analyte from dropwdown 2 is stored in input 2
-     selected2 = document.getElementById("selectbox2");
-     input2 = selected2.options[selected2.selectedIndex].value;
+    var selected2 = document.getElementById("selectbox2");
+    var input2 = selected2.options[selected2.selectedIndex].value;
 
     //the value if selected analyte from dropwdown 3 is stored in input 3
-    selected3 = document.getElementById("selectbox3");
-    input3 = selected3.options[selected3.selectedIndex].value;
+    var selected3 = document.getElementById("selectbox3");
+    var input3 = selected3.options[selected3.selectedIndex].value;
 
     //the value if selected analyte from dropwdown 4 is stored in input 4
-    selected4 = document.getElementById("selectbox4");
-    input4 = selected4.options[selected4.selectedIndex].value;
+    var selected4 = document.getElementById("selectbox4");
+    var input4 = selected4.options[selected4.selectedIndex].value;
 
     //new wellMarkers2 for updated analytes after dropdown selection
     // var wellMarkers2 = new L.FeatureGroup();

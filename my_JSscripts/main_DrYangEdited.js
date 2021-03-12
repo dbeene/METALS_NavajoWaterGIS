@@ -1672,153 +1672,153 @@ function selectAnalyte() {
 
     // Scatterplot matrix
     // Event handler for d3 version
-    // function graphicviz() {
+    function graphicviz() {
 
-    //     var selected1 = document.getElementById("selectbox1");
-    //     var input1 = selected1.options[selected1.selectedIndex].value;
+        var selected1 = document.getElementById("selectbox1");
+        var input1 = selected1.options[selected1.selectedIndex].value;
 
-    //     //the value if selected analyte from dropwdown 2 is stored in input 2
-    //     var selected2 = document.getElementById("selectbox2");
-    //     var input2 = selected2.options[selected2.selectedIndex].value;
+        //the value if selected analyte from dropwdown 2 is stored in input 2
+        var selected2 = document.getElementById("selectbox2");
+        var input2 = selected2.options[selected2.selectedIndex].value;
 
-    //     //the value if selected analyte from dropwdown 3 is stored in input 3
-    //     var selected3 = document.getElementById("selectbox3");
-    //     var input3 = selected3.options[selected3.selectedIndex].value;
+        //the value if selected analyte from dropwdown 3 is stored in input 3
+        var selected3 = document.getElementById("selectbox3");
+        var input3 = selected3.options[selected3.selectedIndex].value;
 
-    //     //the value if selected analyte from dropwdown 4 is stored in input 4
-    //     var selected4 = document.getElementById("selectbox4");
-    //     var input4 = selected4.options[selected4.selectedIndex].value;
+        //the value if selected analyte from dropwdown 4 is stored in input 4
+        var selected4 = document.getElementById("selectbox4");
+        var input4 = selected4.options[selected4.selectedIndex].value;
 
-    //     require.config({
-    //         paths: {
-    //             "d3": "JS_CSS_downladed_libraries/d3.v.6.3.1",
-    //             "dc": "JS_CSS_downladed_libraries/dc.v.4.2.4"
-    //         },
-    //     });
-    //     require(["d3", "dc"], function (d3, dc) {
-    //         var fields = [input1, input2, input3, input4]; //should add input1, input2, input3, and input4 for the analytes to work dynamically
-    //         var rows = ['heading'].concat(fields.slice(0).reverse()),
-    //             cols = ['heading'].concat(fields);
+        require.config({
+            paths: {
+                "d3": "JS_CSS_downladed_libraries/d3.v.6.3.1",
+                "dc": "JS_CSS_downladed_libraries/dc.v.4.2.4"
+            },
+        });
+        require(["d3", "dc"], function (d3, dc) {
+            var fields = [input1, input2, input3, input4]; //should add input1, input2, input3, and input4 for the analytes to work dynamically
+            var rows = ['heading'].concat(fields.slice(0).reverse()),
+                cols = ['heading'].concat(fields);
 
-    //         if (location.search.indexOf('nowait') !== -1) {
-    //             dc.constants.EVENT_DELAY = 0;
-    //             d3.select('#wait-verb').text('remove')
-    //             d3.select('#wait-prep').text('with');
-    //             d3.select('#wait-url').attr('href', location.origin + location.pathname);
-    //         } else {
-    //             d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
-    //         }
+            if (location.search.indexOf('nowait') !== -1) {
+                dc.constants.EVENT_DELAY = 0;
+                d3.select('#wait-verb').text('remove')
+                d3.select('#wait-prep').text('with');
+                d3.select('#wait-url').attr('href', location.origin + location.pathname);
+            } else {
+                d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
+            }
 
-    //         d3.csv('data/dataScatter.csv').then(function (analyte) {
-    //             analyte.forEach(function (d) {
-    //                 Object.keys(fields).forEach(function (ab) {
-    //                     d[fields[ab]] = +d[fields[ab]];
-    //                 });
-    //             });
-    //             var data = crossfilter(analyte);
+            d3.csv('data/dataScatter.csv').then(function (analyte) {
+                analyte.forEach(function (d) {
+                    Object.keys(fields).forEach(function (ab) {
+                        d[fields[ab]] = +d[fields[ab]];
+                    });
+                });
+                var data = crossfilter(analyte);
 
-    //             function make_dimension(var1, var2) {
-    //                 return data.dimension(function (d) {
-    //                     return [d[var1], d[var2], d.wellUse];
-    //                 });
-    //             }
-    //             function key_part(i) {
-    //                 return function (kv) {
-    //                     return kv.key[i];
-    //                 };
-    //             }
+                function make_dimension(var1, var2) {
+                    return data.dimension(function (d) {
+                        return [d[var1], d[var2], d.wellUse];
+                    });
+                }
+                function key_part(i) {
+                    return function (kv) {
+                        return kv.key[i];
+                    };
+                }
 
-    //             var charts = [];
+                var charts = [];
 
-    //             d3.select('#content')
-    //                 .selectAll('tr').data(rows)
-    //                 .enter().append('tr').attr('class', function (d) {
-    //                     return d === 'heading' ? 'heading row' : 'row';
-    //                 })
-    //                 .each(function (row, y) {
-    //                     d3.select(this).selectAll('td').data(cols)
-    //                         .enter().append('td').attr('class', function (d) {
-    //                             return d === 'heading' ? 'heading entry' : 'entry';
-    //                         })
-    //                         .each(function (col, x) {
-    //                             var cdiv = d3.select(this).append('div')
-    //                             if (row === 'heading') {
-    //                                 if (col !== 'heading')
-    //                                     cdiv.text(col.replace('_', ' '))
-    //                                 return;
-    //                             }
-    //                             else if (col === 'heading') {
-    //                                 cdiv.text(row.replace('_', ' '))
-    //                                 return;
-    //                             }
-    //                             cdiv.attr('class', 'chart-holder');
-    //                             var chart = new dc.ScatterPlot(cdiv);
-    //                             var dim = make_dimension(col, row),
-    //                                 group = dim.group();
-    //                             var showYAxis = x === 1, showXAxis = y === 4;
-    //                             chart
-    //                                 .transitionDuration(0)
-    //                                 .width(125 + (showYAxis ? 25 : 0))
-    //                                 .height(125 + (showXAxis ? 20 : 0))
-    //                                 .margins({
-    //                                     left: showYAxis ? 25 : 8,
-    //                                     top: 5,
-    //                                     right: 2.75,
-    //                                     bottom: showXAxis ? 20 : 5
-    //                                 })
-    //                                 .dimension(dim).group(group)
-    //                                 .keyAccessor(key_part(0))
-    //                                 .valueAccessor(key_part(1))
-    //                                 .colorAccessor(key_part(2))
-    //                                 .colorDomain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
-    //                                 .ordinalColors(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
-    //                                 .x(d3.scaleLinear()).xAxisPadding("0.001%")
-    //                                 .y(d3.scaleLinear()).yAxisPadding("0.001%")
-    //                                 .brushOn(true)
-    //                                 .elasticX(true)
-    //                                 .elasticY(true)
-    //                                 .symbolSize(5)
-    //                                 .nonemptyOpacity(0.7)
-    //                                 .emptySize(7)
-    //                                 .emptyColor('#ccc')
-    //                                 .emptyOpacity(0.7)
-    //                                 .excludedSize(7)
-    //                                 .excludedColor('#ccc')
-    //                                 .excludedOpacity(0.7)
-    //                                 .renderHorizontalGridLines(true)
-    //                                 .renderVerticalGridLines(true);
-    //                             chart.xAxis().ticks(3)
-    //                             chart.yAxis().ticks(6);
-    //                             chart.on('postRender', function (chart) {
-    //                                 // remove axes unless at left or bottom
-    //                                 if (!showXAxis)
-    //                                     chart.select('.x.axis').attr('display', 'none');
-    //                                 if (!showYAxis)
-    //                                     chart.select('.y.axis').attr('display', 'none');
-    //                                 // remove clip path, allow dots to display outside
-    //                                 chart.select('.chart-body').attr('clip-path', null);
-    //                             });
-    //                             charts.push(chart);
-    //                             // only filter on one chart at a time
-    //                             chart.on('filtered', function (_, filter) {
+                d3.select('#content')
+                    .selectAll('tr').data(rows)
+                    .enter().append('tr').attr('class', function (d) {
+                        return d === 'heading' ? 'heading row' : 'row';
+                    })
+                    .each(function (row, y) {
+                        d3.select(this).selectAll('td').data(cols)
+                            .enter().append('td').attr('class', function (d) {
+                                return d === 'heading' ? 'heading entry' : 'entry';
+                            })
+                            .each(function (col, x) {
+                                var cdiv = d3.select(this).append('div')
+                                if (row === 'heading') {
+                                    if (col !== 'heading')
+                                        cdiv.text(col.replace('_', ' '))
+                                    return;
+                                }
+                                else if (col === 'heading') {
+                                    cdiv.text(row.replace('_', ' '))
+                                    return;
+                                }
+                                cdiv.attr('class', 'chart-holder');
+                                var chart = new dc.ScatterPlot(cdiv);
+                                var dim = make_dimension(col, row),
+                                    group = dim.group();
+                                var showYAxis = x === 1, showXAxis = y === 4;
+                                chart
+                                    .transitionDuration(0)
+                                    .width(125 + (showYAxis ? 25 : 0))
+                                    .height(125 + (showXAxis ? 20 : 0))
+                                    .margins({
+                                        left: showYAxis ? 25 : 8,
+                                        top: 5,
+                                        right: 2.75,
+                                        bottom: showXAxis ? 20 : 5
+                                    })
+                                    .dimension(dim).group(group)
+                                    .keyAccessor(key_part(0))
+                                    .valueAccessor(key_part(1))
+                                    .colorAccessor(key_part(2))
+                                    .colorDomain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
+                                    .ordinalColors(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
+                                    .x(d3.scaleLinear()).xAxisPadding("0.001%")
+                                    .y(d3.scaleLinear()).yAxisPadding("0.001%")
+                                    .brushOn(true)
+                                    .elasticX(true)
+                                    .elasticY(true)
+                                    .symbolSize(5)
+                                    .nonemptyOpacity(0.7)
+                                    .emptySize(7)
+                                    .emptyColor('#ccc')
+                                    .emptyOpacity(0.7)
+                                    .excludedSize(7)
+                                    .excludedColor('#ccc')
+                                    .excludedOpacity(0.7)
+                                    .renderHorizontalGridLines(true)
+                                    .renderVerticalGridLines(true);
+                                chart.xAxis().ticks(3)
+                                chart.yAxis().ticks(6);
+                                chart.on('postRender', function (chart) {
+                                    // remove axes unless at left or bottom
+                                    if (!showXAxis)
+                                        chart.select('.x.axis').attr('display', 'none');
+                                    if (!showYAxis)
+                                        chart.select('.y.axis').attr('display', 'none');
+                                    // remove clip path, allow dots to display outside
+                                    chart.select('.chart-body').attr('clip-path', null);
+                                });
+                                charts.push(chart);
+                                // only filter on one chart at a time
+                                chart.on('filtered', function (_, filter) {
 
-    //                                 if (!filter)
-    //                                     return;
-    //                                 charts.forEach(function (c) {
-    //                                     if (c !== chart)
-    //                                         c.filter(null);
-    //                                 });
-    //                             });
-    //                             //charts.push(chart);
+                                    if (!filter)
+                                        return;
+                                    charts.forEach(function (c) {
+                                        if (c !== chart)
+                                            c.filter(null);
+                                    });
+                                });
+                                //charts.push(chart);
 
-    //                         });
-    //                 });
-    //             alert(charts.length);
-    //             dc.renderAll();
-    //         });
-    //     });
-    // }
+                            });
+                    });
+                alert(charts.length);
+                dc.renderAll();
+            });
+        });
+    }
 
-    // //Call function to render scatterplot
-    // graphicviz();
+    //Call function to render scatterplot
+    graphicviz();
 }
