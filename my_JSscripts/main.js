@@ -326,7 +326,6 @@ window.onload = function () {
     window.input3 = "Ra_Total";
     window.input4 = "U";
 
-
     // Scatterplot matrix
     // Event handler for d3 version
     window.updateScatterplotMatrix = function () {
@@ -340,126 +339,147 @@ window.onload = function () {
 
         require(["d3", "dc"], function (d3, dc) {
             // var fields = [];
-            var fields = [input1, input2, input3, input4];
-            var rows = [],
-                cols = [];
-            var rows = ['heading'].concat(fields.slice(0).reverse()),
-                cols = ['heading'].concat(fields);
+            console.log(input1);
+            console.log(input2);
+            console.log(input3);
+            console.log(input4);
 
-            if (location.search.indexOf('nowait') !== -1) {
-                dc.constants.EVENT_DELAY = 0;
-                d3.select('#wait-verb').text('remove')
-                d3.select('#wait-prep').text('with');
-                d3.select('#wait-url').attr('href', location.origin + location.pathname);
-            } else {
-                d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
-            }
-            // alert(fields[0]);
+            // document.getElementById("updatePlot_btn").addEventListener("click", function () {
 
-            d3.csv('data/dataScatter.csv').then(function (analyte) {
-                analyte.forEach(function (d) {
-                    Object.keys(fields).forEach(function (ab) {
-                        d[fields[ab]] = +d[fields[ab]];
-                    });
-                });
-                var data = crossfilter(analyte);
+                d3.selectAll("g > *").remove();
 
-                function make_dimension(var1, var2) {
-                    return data.dimension(function (d) {
-                        return [d[var1], d[var2], d.wellUse];
-                    });
+
+                var fields = [input1, input2, input3, input4];
+
+                var rows = [],
+                    cols = [];
+                var rows = ['heading'].concat(fields.slice(0).reverse()),
+                    cols = ['heading'].concat(fields);
+
+                console.log(rows);
+                console.log(cols);
+
+                if (location.search.indexOf('nowait') !== -1) {
+                    dc.constants.EVENT_DELAY = 0;
+                    d3.select('#wait-verb').text('remove')
+                    d3.select('#wait-prep').text('with');
+                    d3.select('#wait-url').attr('href', location.origin + location.pathname);
+                } else {
+                    d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
                 }
-                function key_part(i) {
-                    return function (kv) {
-                        return kv.key[i];
-                    };
-                }
+                // alert(fields[0]);
 
-                var charts = [];
 
-                d3.select('#content')
-                    .selectAll('tr').data(rows)
-                    .enter().append('tr').attr('class', function (d) {
-                        return d === 'heading' ? 'heading row' : 'row';
-                    })
-                    .each(function (row, y) {
-                        d3.select(this).selectAll('td').data(cols)
-                            .enter().append('td').attr('class', function (d) {
-                                return d === 'heading' ? 'heading entry' : 'entry';
-                            })
-                            .each(function (col, x) {
-                                var cdiv = d3.select(this).append('div')
-                                if (row === 'heading') {
-                                    if (col !== 'heading')
-                                        cdiv.text(col.replace('_', ' '))
-                                    return;
-                                }
-                                else if (col === 'heading') {
-                                    cdiv.text(row.replace('_', ' '))
-                                    return;
-                                }
-                                cdiv.attr('class', 'chart-holder');
-                                var chart = new dc.ScatterPlot(cdiv);
-                                var dim = make_dimension(col, row),
-                                    group = dim.group();
-                                var showYAxis = x === 1, showXAxis = y === 4;
-                                chart
-                                    .transitionDuration(0)
-                                    .width(125 + (showYAxis ? 25 : 0))
-                                    .height(125 + (showXAxis ? 20 : 0))
-                                    .margins({
-                                        left: showYAxis ? 25 : 8,
-                                        top: 5,
-                                        right: 2.75,
-                                        bottom: showXAxis ? 20 : 5
-                                    })
-                                    .dimension(dim).group(group)
-                                    .keyAccessor(key_part(0))
-                                    .valueAccessor(key_part(1))
-                                    .colorAccessor(key_part(2))
-                                    .colorDomain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
-                                    .ordinalColors(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
-                                    .x(d3.scaleLinear()).xAxisPadding("0.001%")
-                                    .y(d3.scaleLinear()).yAxisPadding("0.001%")
-                                    .brushOn(true)
-                                    .elasticX(true)
-                                    .elasticY(true)
-                                    .symbolSize(5)
-                                    .nonemptyOpacity(0.7)
-                                    .emptySize(7)
-                                    .emptyColor('#ccc')
-                                    .emptyOpacity(0.7)
-                                    .excludedSize(7)
-                                    .excludedColor('#ccc')
-                                    .excludedOpacity(0.7)
-                                    .renderHorizontalGridLines(true)
-                                    .renderVerticalGridLines(true);
-                                chart.xAxis().ticks(3)
-                                chart.yAxis().ticks(6);
-                                chart.on('postRender', function (chart) {
-                                    // remove axes unless at left or bottom
-                                    if (!showXAxis)
-                                        chart.select('.x.axis').attr('display', 'none');
-                                    if (!showYAxis)
-                                        chart.select('.y.axis').attr('display', 'none');
-                                    // remove clip path, allow dots to display outside
-                                    chart.select('.chart-body').attr('clip-path', null);
-                                });
-                                // only filter on one chart at a time
-                                chart.on('filtered', function (_, filter) {
-                                    if (!filter)
+
+
+
+                d3.csv('data/dataScatter.csv').then(function (analyte) {
+                    analyte.forEach(function (d) {
+                        Object.keys(fields).forEach(function (ab) {
+                            d[fields[ab]] = +d[fields[ab]];
+                        });
+                    });
+                    var data = crossfilter(analyte);
+
+                    function make_dimension(var1, var2) {
+                        return data.dimension(function (d) {
+                            return [d[var1], d[var2], d.wellUse];
+                        });
+                    }
+
+                    function key_part(i) {
+                        return function (kv) {
+                            return kv.key[i];
+                        };
+                    }
+
+                    var charts = [];
+
+                    d3.select('#content')
+                        .selectAll('tr').data(rows)
+                        .enter().append('tr').attr('class', function (d) {
+                            return d === 'heading' ? 'heading row' : 'row';
+                        })
+                        .each(function (row, y) {
+                            d3.select(this).selectAll('td').data(cols)
+                                .enter().append('td').attr('class', function (d) {
+                                    return d === 'heading' ? 'heading entry' : 'entry';
+                                })
+                                .each(function (col, x) {
+                                    var cdiv = d3.select(this).append('div')
+                                    if (row === 'heading') {
+                                        if (col !== 'heading')
+                                            cdiv.text(col.replace('_', ' '))
                                         return;
-                                    charts.forEach(function (c) {
-                                        if (c !== chart)
-                                            c.filter(null);
+                                    }
+                                    else if (col === 'heading') {
+                                        cdiv.text(row.replace('_', ' '))
+                                        return;
+                                    }
+                                    cdiv.attr('class', 'chart-holder');
+                                    var chart = new dc.ScatterPlot(cdiv);
+                                    var dim = make_dimension(col, row),
+                                        group = dim.group();
+                                    var showYAxis = x === 1, showXAxis = y === 4;
+                                    chart
+                                        .transitionDuration(0)
+                                        .width(125 + (showYAxis ? 25 : 0))
+                                        .height(125 + (showXAxis ? 20 : 0))
+                                        .margins({
+                                            left: showYAxis ? 25 : 8,
+                                            top: 5,
+                                            right: 2.75,
+                                            bottom: showXAxis ? 20 : 5
+                                        })
+                                        .dimension(dim).group(group)
+                                        .keyAccessor(key_part(0))
+                                        .valueAccessor(key_part(1))
+                                        .colorAccessor(key_part(2))
+                                        .colorDomain(["Livestock", "Unknown", "Domestic", "Municipal", "Agriculture", "Other", "Independent", "Recreation", "Domestic Irrigation"])
+                                        .ordinalColors(["#f6e8c3", "#01665e", "#dfc27d", "#c7eae5", "#bf812d", "#01665e", "#8c510a", "#35978f", "#80cdc1"])
+                                        .x(d3.scaleLinear()).xAxisPadding("0.001%")
+                                        .y(d3.scaleLinear()).yAxisPadding("0.001%")
+                                        .brushOn(true)
+                                        .elasticX(true)
+                                        .elasticY(true)
+                                        .symbolSize(5)
+                                        .nonemptyOpacity(0.7)
+                                        .emptySize(7)
+                                        .emptyColor('#ccc')
+                                        .emptyOpacity(0.7)
+                                        .excludedSize(7)
+                                        .excludedColor('#ccc')
+                                        .excludedOpacity(0.7)
+                                        .renderHorizontalGridLines(true)
+                                        .renderVerticalGridLines(true);
+                                    chart.xAxis().ticks(3)
+                                    chart.yAxis().ticks(6);
+                                    chart.on('postRender', function (chart) {
+                                        // remove axes unless at left or bottom
+                                        if (!showXAxis)
+                                            chart.select('.x.axis').attr('display', 'none');
+                                        if (!showYAxis)
+                                            chart.select('.y.axis').attr('display', 'none');
+                                        // remove clip path, allow dots to display outside
+                                        chart.select('.chart-body').attr('clip-path', null);
                                     });
+                                    // only filter on one chart at a time
+                                    chart.on('filtered', function (_, filter) {
+                                        if (!filter)
+                                            return;
+                                        charts.forEach(function (c) {
+                                            if (c !== chart)
+                                                c.filter(null);
+                                        });
+                                    });
+                                    charts.push(chart);
                                 });
-                                charts.push(chart);
-                            });
-                    });
-                // alert(charts.length);
-                dc.renderAll();
-            });
+                        });
+                    // alert(charts.length);
+                    dc.renderAll();
+                });
+
+            // });
         });
     }
 
