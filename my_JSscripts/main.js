@@ -123,8 +123,8 @@ window.onload = function () {
             // .xAxisLabel('Calcium')
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-        caCountChart.xAxis().ticks(10);
-        caCountChart.yAxis().ticks(5);
+        caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
+        caCountChart.yAxis().tickValues([0, 3, 6, 9, 12]);
 
         uCountChart
             .width(250)
@@ -323,6 +323,14 @@ window.onload = function () {
     window.input3 = "Ra_Total";
     window.input4 = "U";
 
+    //event listeners to update after clicking "update plots button".
+    plotBtn_eventlisteners = document.getElementById("updatePlot_btn");
+    plotBtn_eventlisteners.addEventListener("click", () => {
+
+        selectAnalyte();
+        updateScatterplotMatrix();
+        
+         });
 
     // Scatterplot matrix
     // Event handler for d3 version
@@ -351,7 +359,6 @@ window.onload = function () {
             } else {
                 d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
             }
-            alert(fields[0]);
 
             d3.csv('data/dataScatter.csv').then(function (analyte) {
                 analyte.forEach(function (d) {
@@ -454,7 +461,6 @@ window.onload = function () {
                                 charts.push(chart);
                             });
                     });
-                    alert(charts.length);
                 dc.renderAll();
             });
         });
