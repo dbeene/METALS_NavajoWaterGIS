@@ -259,49 +259,49 @@ window.onload = function () {
                         + "<dt><span style='font-weight:bolder'>Well Use: </span> </dt> <dd>" + d.properties.USE + ";<dd>"
                         + "<dt><span style='font-weight:bolder'>Alkalinity: </span> </dt> <dd>" + d.properties.Alkalinity + ";<dd>"
                         + "<dt><span style='font-weight:bolder'>Total Alkalinity: </span> </dt> <dd>" + d.properties.Alkalinity_Total + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>As: </span> </dt> <dd>" + d.properties.As_ + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Ba: </span> </dt> <dd>" + d.properties.Ba + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Be: </span> </dt> <dd>" + d.properties.Be + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Br: </span> </dt> <dd>" + d.properties.Br_ + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Ca: </span> </dt> <dd>" + d.properties.Ca + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Cd: </span> </dt> <dd>" + d.properties.Cd + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Cl :" + d.properties.Cl_ + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Conductivity: </span> </dt> <dd>" + d.properties.Conductivity + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Cr: </span> </dt> <dd>" + d.properties.Cr + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>DO: </span> </dt> <dd>" + d.properties.DO + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>As (&mu;g/L): </span> </dt> <dd>" + d.properties.As_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ba (&mu;g/L): </span> </dt> <dd>" + d.properties.Ba + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Be (&mu;g/L): </span> </dt> <dd>" + d.properties.Be + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Br (mg/L): </span> </dt> <dd>" + d.properties.Br_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ca (mg/L): </span> </dt> <dd>" + d.properties.Ca + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cd (&mu;g/L): </span> </dt> <dd>" + d.properties.Cd + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cl (mg/L): </span> </dt> <dd>" + d.properties.Cl_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Conductivity (&mu;s/cm): </span> </dt> <dd>" + d.properties.Conductivity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Cr (&mu;g/L): </span> </dt> <dd>" + d.properties.Cr + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>DO (mg/L): </span> </dt> <dd>" + d.properties.DO + ";<dd>"
                         + "<dt><span style='font-weight:bolder'>Electrical Conductivity: </span> </dt> <dd>" + d.properties.ElectricalConductivity + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Gross Alpha 2 Sigma Comb. Uncertainty: </span> </dt> <dd>" + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Gross Alpha: </span> </dt> <dd>" + d.properties.GrossAlpha + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Gross Alpha: U Nat: </span> </dt> <dd>" + d.properties.GrossAlpha_U_Nat + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Gross Beta 1: </span> </dt> <dd>" + d.properties.GrossBeta + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Gross Beta: Cs 137: </span> </dt> <dd>" + d.properties.GrossBeta_Cs137 + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Gross Beta: Sr Y90: </span> </dt> <dd>" + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Hardness: </span> </dt> <dd>" + d.properties.Hardness + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Total Hardness: </span> </dt> <dd>" + d.properties.Hardness_Total + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Hg: </span> </dt> <dd>" + d.properties.Hg + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Hydroxide: </span> </dt> <dd>" + d.properties.Hydroxide + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>K: </span> </dt> <dd>" + d.properties.K + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Mg: </span> </dt> <dd>" + d.properties.Mg + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Mn: </span> </dt> <dd>" + d.properties.Mn + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Na: </span> </dt> <dd>" + d.properties.Na + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha 2 Sigma Comb. Uncertainty (pCi/L): </span> </dt> <dd>" + d.properties.Gross_alpha__2_sigma_combined_uncertainty + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha (pCi/L): </span> </dt> <dd>" + d.properties.GrossAlpha + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Alpha: U Nat (pCi/L): </span> </dt> <dd>" + d.properties.GrossAlpha_U_Nat + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta 1 (pCi/L): </span> </dt> <dd>" + d.properties.GrossBeta + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta: Cs 137 (pCi/L): </span> </dt> <dd>" + d.properties.GrossBeta_Cs137 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Gross Beta: Sr Y90 (pCi/L): </span> </dt> <dd>" + d.properties.GrossBeta_Sr_Y90 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hardness (mg/L as CaCO3): </span> </dt> <dd>" + d.properties.Hardness + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Total Hardness (mg/L): </span> </dt> <dd>" + d.properties.Hardness_Total + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hg (&mu;g/L): </span> </dt> <dd>" + d.properties.Hg + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Hydroxide (mg/L): </span> </dt> <dd>" + d.properties.Hydroxide + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>K (mg/L): </span> </dt> <dd>" + d.properties.K + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Mg (mg/L): </span> </dt> <dd>" + d.properties.Mg + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Mn (&mu;g/L): </span> </dt> <dd>" + d.properties.Mn + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na (mg/L): </span> </dt> <dd>" + d.properties.Na + ";<dd>"
                         + "<dt><span style='font-weight:bolder'>Na Adsorption Ratio: </span> </dt> <dd>" + d.properties.Na_AdsorptionRatio + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Na Fraction Cations: </span> </dt> <dd>" + d.properties.Na_FractionCations + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Na_K: </span> </dt> <dd>" + d.properties.Na_K + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Nitrate: </span> </dt> <dd>" + d.properties.Nitrate + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Nitrate_Nitrite: </span> </dt> <dd>" + d.properties.Nitrate_Nitrite + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>NO2: </span> </dt> <dd>" + d.properties.NO2_ + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>NO3: </span> </dt> <dd>" + d.properties.NO3_ + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>ORP: </span> </dt> <dd>" + d.properties.ORP + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Pb: </span> </dt> <dd>" + d.properties.Pb + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Ra 226: </span> </dt> <dd>" + d.properties.Ra_226 + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Ra 228: </span> </dt> <dd>" + d.properties.Ra_228 + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Ra Total: </span> </dt> <dd>" + d.properties.Ra_Total + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Sb: </span> </dt> <dd>" + d.properties.Sb + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Se: </span> </dt> <dd>" + d.properties.Se + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Temperature: </span> </dt> <dd>" + d.properties.Temperature + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Tl: </span> </dt> <dd>" + d.properties.Tl + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>Turbidity: </span> </dt> <dd>" + d.properties.Turbidity + ";<dd>"
-                        + "<dt><span style='font-weight:bolder'>U: </span> </dt> <dd>" + d.properties.U + "<dt><dl>"
+                        + "<dt><span style='font-weight:bolder'>Na Fraction Cations (%): </span> </dt> <dd>" + d.properties.Na_FractionCations + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Na_K (mg/L as Na): </span> </dt> <dd>" + d.properties.Na_K + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Nitrate (mg/L): </span> </dt> <dd>" + d.properties.Nitrate + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Nitrate_Nitrite (mg/L): </span> </dt> <dd>" + d.properties.Nitrate_Nitrite + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>NO2 (mg/L as N): </span> </dt> <dd>" + d.properties.NO2_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>NO3 (mg/L as N): </span> </dt> <dd>" + d.properties.NO3_ + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>ORP (mV): </span> </dt> <dd>" + d.properties.ORP + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Pb (&mu;g/L): </span> </dt> <dd>" + d.properties.Pb + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra 226 (pCi/L): </span> </dt> <dd>" + d.properties.Ra_226 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra 228 (pCi/L): </span> </dt> <dd>" + d.properties.Ra_228 + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Ra Total (pCi/L): </span> </dt> <dd>" + d.properties.Ra_Total + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Sb (&mu;g/L): </span> </dt> <dd>" + d.properties.Sb + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Se (&mu;g/L): </span> </dt> <dd>" + d.properties.Se + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Temperature (&deg;C): </span> </dt> <dd>" + d.properties.Temperature + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Tl (&mu;g/L): </span> </dt> <dd>" + d.properties.Tl + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>Turbidity (NTU): </span> </dt> <dd>" + d.properties.Turbidity + ";<dd>"
+                        + "<dt><span style='font-weight:bolder'>U  (&mu;g/L): </span> </dt> <dd>" + d.properties.U + "<dt><dl>"
                         + "</dl>"
                     );
                     wellMarkers.addLayer(marker);
@@ -328,18 +328,20 @@ window.onload = function () {
         });
 
         require(["d3", "dc"], function (d3, dc) {
-            var fields = ['As_', 'Ca', 'Ra_Total', 'U'];
+            // var fields = ['As_', 'Ca', 'Ra_Total', 'U'];
+            var fields = ['Ba',	'Ca', 'Cl_', 'None']
             var rows = ['heading'].concat(fields.slice(0).reverse()),
                 cols = ['heading'].concat(fields);
+                alert(cols[1]);
 
-            if (location.search.indexOf('nowait') !== -1) {
-                dc.constants.EVENT_DELAY = 0;
-                d3.select('#wait-verb').text('remove')
-                d3.select('#wait-prep').text('with');
-                d3.select('#wait-url').attr('href', location.origin + location.pathname);
-            } else {
-                d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
-            }
+            // if (location.search.indexOf('nowait') !== -1) {
+            //     dc.constants.EVENT_DELAY = 0;
+            //     d3.select('#wait-verb').text('remove')
+            //     d3.select('#wait-prep').text('with');
+            //     d3.select('#wait-url').attr('href', location.origin + location.pathname);
+            // } else {
+            //     d3.select('#wait-url').attr('href', location.origin + location.pathname + '?nowait');
+            // }
 
             d3.csv('data/dataScatter.csv').then(function (analyte) {
                 analyte.forEach(function (d) {
@@ -1784,7 +1786,7 @@ function selectAnalyte() {
                                     // remove clip path, allow dots to display outside
                                     chart.select('.chart-body').attr('clip-path', null);
                                 });
-                                charts.push(chart);
+                                // charts.push(chart);
                                 // only filter on one chart at a time
                                 chart.on('filtered', function (_, filter) {
 
@@ -1795,11 +1797,11 @@ function selectAnalyte() {
                                             c.filter(null);
                                     });
                                 });
-                                //charts.push(chart);
+                                charts.push(chart);
                                
                             });
                     });
-                    alert(charts.length);
+                    // alert(charts.length);
                 dc.renderAll();
             });
         });
