@@ -470,7 +470,7 @@ window.onload = function () {
     //the value if selected analyte from dropwdown 1 is stored in input 1
     selected1 = document.getElementById("selectbox1");
     input1 = selected1.options[selected1.selectedIndex].value;
-    
+
     //the value if selected analyte from dropwdown 2 is stored in input 2
      selected2 = document.getElementById("selectbox2");
      input2 = selected2.options[selected2.selectedIndex].value;
@@ -1676,7 +1676,6 @@ window.onload = function () {
         //the value if selected analyte from dropwdown 3 is stored in input 3
         var selected3 = document.getElementById("selectbox3");
         var input3 = selected3.options[selected3.selectedIndex].value;
-        alert("input3:" + input3)
     
         //the value if selected analyte from dropwdown 4 is stored in input 4
         var selected4 = document.getElementById("selectbox4");
@@ -1814,5 +1813,4 @@ window.onload = function () {
 
     //Call function to render scatterplot
     graphicviz();
-}
 }
