@@ -173,26 +173,12 @@ text {
 .legend {
   text-align: center;
 }
-.dot-ind {
-  height: 10px;
-  width: 10px;
-  background-color: #8c510a;
-  border-radius: 50%;
-  display: inline-block;
-}
 
-.dot-agr {
-  height: 10px;
-  width: 10px;
-  background-color: #bf812d;
-  border-radius: 50%;
-  display: inline-block;
-}
 
 .dot-dom {
   height: 10px;
   width: 10px;
-  background-color: #dfc27d;
+  background-color: #018571;
   border-radius: 50%;
   display: inline-block;
 }
@@ -200,7 +186,7 @@ text {
 .dot-liv {
   height: 10px;
   width: 10px;
-  background-color: #f6e8c3;
+  background-color: #a6611a;
   border-radius: 50%;
   display: inline-block;
 }
@@ -208,35 +194,26 @@ text {
 .dot-mun {
   height: 10px;
   width: 10px;
-  background-color: #c7eae5;
-  border-radius: 50%;
-  display: inline-block;
-}
-
-.dot-dir {
-  height: 10px;
-  width: 10px;
   background-color: #80cdc1;
   border-radius: 50%;
   display: inline-block;
 }
 
-.dot-rec {
+.dot-oth{
   height: 10px;
   width: 10px;
-  background-color: #35978f;
+  background-color: #dfc27d;
   border-radius: 50%;
-  display: inline-block;
+  display: inline-block;  
 }
 
 .dot-unk {
   height: 10px;
   width: 10px;
-  background-color: #657e7c;
+  background-color: #666666;
   border-radius: 50%;
   display: inline-block;
 }
-
 .update-button{
   padding-top: 10px;
   padding-bottom: 10px;

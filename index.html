@@ -22,7 +22,7 @@
     <script type="text/javascript" src="JS_CSS_downladed_libraries/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="JS_CSS_downladed_libraries/leaflet.js"></script>
     <script type="text/javascript" src="JS_CSS_downladed_libraries/leaflet.markercluster.js"></script>
-    <script type="text/javascript" src="data/nnWells.js"></script>
+    <!-- <script type="text/javascript" src="data/nnWells.js"></script> -->
     <script type="text/javascript" src="JS_CSS_downladed_libraries/d3.js"></script>
     <script type="text/javascript" src="JS_CSS_downladed_libraries/crossfilter.js"></script>
     <script type="text/javascript" src="JS_CSS_downladed_libraries/dc.js"></script>
@@ -35,10 +35,7 @@
     <!--Fixed position website title with counter of data records displayed-->
     <nav class="navbar navbar-default navbar-fixed-top fixed-top">
         <div class="container">
-            <div class="col-md-1">
-                <a href="https://hsc.unm.edu/pharmacy/research/areas/metals/" target="_blank">
-                    <img src="myCSS_styleFiles/images/metals-logo.png" width="65px" height="65px">
-            </div>
+
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                     <span class="icon-bar"></span>
@@ -68,29 +65,49 @@
                                     </div>
                                     <div class="modal-body">
                                         <p>
+                                            This project is supported by the Agnese Nelms Haury Program in Environment
+                                            and Social
+                                            Justice at the University of Arizona, NIH National Institute of
+                                            Environmental
+                                            Health Sciences (NIEHS) grant no. 1R25ES013208-01 and NIEHS grant no.
+                                            5P42ES025589-04.<br><br>
                                             The aim of this website is to allow users to make informed inferences and
-                                            decisions about the quality of unregulated water sources on the Navajo Nation.
-                                            Nearly 30% of households in the Navajo Nation, a sovereign Indigenous nation in
+                                            decisions about the quality of unregulated water sources on the Navajo
+                                            Nation.
+                                            Nearly 30% of households in the Navajo Nation, a sovereign Indigenous nation
+                                            in
                                             the Southwestern United States, lack access to running water from regulated
-                                            public water systems. Water hauling from unregulated water sources is common in
+                                            public water systems. Water hauling from unregulated water sources is common
+                                            in
                                             this region and may present a disproportionate burden of exposure to harmful
                                             toxicants like uranium and arsenic. Research shows that wells in closer
                                             proximity to one of the more than 500 abandoned uranium mines on the Navajo
                                             Nation have higher counts of uranium and arsenic that exceed the federally
-                                            mandated maximum contaminant level for each, 10 ppb and 30 ppm, respectively.
-                                            One of the main challenges in addressing this problem is the lack of available
-                                            information to water users and decision-makers in the Navajo Nation about which
+                                            mandated maximum contaminant level for each, 10 ppb and 30 ppm,
+                                            respectively.
+                                            One of the main challenges in addressing this problem is the lack of
+                                            available
+                                            information to water users and decision-makers in the Navajo Nation about
+                                            which
                                             wells are unsafe.<br><br>
                                             Researchers at the <b>University of New Mexico METALS Superfund Research
-                                                Program</b>
-                                            have compiled a database of water quality measurements from 1101 wells within
-                                            the reservation using data from the U.S. Geological Survey (USGS), Church Rock
-                                            Uranium Monitoring Project (CRUMP), Navajo Nation Environmental Protection
-                                            Agency (NNEPA), U.S. Centers for Disease Control (CDC), Tolani Lake Enterprises,
-                                            Northern Arizona University (NAU), U.S. Army Corps of Engineers (ACOE), and
-                                            other fellow researchers. <i>To date, none of these compiled data have been
-                                                disseminated publicly</i> and in a format that facilitates easy
-                                            interpretation.
+                                                Program</b>,
+                                            the <b>University of Arizona</b>, <b>Northern Arizona University</b>, and
+                                            the
+                                            <b>Southwest Research and Information Center</b> have compiled a database of
+                                            water
+                                            quality measurements from 1101 wells within the reservation using data from
+                                            the
+                                            U.S. Geological Survey (USGS), Church Rock Uranium Monitoring Project
+                                            (CRUMP),
+                                            Navajo Nation Environmental Protection Agency (NNEPA), U.S. Centers for
+                                            Disease
+                                            Control (CDC), Tolani Lake Enterprises, Northern Arizona University (NAU),
+                                            U.S. Army Corps of Engineers (ACOE), and other fellow researchers. <i>To
+                                                date, none
+                                                of these compiled data have been disseminated publicly</i> and in a
+                                            format that
+                                            facilitates easy interpretation.
                                         </p>
                                     </div>
                                     <div class="modal-header">
@@ -98,21 +115,33 @@
                                     </div>
                                     <div class="modal-body">
                                         <p>
-                                            The dataset used in this map has been cleaned and converted from long to wide
+                                            The data presented in this map does not represent the totality of all wells
+                                            in the
+                                            Navajo Nation. Rather, this tool is a compilation of all available data, and
+                                            as such
+                                            should not be interpreted as a definitive or complete record of all wells in
+                                            the region.
+                                            The dataset used in this map has been cleaned and converted from long to
+                                            wide
                                             format. In total, the dataset includes details of 1101 wells with location
                                             information from publicly available sources. Each data point in the table
                                             represents an aggregation of all data points from the sources listed above.
-                                            Uranium measurements are converted from radioactive activity in picocuries per
+                                            Uranium measurements are converted from radioactive activity in picocuries
+                                            per
                                             liter (pCi/L) to mass in micrograms per liter (ug/L) by dividing pCi/L by an
                                             assumed constant of 0.67. Multiple measurements for each well are combined
                                             according to type, where primary standard analytes, which includes
                                             radionuclides, metals, and metalloids, are aggregated by median value; water
                                             chemistry analytes, which includes pH and hardness, are aggregated by the
                                             arithmetic mean. Measurements that are below the detection limit (BDL) are
-                                            excluded from the dataset for two reasons: first, detection limits vary by the
-                                            lab and are not always reported, so imputation is inconsistent; second, because
-                                            the primary intent of this map is visualization we have opted to favor ease of
-                                            use over various sensitivity analyses. Information on data sources and cleaning
+                                            excluded from the dataset for two reasons: first, detection limits vary by
+                                            the
+                                            lab and are not always reported, so imputation is inconsistent; second,
+                                            because
+                                            the primary intent of this map is visualization we have opted to favor ease
+                                            of
+                                            use over various sensitivity analyses. Information on data sources and
+                                            cleaning
                                             will be displayed and clearly articulated in a modal window.
                                         </p>
                                     </div>
@@ -121,7 +150,127 @@
                                     </div>
                                     <div class="modal-body">
                                         <p>
-                                            Download the raw data <a href="data/resultsPublic.csv" target="_blank">here.</a>
+                                            Download the raw data <a href="data/resultsPublic.csv"
+                                                target="_blank">here.</a>
+                                        </p>
+                                    </div>
+                                    <div class="modal-header">
+                                        <h2>References:</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            [1] Breit, G. (2007). Selected USGS Water Samples for the Bidahochi Area of
+                                            the
+                                            Southern AUM Region of the Navajo Nation [Point Shapefile]. U.S. Geological
+                                            Survey.<br><br>
+                                            [2] Centers for Disease Control and Prevention. (2010). Navajo Nation
+                                            Unregulated Water Source Sampling Results: October 2009 Sampling Event.
+                                            Drinking Water Office, WTR-6, USEPA Region 9.<br><br>
+                                            [3] Church Rock Uranium Monitoring Project (CRUMP). (2003). [Point
+                                            Shapefile].<br><br>
+                                            [4] Credo, J., Torkelson, J., Rock, T., & Ingram, J. C. (2019).
+                                            Quantification
+                                            of Elemental Contaminants in Unregulated Water across Western Navajo Nation.
+                                            International Journal of Environmental Research and Public Health, 16(15),
+                                            2727. <a href="https://doi.org/10.3390/ijerph16152727" target="_blank">
+                                                https://doi.org/10.3390/ijerph16152727</a><br><br>
+                                            [5] Hoover, J., Coker, E., Barney, Y., Shuey, C., & Lewis, J. (2018).
+                                            Spatial
+                                            clustering of metal and metalloid mixtures in unregulated water sources on
+                                            the Navajo Nation – Arizona, New Mexico, and Utah, USA. Science of The Total
+                                            Environment, 633, 1667–1678. <a
+                                                href="https://doi.org/10.1016/j.scitotenv.2018.02.288" target="_blank">
+                                                https://doi.org/10.1016/j.scitotenv.2018.02.288</a><br><br>
+                                            [6] Hoover, J., Erdei, E., Nash, J., & Gonzales, M. (2019). A Review of
+                                            Metal
+                                            Exposure Studies Conducted in the Rural Southwestern and Mountain West
+                                            Region of the United States. Current Epidemiology Reports, 6(1), 34–49.
+                                            <a href="https://doi.org/10.1007/s40471-019-0182-3" target="_blank">
+                                            https://doi.org/10.1007/s40471-019-0182-3</a><br><br>
+                                            [7] Hoover, J., Gonzales, M., Shuey, C., Barney, Y., & Lewis, J. (2017).
+                                            Elevated Arsenic and Uranium Concentrations in Unregulated Water Sources on
+                                            the Navajo Nation, USA. Exposure and Health, 9(2), 113–124. <a
+                                                href="https://doi.org/10.1007/s12403-016-0226-6" target="_blank">
+                                            https://doi.org/10.1007/s12403-016-0226-6</a><br><br>
+                                            [8] Lewis, J., Hoover, J., & MacKenzie, D. (2017). Mining and Environmental
+                                            Health Disparities in Native American Communities. Current Environmental
+                                            Health Reports, 4(2), 130–141. <a
+                                                href="https://doi.org/10.1007/s40572-017-0140-5" target="_blank">
+                                            https://doi.org/10.1007/s40572-017-0140-5</a><br><br>
+                                            [9] Ingram, J. C., Jones, L., Credo, J., & Rock, T. (2020). Uranium and
+                                            arsenic
+                                            unregulated water issues on Navajo lands. Journal of Vacuum Science &
+                                            Technology A, 38(3), 031003. <a href="https://doi.org/10.1116/1.5142283"
+                                                target="_blank">https://doi.org/10.1116/1.5142283</a><br><br>
+                                            [10] Jones, L., Credo, J., Parnell, R., & Ingram, J. C. (2020). Dissolved
+                                            Uranium
+                                            and Arsenic in Unregulated Groundwater Sources – Western Navajo Nation.
+                                            Journal of Contemporary Water Research & Education, 169(1), 27–43. <a
+                                                href="https://doi.org/10.1111/j.1936-704X.2020.03330.x"
+                                                target="_blank">
+                                            https://doi.org/10.1111/j.1936-704X.2020.03330.x</a><br><br>
+                                            [11] Longsworth, S. A. (1994). Geohydrology and Water Chemistry of Abandoned
+                                            Uranium Mines and Radiochemistry of Spoil-material Leachate, Monument Valley
+                                            and Cameron Areas, Arizona and Utah. U.S. Geological Survey.<br><br>
+                                            [12] Navajo Nation Environmental Protection Agency. (2004). Water Sampling
+                                            Locations and Results from a Sanitary Assessment of Drinking Water Used by
+                                            Navajo Residents Not Connected to Public Water Systems [Point Shapefile].
+                                            Navajo Nation Environmental Protection Agency.<br><br>
+                                            [13] Rock, T. (2017). Developing Policy around Uranium Contamination on the
+                                            Navajo Nation Using Traditional Ecological Knowledge [Ph.D., Northern
+                                            Arizona University]. <a
+                                                href="http://search.proquest.com/docview/1994442794/abstract/FEF64979FA21433APQ/1"
+                                                target="_blank">
+                                            http://search.proquest.com/docview/1994442794/abstract/FEF64979FA21433APQ/1</a><br><br>
+                                            [14] Southwest Resource Information Center (SRIC). (1988). Puerco River
+                                            Education
+                                            Project Data (1985-1988).<br><br>
+                                            [15] U.S. Army Corps of Engineers. (2000). U.S. Army Corps Of Engineers
+                                            Water
+                                            Sampling [Point Shapefile]. U.S. Environmental Protection Agency.<br><br>
+                                            [16] U.S. Environmental Protection Agency. (n.d.). Superfund Technical
+                                            Assessment
+                                            and Response Team (START).<br><br>
+                                            [17] U.S. Environmental Protection Agency. (2008). Navajo Nation Drinking
+                                            Water
+                                            Source Sampling 2008.<br><br>
+                                            [18] U.S. Environmental Protection Agency. (2009). Navajo Nation Unregulated
+                                            Wells Sampling Results.<br><br>
+                                            [19] U.S. Office of Navajo and Hopi Indian Relocation (1997). Effects of Uranium-mining
+                                            Releases on Ground-water Quality in the Puerco River Basin, Arizona and New
+                                            Mexico. U.S. Department of the Interior, U.S. Geological Survey.<br><br>
+                                            [20] Water Resources of the United States—National Water Information System
+                                            (NWIS) Mapper. (n.d.). Retrieved March 12, 2021, from <a
+                                                href="https://maps.waterdata.usgs.gov/mapper/index.html"
+                                                target="_blank">
+                                            https://maps.waterdata.usgs.gov/mapper/index.html</a><br><br>
+                                            [21] Wirt, L., Van Metre, P. C., & Favor, B. (1991). Historical
+                                            Water-Quality
+                                            Data, Puerco River Basin, Arizona and New Mexico (Open-File Report 91-196;
+                                            Open-File Report). U.S. Geological Survey.<br>
+
+
+                                        </p>
+                                    </div>
+                                    <div class="modal-header">
+                                        <h2>Acknowledgements:</h2>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            The data presented in this app is a collaboration between researchers at the
+                                            <b>University of New Mexico METALS Superfund Research Program</b>, the
+                                            <b>University of Arizona</b>,
+                                            <b>Northern Arizona University</b>, and the <b>Southwest Research and
+                                                Information Center</b>, and is funded by the <b>Agnese Nelms Haury
+                                                Foundation</b> at
+                                            the University of Arizona.<br><br>
+                                            Much of the data visualization used in this app is based on the examples
+                                            linked
+                                            below.<br>
+                                            <a href="https://github.com/austinlyons/dcjs-leaflet-untappd"
+                                                target="_blank">Austin Lyons - Dc.js Leaflet Untapped</a><br>
+                                            <a href="https://dc-js.github.io/dc.js/examples/splom.html"
+                                                target="_blank">Scatterplot Matrix Brushing in dc.js</a><br>
                                         </p>
                                     </div>
                                     <div class="modal-header">
@@ -132,33 +281,40 @@
                                             <a href="https://dbeene.github.io/" target="_blank">Daniel Beene</a>
                                             (darbeene@salud.unm.edu), Team Member, University of New Mexico<br>
                                             <a href="https://manideeppotluru.github.io/" target="_blank">Manideep
-                                                Potluru</a> (mpotluru@unm.edu), Team Member, University of New Mexico<br>
+                                                Potluru</a> (mpotluru@unm.edu), Team Member, University of New
+                                            Mexico<br>
                                             <a href="https://www.lipingyang.org/" target="_blank">Dr. Liping Yang</a>
-                                            (lipingyang@unm.edu), Ph.D., Project Advisor, University of New Mexico<br><br>
-                                        </p>
-                                    </div>
-                                    <div class="modal-header">
-                                        <h2>Acknowledgements:</h2>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>
-                                            Much of the data visualization used in this app is based on the examples linked
-                                            below.<br>
-                                            <a href="https://github.com/austinlyons/dcjs-leaflet-untappd"
-                                                target="_blank">Austin Lyons - Dc.js Leaflet Untapped</a><br>
-                                            <a href="https://dc-js.github.io/dc.js/examples/splom.html"
-                                                target="_blank">Scatterplot Matrix Brushing in dc.js</a><br>
+                                            (lipingyang@unm.edu), Ph.D., Project Advisor, University of New
+                                            Mexico<br><br>
                                         </p>
                                     </div>
                                     <div class="modal-footer">
-                                        <h3><a href="https://hsc.unm.edu/pharmacy/research/areas/metals/"
-                                                target="_blank">UNM METALS Superfund Research Program Center
-                                                <img src="myCSS_styleFiles/images/metals-logo.png" width="65px"
-                                                    height="65px">
+                                        <div class="col-md-2"></div>
+                                        <div class="col-md-1">
+                                            <a href="https://hsc.unm.edu/pharmacy/research/areas/metals/"
+                                                target="_blank">
+                                                <img src="myCSS_styleFiles/images/metals-logo.png" height="55px">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="https://www.haury.arizona.edu/" target="_blank">
+                                                <img src="myCSS_styleFiles/images/haury-foundation.jpg" height="55px">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="https://www.arizona.edu/" target="_blank">
+                                                <img src="myCSS_styleFiles/images/ua-logo.png" height="55px">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="https://nau.edu/" target="_blank">
+                                                <img src="myCSS_styleFiles/images/nau-logo.png" height="55px">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <a href="https://hsc.unm.edu/pharmacy/" target="_blank">
+                                                <img src="myCSS_styleFiles/images/unm-cop-logo.png" height="55px">
+                                        </div>
                                         </h3></a>
                                     </div>
                                 </div>
-    
+
                             </div>
                         </div>
                     </ul>
@@ -179,22 +335,16 @@
     <div id="section2" class="container">
         <div class="row legend">
             <strong>Well Use: </strong>
-            <span class="dot-ind"></span>
-            Independent
-            <span class="dot-agr"></span>
-            Agriculture
             <span class="dot-dom"></span>
             Domestic
             <span class="dot-liv"></span>
             Livestock
             <span class="dot-mun"></span>
             Municipal
-            <span class="dot-dir"></span>
-            Domestic Irrigation
-            <span class="dot-rec"></span>
-            Recreation
+            <span class="dot-oth"></span>
+            Other
             <span class="dot-unk"></span>
-            Other/Unknown
+            Unknown
         </div>
     </div>
     <!--Plots-->
@@ -203,14 +353,15 @@
             <div class="col text-center update-button">
                 <h3><strong>Data Dashboard</strong></h3>
                 <!--Update plots button-->
-                <input id="updatePlot_btn" type= "button" value = "Update Plots" style ="font-weight: bold; text-align: center; padding-left: 10px; padding-right: 10px;" />
+                <input id="updatePlot_btn" type="button" value="Update Plots"
+                    style="font-weight: bold; text-align: center; padding-left: 10px; padding-right: 10px;" />
             </div>
 
             <div class="col-xs-6">
                 <div class="col-xs-6">
                     <div class="dc-chart" id="histogram1"></div>
                     <select class="col-md-12 text-center" id="selectbox1">
-                        <option value="As_">
+                        <option value="As">
                             Arsenic (&mu;g/L)
                         </option>
                         <option value="Ba">
@@ -253,7 +404,7 @@
                         <option value="Ca">
                             Calcium (mg/L)
                         </option>
-                        <option value="As_">
+                        <option value="As">
                             Arsenic (&mu;g/L)
                         </option>
                         <option value="Ba">
@@ -296,7 +447,7 @@
                         <option value="Ra_Total">
                             Radium_Total (&mu;g/L)
                         </option>
-                        <option value="As_">
+                        <option value="As">
                             Arsenic (&mu;g/L)
                         </option>
                         <option value="Ba">
@@ -336,7 +487,7 @@
                         <option value="U">
                             Uranium (&mu;g/L)
                         </option>
-                        <option value="As_">
+                        <option value="As">
                             Arsenic (&mu;g/L)
                         </option>
                         <option value="Ba">
@@ -388,7 +539,7 @@
                 </div>
                 <div class="col-xs-3">
                     <ul class="nav navbar-nav navbar-right" id="data-count">
-                        <h1><b>1,101</b></h1>
+                        <h1><b>1,116</b></h1>
                         <p style="text-align: center"><i>total records</p></i>
                     </ul>
                 </div>
@@ -396,27 +547,27 @@
         </div>
     </div>
     <!--Data table-->
-        <div id="section3" class="row dashboard">
-            <div class="col text-center update-button">
-                <h3><strong>Data Table</strong></h3>
-            </div>
-            <div class="container-fluid">
-                <div class="row dashboard">
-                    <div class="col-md-12">
-                        <table class="table table-bordered table-striped" id="data-table">
-                            <thead>
-                                <tr class="header">
-                                    <th>Well_ID</th>
-                                    <th>Analyte1</th>
-                                    <th>Analyte2</th>
-                                    <th>Analyte3</th>
-                                    <th>Analyte4</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+    <div id="section3" class="row dashboard">
+        <div class="col text-center update-button">
+            <h3><strong>Data Table</strong></h3>
+        </div>
+        <div class="container-fluid">
+            <div class="row dashboard">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-striped" id="data-table">
+                        <thead>
+                            <tr class="header">
+                                <th>Well_ID</th>
+                                <th>Analyte1</th>
+                                <th>Analyte2</th>
+                                <th>Analyte3</th>
+                                <th>Analyte4</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
+        </div>
 </body>
 
 </html>
