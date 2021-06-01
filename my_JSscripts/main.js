@@ -1,7 +1,3 @@
-
-
-
-
 window.onload = function () {
 
     // Call leaflet map into map frame
@@ -16,29 +12,129 @@ window.onload = function () {
     });
     HikeBike_HikeBike.addTo(map);
 
+    var esri_world = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 19,
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
+    });
+
+    var USGS_USImageryTopo = L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryTopo/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 20,
+        attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
+    });
+
+    // NN Layers
+
+    // City markers
+    var cityMarkers = {
+        radius: 5,
+        fillColor: '#333333',
+        color: '#000000',
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.6
+    };
+
+    // AUM markers
+    var AUMMarkers = {
+        radius: 4,
+        fillColor: '#bd1b1b',
+        color: '#520e0e',
+        weight: 0.5,
+        opacity: 0.8,
+        fillOpacity: 0.6
+    };
+
+    // Cities
+    $.getJSON("data/nnCities.geojson", function (data) {
+        var nnCities = L.geoJson(data, {
+            pointToLayer: function (feature, layer) {
+                return L.circleMarker(layer, cityMarkers)
+            },
+            // style: myStyle,
+            onEachFeature: function (feature, layer) {
+                var cityTooltip = feature.properties.Name
+                layer.bindTooltip(cityTooltip, {
+                    permanent: true,
+                    direction: "auto",
+                    className: "city-labels"
+                }).openTooltip();
+            }
+
+        });
+
+        // AUMs
+        $.getJSON("data/nnAUMs.geojson", function (data) {
+            var nnAUMs = L.geoJson(data, {
+                pointToLayer: function (feature, layer) {
+                    return L.circleMarker(layer, AUMMarkers)
+                },
+                onEachFeature: function (feature, layer) {
+                    var aumPopup = "<b>Name: </b>" + feature.properties.MINE
+                        + "<br><b>Reclamation Status: </b>" + feature.properties.REC_STAT
+                    layer.bindPopup(aumPopup);
+                }
+            })
+
+            // Leaflet layer control
+            var baseMaps = {
+                'Topo': HikeBike_HikeBike,
+                'Sattelite': esri_world,
+                'Hybrid': USGS_USImageryTopo
+            }
+
+            var overlayMaps = {
+                'Cities': nnCities,
+                'AUMs': nnAUMs
+            }
+
+            L.control.layers(baseMaps, overlayMaps).addTo(map);
+        });
+
+    });
+
     "use strict"; //JS strict mode
     // Add control.scale to map
     L.control.scale().addTo(map);
-    // Add chapters layer to map -- need to render underneath circleMarkers
-    var myStyle = {
-        "color": "#dbc38f",
-        "fillColor": "white",
-        "weight": 0.6,
-        "fillOpacity": 0.4
+
+    // Add NN layer to map -- render underneath circleMarkers
+    // Define colors by NN agency for overlay map
+    function getColor(d) {
+        return d == "Chinle" ? '#ffffd4' :
+            d == "Eastern" ? '#fee391' :
+                d == "Fort Defiance" ? '#fec44f' :
+                    d == "Shiprock" ? '#fe9929' :
+                        d == "Western" ? '#d95f0e' :
+                            '#993404';
     }
 
+    // Define style using referenced colors
+    function myStyle(feature) {
+        return {
+            fillColor: getColor(feature.properties.Agency),
+            weight: 1,
+            opacity: 1,
+            // color: '#dbc38f',
+            color: '#9c9076',
+            dashArray: '1.5',
+            fillOpacity: 0.4
+        };
+    }
+
+    // Call in NN layer
     $.getJSON("data/nnChapters.geojson", function (data) {
         // L.geoJson(data).addTo(map);
-        var geojson = L.geoJson(data, {
+        var nnChapters = L.geoJson(data, {
             style: myStyle,
             onEachFeature: function (feature, layer) {
-                var chPopup = "<b>Chapter: <b><br>" + feature.properties.Chapter
+                var chPopup = "<b>Chapter: <b>" + feature.properties.Chapter
+                    + "<br><b>Agency: <b>" + feature.properties.Agency
+                    + "<br><b>Population: <b>" + feature.properties.Population
                 layer.bindPopup(chPopup);
             }
         });
 
-        geojson.addTo(map)
-        geojson.bringToBack();
+        nnChapters.addTo(map)
+        nnChapters.bringToBack();
     });
 
     // Modal window 
@@ -136,14 +232,15 @@ window.onload = function () {
             .group(countPerU)
             .x(d3.scale.linear().domain([0, 700]))
             .y(d3.scale.linear().domain([0, 20]))
+            .xUnits(function () { return 15; })
             .elasticY(false)
             .centerBar(true)
             .barPadding(3)
             // .xAxisLabel('Uranium')
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-        uCountChart.xAxis().tickValues([0, 200, 400, 600]);
-        uCountChart.yAxis().tickValues([0, 5, 10, 15, 20]);
+        uCountChart.xAxis().tickValues([30, 200, 400, 600]);
+        // uCountChart.yAxis().tickValues([0, 5, 10, 15, 20]);
 
 
         as_CountChart
@@ -151,36 +248,37 @@ window.onload = function () {
             .height(250)
             .dimension(AsDim)
             .group(countPerAs)
-            .x(d3.scale.linear().domain([0, 500]))
-            .xUnits(function () { return 10; })
-            .elasticY(true)
+            .x(d3.scale.linear().domain([0, 282]))
+            .y(d3.scale.linear().domain([0, 30]))
+            .xUnits(function () { return 15; })
+            .elasticY(false)
             .centerBar(false)
             .barPadding(3)
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 })
             // Add vertical line at MCL using example from https://github.com/dc-js/dc.js/blob/develop/web-src/examples/row-vertical-line.html
-            .on('pretransition', function (as_CountChart) {
-                var x_vert = 10; // MCL for As is 10
-                var extra_data = [ // Array to define vertical line starting at (MCL, 0)
-                    { x: as_CountChart.x()(x_vert), y: 0 },
-                    { x: as_CountChart.x()(x_vert), y: as_CountChart.effectiveHeight() }
-                ];
-                var line = d3.svg.line()
-                    .x(function (d) { return d.x; })
-                    .y(function (d) { return d.y; })
-                    .interpolate('linear')
-                var chartBody = as_CountChart.select('g');
-                var path = chartBody.selectAll('path.extra').data([extra_data]);
-                path.enter()
-                    .append('path')
-                    .attr('class', 'oeExtra')
-                    .attr('stroke', 'red')
-                    .attr('id', 'oeLine')
-                    .attr("stroke-width", 1.2)
-                    .style("stroke-dasharray", ("10,3"))
-                path.attr('d', line);
-            });
-        ;
+            // .on('pretransition', function (as_CountChart) {
+            //     var x_vert = 10; // MCL for As is 10
+            //     var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+            //         { x: as_CountChart.x()(x_vert), y: 0 },
+            //         { x: as_CountChart.x()(x_vert), y: as_CountChart.effectiveHeight() }
+            //     ];
+            //     var line = d3.svg.line()
+            //         .x(function (d) { return d.x; })
+            //         .y(function (d) { return d.y; })
+            //         .interpolate('linear')
+            //     var chartBody = as_CountChart.select('g');
+            //     var path = chartBody.selectAll('path.extra').data([extra_data]);
+            //     path.enter()
+            //         .append('path')
+            //         .attr('class', 'oeExtra')
+            //         .attr('stroke', 'red')
+            //         .attr('id', 'oeLine')
+            //         .attr("stroke-width", 1.2)
+            //         .style("stroke-dasharray", ("10,3"))
+            //     path.attr('d', line);
+            // });
+            ;
 
 
         as_CountChart.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
@@ -191,6 +289,7 @@ window.onload = function () {
             .dimension(Ra_TotalDim)
             .group(countPerRa_Total)
             .x(d3.scale.linear().domain([0, 1]))
+            .xUnits(function () { return 5; })
             .elasticY(false)
             .centerBar(true)
             .barPadding(3)
@@ -214,7 +313,7 @@ window.onload = function () {
             .group(function (d) { return 'dc.js insists on putting a row here so I remove it using JS'; })
             .size(1000)
             .columns([
-                function (d) { return d.properties.well_id; },
+                function (d) { return d.properties.well_no; },
                 column2,
                 column3,
                 column4,
@@ -227,7 +326,6 @@ window.onload = function () {
                 wellMarkers.clearLayers();
                 _.each(allDim.top(Infinity), function (d) {
                     var filLoc = d.properties;
-                    // var id = d.properties.well_id;
 
                     // Color based on well use
                     function getColor(wUse) {
@@ -1582,12 +1680,34 @@ window.onload = function () {
                 .group(function (d) { return 'dc.js insists on putting a row here so I remove it using JS'; })
                 .size(1001)
                 .columns([
-                    function (d) { return d.properties.well_id; },
-                    dataHistogram1,
-                    dataHistogram2,
-                    dataHistogram3,
-                    dataHistogram4
-                ]) //Code to make dataTable data Alter the Map wells
+                    {
+                        label: "Well No.",
+                        format: function (d) {
+                            return d.properties.well_no
+                        }
+                    },
+                    {
+                        label: input1,
+                        // Mess around with adding conditional here based on what input1 is
+                        format: dataHistogram1
+                    },
+                    {
+                        label: input2,
+                        // Mess around with adding conditional here based on what input1 is
+                        format: dataHistogram2
+                    },
+                    {
+                        label: input3,
+                        // Mess around with adding conditional here based on what input1 is
+                        format: dataHistogram3
+                    },
+                    {
+                        label: input4,
+                        // Mess around with adding conditional here based on what input1 is
+                        format: dataHistogram4
+                    },
+
+                ])
                 .on('renderlet', function (table) {
                     // each time table is rendered remove nasty extra row dc.js insists on adding
                     table.select('tr.dc-table-group').remove();
@@ -1595,7 +1715,6 @@ window.onload = function () {
                     wellMarkers.clearLayers();
                     _.each(allDim.top(Infinity), function (d) {
                         var filLoc = d.properties;
-                        // var id = d.properties.well_id;
 
                         // Color based on well use
                         function getColor(wUse) {

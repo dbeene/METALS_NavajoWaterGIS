@@ -242,3 +242,11 @@ section {
   padding: 50px 0;
 }
 
+.city-labels {
+  background-color: transparent;
+  border: transparent;
+  box-shadow: none;
+  font-size: medium;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 #e2e2e2, -1px -1px 0 #e2e2e2, -1px -1px 0 #e2e2e2, -1px -1px 0 #e2e2e2;
+}
