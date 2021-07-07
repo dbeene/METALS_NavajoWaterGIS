@@ -214,12 +214,11 @@ window.onload = function () {
             .dimension(CaDim)
             .group(countPerCa)
             .x(d3.scale.linear().domain([0, 976]))
-            // .x(d3.scale.linear().range([0,90]))
             .y(d3.scale.linear().domain([0, 13]))
+            .xUnits(function () { return 976})
             .elasticY(false)
             .centerBar(true)
             .barPadding(3)
-            // .xAxisLabel('Calcium')
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
         caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
@@ -232,16 +231,35 @@ window.onload = function () {
             .group(countPerU)
             .x(d3.scale.linear().domain([0, 700]))
             .y(d3.scale.linear().domain([0, 20]))
-            .xUnits(function () { return 15; })
+            .xUnits(function () { return 700; })
             .elasticY(false)
             .centerBar(true)
             .barPadding(3)
-            // .xAxisLabel('Uranium')
             .yAxisLabel('Count')
-            .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-        uCountChart.xAxis().tickValues([30, 200, 400, 600]);
-        // uCountChart.yAxis().tickValues([0, 5, 10, 15, 20]);
-
+            .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+            .on('pretransition', function (mcl) {
+                var x_vert = 30; // MCL for U is 30
+                var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+                    { x: mcl.x()(260 - x_vert), y: 10 },
+                    { x: mcl.x()(260 - x_vert), y: 200 }
+                ];
+                var line = d3.svg.line()
+                    .x(function (d) { return d.x; })
+                    .y(function (d) { return d.y; })
+                    .interpolate('linear')
+                var chartBody = uCountChart.select('g');
+                var path = chartBody.selectAll('path.extra').data([extra_data]);
+                path.enter()
+                    .append('path')
+                    .attr('class', 'oeExtra')
+                    .attr('stroke', 'red')
+                    .attr('id', 'oeLine')
+                    .attr("stroke-width", 2)
+                    .style("stroke-dasharray", ("4,3"))
+                path.attr('d', line);
+            });
+        ;
+        uCountChart.xAxis().tickValues([30, 200, 400, 600])
 
         as_CountChart
             .width(250)
@@ -250,36 +268,35 @@ window.onload = function () {
             .group(countPerAs)
             .x(d3.scale.linear().domain([0, 282]))
             .y(d3.scale.linear().domain([0, 30]))
-            .xUnits(function () { return 15; })
+            .xUnits(function () { return 282; })
             .elasticY(false)
-            .centerBar(false)
+            .centerBar(true)
             .barPadding(3)
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 })
             // Add vertical line at MCL using example from https://github.com/dc-js/dc.js/blob/develop/web-src/examples/row-vertical-line.html
-            // .on('pretransition', function (as_CountChart) {
-            //     var x_vert = 10; // MCL for As is 10
-            //     var extra_data = [ // Array to define vertical line starting at (MCL, 0)
-            //         { x: as_CountChart.x()(x_vert), y: 0 },
-            //         { x: as_CountChart.x()(x_vert), y: as_CountChart.effectiveHeight() }
-            //     ];
-            //     var line = d3.svg.line()
-            //         .x(function (d) { return d.x; })
-            //         .y(function (d) { return d.y; })
-            //         .interpolate('linear')
-            //     var chartBody = as_CountChart.select('g');
-            //     var path = chartBody.selectAll('path.extra').data([extra_data]);
-            //     path.enter()
-            //         .append('path')
-            //         .attr('class', 'oeExtra')
-            //         .attr('stroke', 'red')
-            //         .attr('id', 'oeLine')
-            //         .attr("stroke-width", 1.2)
-            //         .style("stroke-dasharray", ("10,3"))
-            //     path.attr('d', line);
-            // });
-            ;
-
+            .on('pretransition', function (mcl) {
+                var x_vert = 10; // MCL for As is 10
+                var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+                    { x: mcl.x()(100 - x_vert), y: 10 },
+                    { x: mcl.x()(100 - x_vert), y: 200 }
+                ];
+                var line = d3.svg.line()
+                    .x(function (d) { return d.x; })
+                    .y(function (d) { return d.y; })
+                    .interpolate('linear')
+                var chartBody = as_CountChart.select('g');
+                var path = chartBody.selectAll('path.extra').data([extra_data]);
+                path.enter()
+                    .append('path')
+                    .attr('class', 'oeExtra')
+                    .attr('stroke', 'red')
+                    .attr('id', 'oeLine')
+                    .attr("stroke-width", 2)
+                    .style("stroke-dasharray", ("4,3"))
+                path.attr('d', line);
+            });
+        ;
 
         as_CountChart.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
 
@@ -289,19 +306,18 @@ window.onload = function () {
             .dimension(Ra_TotalDim)
             .group(countPerRa_Total)
             .x(d3.scale.linear().domain([0, 1]))
-            .xUnits(function () { return 5; })
+            .xUnits(function () { return 2; })
             .elasticY(false)
             .centerBar(true)
             .barPadding(3)
-            // .xAxisLabel('Radium_Total')
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-        ra_TotalCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
+        ra_TotalCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);   
 
         var column2 = function (d) { return d.properties.As; };
         var column3 = function (d) { return d.properties.Ca; };
-        var column4 = function (d) { return d.properties.Ra_Total; };
-        var column5 = function (d) { return d.properties.U; };
+        var column4 = function (d) { return d.properties.U; };
+        var column5 = function (d) { return d.properties.Ra_Total; };
 
         dataCount
             .dimension(ndx)
