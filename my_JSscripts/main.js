@@ -215,7 +215,7 @@ window.onload = function () {
             .group(countPerCa)
             .x(d3.scale.linear().domain([0, 976]))
             .y(d3.scale.linear().domain([0, 13]))
-            .xUnits(function () { return 976})
+            .xUnits(function () { return 976 })
             .elasticY(false)
             .centerBar(true)
             .barPadding(3)
@@ -240,14 +240,14 @@ window.onload = function () {
             .on('pretransition', function (mcl) {
                 var x_vert = 30; // MCL for U is 30
                 var extra_data = [ // Array to define vertical line starting at (MCL, 0)
-                    { x: mcl.x()(260 - x_vert), y: 10 },
-                    { x: mcl.x()(260 - x_vert), y: 200 }
+                    { x: mcl.x()(x_vert), y: 0 },
+                    { x: mcl.x()(x_vert), y: uCountChart.effectiveHeight() }
                 ];
                 var line = d3.svg.line()
                     .x(function (d) { return d.x; })
                     .y(function (d) { return d.y; })
                     .interpolate('linear')
-                var chartBody = uCountChart.select('g');
+                var chartBody = uCountChart.select('g.chart-body');
                 var path = chartBody.selectAll('path.extra').data([extra_data]);
                 path.enter()
                     .append('path')
@@ -278,14 +278,14 @@ window.onload = function () {
             .on('pretransition', function (mcl) {
                 var x_vert = 10; // MCL for As is 10
                 var extra_data = [ // Array to define vertical line starting at (MCL, 0)
-                    { x: mcl.x()(100 - x_vert), y: 10 },
-                    { x: mcl.x()(100 - x_vert), y: 200 }
+                    { x: mcl.x()(x_vert), y: 0 },
+                    { x: mcl.x()(x_vert), y: as_CountChart.effectiveHeight() }
                 ];
                 var line = d3.svg.line()
                     .x(function (d) { return d.x; })
                     .y(function (d) { return d.y; })
                     .interpolate('linear')
-                var chartBody = as_CountChart.select('g');
+                var chartBody = as_CountChart.select('g.chart-body'); //select g.chart-body will select the rect object within the svg
                 var path = chartBody.selectAll('path.extra').data([extra_data]);
                 path.enter()
                     .append('path')
@@ -295,9 +295,9 @@ window.onload = function () {
                     .attr("stroke-width", 2)
                     .style("stroke-dasharray", ("4,3"))
                 path.attr('d', line);
-            });
+            })
+            ;
         ;
-
         as_CountChart.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
 
         ra_TotalCountChart
@@ -312,7 +312,7 @@ window.onload = function () {
             .barPadding(3)
             .yAxisLabel('Count')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-        ra_TotalCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);   
+        ra_TotalCountChart.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
 
         var column2 = function (d) { return d.properties.As; };
         var column3 = function (d) { return d.properties.Ca; };
@@ -335,7 +335,7 @@ window.onload = function () {
                 column4,
                 column5
             ])
-            .on('renderlet', function (table) {
+            .on('pretransition', function (table) {
                 // each time table is rendered remove nasty extra row dc.js insists on adding
                 table.select('tr.dc-table-group').remove();
 
@@ -649,9 +649,6 @@ window.onload = function () {
         selected4 = document.getElementById("selectbox4");
         input4 = selected4.options[selected4.selectedIndex].value;
 
-        //new wellMarkers2 for updated analytes after dropdown selection
-        // var wellMarkers2 = new L.FeatureGroup();
-
         d3.json('data/AnalytesSel.json', function (error, data) {
             var wellData = data.features;
             _.each(wellData, function (d) {
@@ -659,7 +656,7 @@ window.onload = function () {
                 d.As = Math.round(+d.properties.As / 50) * 50;
                 d.Ba = Math.round(+d.properties.Ba / 1) * 1;
                 d.Ca = Math.round(+d.properties.Ca / 100) * 100;
-                d.Cl_ = Math.round(+d.properties.Cl_ / 1) * 1;
+                d.Chloride = Math.round(+d.properties.Chloride / 1) * 1;
                 d.Cr = Math.round(+d.properties.Cr / 1) * 1;
                 d.GrossAlpha_U_Nat = Math.round(+d.properties.GrossAlpha_U_Nat / 1) * 1;
                 d.Nitrate = Math.round(+d.properties.Nitrate / 1) * 1;
@@ -676,7 +673,7 @@ window.onload = function () {
             var AsDim = ndx.dimension(function (d) { return d.properties.As; });
             var BaDim = ndx.dimension(function (d) { return d.properties.Ba; });
             var CaDim = ndx.dimension(function (d) { return d.properties.Ca; });
-            var Cl_Dim = ndx.dimension(function (d) { return d.properties.Cl_; });
+            var ChlorideDim = ndx.dimension(function (d) { return d.properties.Chloride; });
             var CrDim = ndx.dimension(function (d) { return d.properties.Cr; });
             var GrossAlpha_U_NatDim = ndx.dimension(function (d) { return d.properties.GrossAlpha_U_Nat; });
             var NitrateDim = ndx.dimension(function (d) { return d.properties.Nitrate; });
@@ -685,16 +682,14 @@ window.onload = function () {
             var SeDim = ndx.dimension(function (d) { return d.properties.Se; });
             var UDim = ndx.dimension(function (d) { return d.properties.U; });
             var NoneDim = ndx.dimension(function (d) { return d.None; });
-
             var allDim = ndx.dimension(function (d) { return d; });
-
             var all = ndx.groupAll();
 
             //countPerAnalyte
             var countPerAs = AsDim.group().reduceCount();
             var countPerBa = BaDim.group().reduceCount();
             var countPerCa = CaDim.group().reduceCount();
-            var countPerCl_ = Cl_Dim.group().reduceCount();
+            var countPerChloride = ChlorideDim.group().reduceCount();
             var countPerCr = CrDim.group().reduceCount();
             var countPerGrossAlpha_U_Nat = GrossAlpha_U_NatDim.group().reduceCount();
             var countPerNitrate = NitrateDim.group().reduceCount();
@@ -711,17 +706,13 @@ window.onload = function () {
             var histogram4 = dc.barChart('#histogram4');
             //dataCount
             var dataCountNew = dc.dataCount('#data-count');
-
             var dataTableNew = dc.dataTable('#data-table');
-
             var dataHistogram1;
             var dataHistogram2;
             var dataHistogram3;
             var dataHistogram4;
 
-
             if (input1 == "As") {
-
                 histogram1
                     .width(250)
                     .height(250)
@@ -729,38 +720,79 @@ window.onload = function () {
                     .group(countPerAs)
                     .x(d3.scale.linear().domain([0, 282]))
                     .y(d3.scale.linear().domain([0, 30]))
+                    .xUnits(function () { return 282; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Arsenic')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram1.yAxis().tickValues([0, 10, 20, 30]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 10; // MCL for As is 10
+                        var As_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram1.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([As_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                ;
+                histogram1.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                 dataHistogram1 = function (d) { return d.properties.As; };
-
             }
-            else if (input1 == "Ba") {
 
+            else if (input1 == "Ba") {
                 histogram1
                     .width(250)
                     .height(250)
                     .dimension(BaDim)
                     .group(countPerBa)
-                    .x(d3.scale.linear().domain([0, 1500]))
+                    .x(d3.scale.linear().domain([0, 1250]))
                     .y(d3.scale.linear().domain([0, 30]))
+                    .xUnits(function () { return 1250 })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Barium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram1.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
-                histogram1.yAxis().tickValues([0, 10, 20, 30]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 2; // MCL for Ba is 2
+                        var Ba_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram1.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Ba_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                ;
+                histogram1.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                 dataHistogram1 = function (d) { return d.properties.Ba; };
             }
+
             else if (input1 == "Ca") {
 
                 histogram1
@@ -768,78 +800,57 @@ window.onload = function () {
                     .height(250)
                     .dimension(CaDim)
                     .group(countPerCa)
-                    .x(d3.scale.linear().domain([0, 970]))
+                    .x(d3.scale.linear().domain([0, 976]))
                     .y(d3.scale.linear().domain([0, 13]))
+                    .xUnits(function () { return 976 })
                     .elasticY(false)
                     .centerBar(true)
-                    .barPadding(20)
-                    // .xAxisLabel('Calcium')
+                    .barPadding(3)
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    ;
                 histogram1.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-                histogram1.yAxis().tickValues([0, 3, 6, 9, 12]);
 
                 dataHistogram1 = function (d) { return d.properties.Ca; };
             }
-            else if (input1 == "Cl_") {
+            else if (input1 == "Chloride") {
 
                 histogram1
                     .width(250)
                     .height(250)
-                    .dimension(Cl_Dim)
-                    .group(countPerCl_)
+                    .dimension(ChlorideDim)
+                    .group(countPerChloride)
                     .x(d3.scale.linear().domain([0, 41800]))
                     .y(d3.scale.linear().domain([0, 3]))
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Clorine')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram1.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
-                histogram1.yAxis().tickValues([0, 1, 2, 3]);
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 250; // MCL for chloride is 250
+                        var Cl_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram1.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Cl_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'yellow')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                histogram1.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
-                dataHistogram1 = function (d) { return d.properties.Cl_; };
-            }
-            else if (input1 == "Cr") {
-
-                histogram1
-                    .width(250)
-                    .height(250)
-                    .dimension(CrDim)
-                    .group(countPerCr)
-                    .x(d3.scale.linear().domain([0, 30]))
-                    .y(d3.scale.linear().domain([0, 20]))
-                    .elasticY(false)
-                    .centerBar(true)
-                    .barPadding(3)
-                    // .xAxisLabel('Chromium')
-                    .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram1.xAxis().tickValues([0, 10, 20, 30]);
-                histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
-
-                dataHistogram1 = function (d) { return d.properties.Cr; };
-            }
-            else if (input1 == "GrossAlpha_U_Nat") {
-
-                histogram1
-                    .width(250)
-                    .height(250)
-                    .dimension(GrossAlpha_U_NatDim)
-                    .group(countPerGrossAlpha_U_Nat)
-                    .x(d3.scale.linear().domain([0, 780]))
-                    .y(d3.scale.linear().domain([0, 2]))
-                    .elasticY(false)
-                    .centerBar(true)
-                    .barPadding(3)
-                    // .xAxisLabel('GrossAlpha_U_Nat')
-                    .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram1.xAxis().tickValues([0, 200, 400, 600, 800]);
-                histogram1.yAxis().tickValues([0, 1, 2]);
-
-                dataHistogram1 = function (d) { return d.properties.GrossAlpha_U_Nat; };
+                dataHistogram1 = function (d) { return d.properties.Chloride; };
             }
             else if (input1 == "Nitrate") {
 
@@ -853,11 +864,31 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Nitrate')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram1.yAxis().tickValues([0, 1, 2, 3]);
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 10; // MCL for Nitrate is 10
+                        var Ni_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram1.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Ni_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                histogram1.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
 
                 dataHistogram1 = function (d) { return d.properties.Nitrate; };
             }
@@ -873,26 +904,45 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Lead')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 0; // MCL for Pb is 0
+                        var Pb_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram1.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Pb_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
                 histogram1.xAxis().tickValues([0, 100, 200, 300]);
-                histogram1.yAxis().tickValues([0, 5, 10, 15]);
 
                 dataHistogram1 = function (d) { return d.properties.Pb; };
             }
             else if (input1 == "Ra_Total") {
-
                 histogram1
                     .width(250)
                     .height(250)
                     .dimension(Ra_TotalDim)
                     .group(countPerRa_Total)
                     .x(d3.scale.linear().domain([0, 1]))
+                    .xUnits(function () { return 2; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Ra_Total')
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram1.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
@@ -911,11 +961,31 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Selenium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 0.05; // MCL for BSe is 0.05
+                        var Se_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram1.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Se_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                histogram1.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
 
                 dataHistogram1 = function (d) { return d.properties.Se; };
             }
@@ -926,16 +996,37 @@ window.onload = function () {
                     .height(250)
                     .dimension(UDim)
                     .group(countPerU)
-                    .x(d3.scale.linear().domain([0, 282]))
+                    .x(d3.scale.linear().domain([0, 700]))
                     .y(d3.scale.linear().domain([0, 20]))
+                    .xUnits(function () { return 700; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Uranium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram1.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram1.yAxis().tickValues([0, 5, 10, 15, 20]);
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 30; // MCL for U is 30
+                        var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram1.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([extra_data]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                ;
+                histogram1.xAxis().tickValues([30, 200, 400, 600])
 
                 dataHistogram1 = function (d) { return d.properties.U; };
             }
@@ -947,13 +1038,10 @@ window.onload = function () {
                     .height(250)
                     .dimension(NoneDim)
                     .group(countPerNone)
-                    //.range([0,20])
                     .x(d3.scale.linear().domain([0, 0]))
-                    // .y(d3.scale.linear().domain([0, 30]))
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('None')
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram1.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
@@ -963,7 +1051,6 @@ window.onload = function () {
             }
 
             if (input2 == "As") {
-
                 histogram2
                     .width(250)
                     .height(250)
@@ -971,122 +1058,140 @@ window.onload = function () {
                     .group(countPerAs)
                     .x(d3.scale.linear().domain([0, 282]))
                     .y(d3.scale.linear().domain([0, 30]))
+                    .xUnits(function () { return 282; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Arsenic')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram2.yAxis().tickValues([0, 10, 20, 30]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 10; // MCL for As is 10
+                        var As_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram2.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram2.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([As_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                ;
+                histogram2.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                 dataHistogram2 = function (d) { return d.properties.As; };
             }
+            
             else if (input2 == "Ba") {
-
                 histogram2
                     .width(250)
                     .height(250)
                     .dimension(BaDim)
                     .group(countPerBa)
-                    .x(d3.scale.linear().domain([0, 1500]))
-                    // .x(d3.scale.linear().range([0,50]))
+                    .x(d3.scale.linear().domain([0, 1250]))
                     .y(d3.scale.linear().domain([0, 30]))
-                    // .y(d3.scale.linear().range([550,0]))
-                    // .xAxis().ticks(20)
+                    .xUnits(function () { return 1250 })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Barium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram2.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
-                histogram2.yAxis().tickValues([0, 10, 20, 30]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 2; // MCL for Ba is 2
+                        var Ba_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram2.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram2.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Ba_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                ;
+                histogram2.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                 dataHistogram2 = function (d) { return d.properties.Ba; };
             }
+            
             else if (input2 == "Ca") {
-
+            
                 histogram2
                     .width(250)
                     .height(250)
                     .dimension(CaDim)
                     .group(countPerCa)
-                    .x(d3.scale.linear().domain([0, 970]))
+                    .x(d3.scale.linear().domain([0, 976]))
                     .y(d3.scale.linear().domain([0, 13]))
+                    .xUnits(function () { return 976 })
                     .elasticY(false)
                     .centerBar(true)
-                    .barPadding(20)
-                    // .xAxisLabel('Calcium')
+                    .barPadding(3)
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    ;
                 histogram2.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-                histogram2.yAxis().tickValues([0, 3, 6, 9, 12]);
-
+            
                 dataHistogram2 = function (d) { return d.properties.Ca; };
             }
-            else if (input2 == "Cl_") {
-
+            else if (input2 == "Chloride") {
+            
                 histogram2
                     .width(250)
                     .height(250)
-                    .dimension(Cl_Dim)
-                    .group(countPerCl_)
+                    .dimension(ChlorideDim)
+                    .group(countPerChloride)
                     .x(d3.scale.linear().domain([0, 41800]))
                     .y(d3.scale.linear().domain([0, 3]))
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Clorine')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram2.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
-                histogram2.yAxis().tickValues([0, 1, 2, 3]);
-
-                dataHistogram2 = function (d) { return d.properties.Cl_; };
-            }
-            else if (input2 == "Cr") {
-
-                histogram2
-                    .width(250)
-                    .height(250)
-                    .dimension(CrDim)
-                    .group(countPerCr)
-                    .x(d3.scale.linear().domain([0, 30]))
-                    .y(d3.scale.linear().domain([0, 20]))
-                    .elasticY(false)
-                    .centerBar(true)
-                    .barPadding(3)
-                    // .xAxisLabel('Chromium')
-                    .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram2.xAxis().tickValues([0, 10, 20, 30]);
-                histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
-
-                dataHistogram2 = function (d) { return d.properties.Cr; };
-            }
-            else if (input2 == "GrossAlpha_U_Nat") {
-
-                histogram2
-                    .width(250)
-                    .height(250)
-                    .dimension(GrossAlpha_U_NatDim)
-                    .group(countPerGrossAlpha_U_Nat)
-                    .x(d3.scale.linear().domain([0, 780]))
-                    .y(d3.scale.linear().domain([0, 2]))
-                    .elasticY(false)
-                    .centerBar(true)
-                    .barPadding(3)
-                    // .xAxisLabel('GrossAlpha_U_Nat')
-                    .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram2.xAxis().tickValues([0, 200, 400, 600, 800]);
-                histogram2.yAxis().tickValues([0, 1, 2]);
-
-                dataHistogram2 = function (d) { return d.properties.GrossAlpha_U_Nat; };
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 250; // MCL for chloride is 250
+                        var Cl_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram2.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram2.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Cl_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'yellow')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                histogram2.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
+            
+                dataHistogram2 = function (d) { return d.properties.Chloride; };
             }
             else if (input2 == "Nitrate") {
-
+            
                 histogram2
                     .width(250)
                     .height(250)
@@ -1097,16 +1202,36 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Nitrate')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram2.yAxis().tickValues([0, 1, 2, 3]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 10; // MCL for Nitrate is 10
+                        var Ni_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram2.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram2.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Ni_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                histogram2.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
+            
                 dataHistogram2 = function (d) { return d.properties.Nitrate; };
             }
             else if (input2 == "Pb") {
-
+            
                 histogram2
                     .width(250)
                     .height(250)
@@ -1117,34 +1242,53 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Lead')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 0; // MCL for Pb is 0
+                        var Pb_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram2.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram2.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Pb_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
                 histogram2.xAxis().tickValues([0, 100, 200, 300]);
-                histogram2.yAxis().tickValues([0, 5, 10, 15]);
-
+            
                 dataHistogram2 = function (d) { return d.properties.Pb; };
             }
             else if (input2 == "Ra_Total") {
-
                 histogram2
                     .width(250)
                     .height(250)
                     .dimension(Ra_TotalDim)
                     .group(countPerRa_Total)
                     .x(d3.scale.linear().domain([0, 1]))
+                    .xUnits(function () { return 2; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Ra_Total')
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram2.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
-
+            
                 dataHistogram2 = function (d) { return d.properties.Ra_Total; };
             }
             else if (input2 == "Se") {
-
+            
                 histogram2
                     .width(250)
                     .height(250)
@@ -1155,58 +1299,98 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Selenium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 0.05; // MCL for BSe is 0.05
+                        var Se_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram2.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram2.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Se_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                histogram2.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
+            
                 dataHistogram2 = function (d) { return d.properties.Se; };
             }
             else if (input2 == "U") {
-
+            
                 histogram2
                     .width(250)
                     .height(250)
                     .dimension(UDim)
                     .group(countPerU)
-                    .x(d3.scale.linear().domain([0, 282]))
+                    .x(d3.scale.linear().domain([0, 700]))
                     .y(d3.scale.linear().domain([0, 20]))
+                    .xUnits(function () { return 700; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Uranium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram2.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram2.yAxis().tickValues([0, 5, 10, 15, 20]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 30; // MCL for U is 30
+                        var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram2.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram2.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([extra_data]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                ;
+                histogram2.xAxis().tickValues([30, 200, 400, 600])
+            
                 dataHistogram2 = function (d) { return d.properties.U; };
             }
-
+            
+            
+            
             else if (input2 == "None") {
-
+            
                 histogram2
                     .width(250)
                     .height(250)
                     .dimension(NoneDim)
                     .group(countPerNone)
                     .x(d3.scale.linear().domain([0, 0]))
-                    // .y(d3.scale.linear().domain([0, 30]))
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('None')
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram2.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
                 histogram2.yAxis().tickValues([0, 0, 0, 0]);
-
+            
                 dataHistogram2 = function (d) { return d.properties.None; };
             }
 
             if (input3 == "As") {
-
                 histogram3
                     .width(250)
                     .height(250)
@@ -1214,119 +1398,140 @@ window.onload = function () {
                     .group(countPerAs)
                     .x(d3.scale.linear().domain([0, 282]))
                     .y(d3.scale.linear().domain([0, 30]))
+                    .xUnits(function () { return 282; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Arsenic')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram3.yAxis().tickValues([0, 10, 20, 30]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 10; // MCL for As is 10
+                        var As_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram3.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram3.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([As_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                ;
+                histogram3.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                 dataHistogram3 = function (d) { return d.properties.As; };
             }
+            
             else if (input3 == "Ba") {
-
                 histogram3
                     .width(250)
                     .height(250)
                     .dimension(BaDim)
                     .group(countPerBa)
-                    .x(d3.scale.linear().domain([0, 1500]))
+                    .x(d3.scale.linear().domain([0, 1250]))
                     .y(d3.scale.linear().domain([0, 30]))
+                    .xUnits(function () { return 1250 })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Barium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram3.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
-                histogram3.yAxis().tickValues([0, 10, 20, 30]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 2; // MCL for Ba is 2
+                        var Ba_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram3.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram3.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Ba_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                ;
+                histogram3.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                 dataHistogram3 = function (d) { return d.properties.Ba; };
             }
+            
             else if (input3 == "Ca") {
-
+            
                 histogram3
                     .width(250)
                     .height(250)
                     .dimension(CaDim)
                     .group(countPerCa)
-                    .x(d3.scale.linear().domain([0, 970]))
+                    .x(d3.scale.linear().domain([0, 976]))
                     .y(d3.scale.linear().domain([0, 13]))
+                    .xUnits(function () { return 976 })
                     .elasticY(false)
                     .centerBar(true)
-                    .barPadding(20)
-                    // .xAxisLabel('Calcium')
+                    .barPadding(3)
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    ;
                 histogram3.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-                histogram3.yAxis().tickValues([0, 3, 6, 9, 12]);
-
+            
                 dataHistogram3 = function (d) { return d.properties.Ca; };
             }
-            else if (input3 == "Cl_") {
-
+            else if (input3 == "Chloride") {
+            
                 histogram3
                     .width(250)
                     .height(250)
-                    .dimension(Cl_Dim)
-                    .group(countPerCl_)
+                    .dimension(ChlorideDim)
+                    .group(countPerChloride)
                     .x(d3.scale.linear().domain([0, 41800]))
                     .y(d3.scale.linear().domain([0, 3]))
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Clorine')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram3.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
-                histogram3.yAxis().tickValues([0, 1, 2, 3]);
-
-                dataHistogram3 = function (d) { return d.properties.Cl_; };
-            }
-            else if (input3 == "Cr") {
-
-                histogram3
-                    .width(250)
-                    .height(250)
-                    .dimension(CrDim)
-                    .group(countPerCr)
-                    .x(d3.scale.linear().domain([0, 30]))
-                    .y(d3.scale.linear().domain([0, 20]))
-                    .elasticY(false)
-                    .centerBar(true)
-                    .barPadding(3)
-                    // .xAxisLabel('Chromium')
-                    .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram3.xAxis().tickValues([0, 10, 20, 30]);
-                histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
-
-                dataHistogram3 = function (d) { return d.properties.Cr; };
-            }
-            else if (input3 == "GrossAlpha_U_Nat") {
-
-                histogram3
-                    .width(250)
-                    .height(250)
-                    .dimension(GrossAlpha_U_NatDim)
-                    .group(countPerGrossAlpha_U_Nat)
-                    .x(d3.scale.linear().domain([0, 780]))
-                    .y(d3.scale.linear().domain([0, 2]))
-                    .elasticY(false)
-                    .centerBar(true)
-                    .barPadding(3)
-                    // .xAxisLabel('GrossAlpha_U_Nat')
-                    .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram3.xAxis().tickValues([0, 200, 400, 600, 800]);
-                histogram3.yAxis().tickValues([0, 1, 2]);
-
-                dataHistogram3 = function (d) { return d.properties.GrossAlpha_U_Nat; };
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 250; // MCL for chloride is 250
+                        var Cl_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram3.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram3.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Cl_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'yellow')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                histogram3.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
+            
+                dataHistogram3 = function (d) { return d.properties.Chloride; };
             }
             else if (input3 == "Nitrate") {
-
+            
                 histogram3
                     .width(250)
                     .height(250)
@@ -1337,16 +1542,36 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Nitrate')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram3.yAxis().tickValues([0, 1, 2, 3]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 10; // MCL for Nitrate is 10
+                        var Ni_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram3.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram3.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Ni_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                histogram3.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
+            
                 dataHistogram3 = function (d) { return d.properties.Nitrate; };
             }
             else if (input3 == "Pb") {
-
+            
                 histogram3
                     .width(250)
                     .height(250)
@@ -1357,34 +1582,53 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Lead')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 0; // MCL for Pb is 0
+                        var Pb_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram3.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram3.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Pb_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
                 histogram3.xAxis().tickValues([0, 100, 200, 300]);
-                histogram3.yAxis().tickValues([0, 5, 10, 15]);
-
+            
                 dataHistogram3 = function (d) { return d.properties.Pb; };
             }
             else if (input3 == "Ra_Total") {
-
                 histogram3
                     .width(250)
                     .height(250)
                     .dimension(Ra_TotalDim)
                     .group(countPerRa_Total)
                     .x(d3.scale.linear().domain([0, 1]))
+                    .xUnits(function () { return 2; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Ra_Total')
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram3.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
-
+            
                 dataHistogram3 = function (d) { return d.properties.Ra_Total; };
             }
             else if (input3 == "Se") {
-
+            
                 histogram3
                     .width(250)
                     .height(250)
@@ -1395,58 +1639,98 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Selenium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 0.05; // MCL for BSe is 0.05
+                        var Se_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram3.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram3.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Se_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                histogram3.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
+            
                 dataHistogram3 = function (d) { return d.properties.Se; };
             }
             else if (input3 == "U") {
-
+            
                 histogram3
                     .width(250)
                     .height(250)
                     .dimension(UDim)
                     .group(countPerU)
-                    .x(d3.scale.linear().domain([0, 282]))
+                    .x(d3.scale.linear().domain([0, 700]))
                     .y(d3.scale.linear().domain([0, 20]))
+                    .xUnits(function () { return 700; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Uranium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram3.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram3.yAxis().tickValues([0, 5, 10, 15, 20]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 30; // MCL for U is 30
+                        var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram3.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram3.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([extra_data]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                ;
+                histogram3.xAxis().tickValues([30, 200, 400, 600])
+            
                 dataHistogram3 = function (d) { return d.properties.U; };
             }
-
+            
+            
+            
             else if (input3 == "None") {
-
+            
                 histogram3
                     .width(250)
                     .height(250)
                     .dimension(NoneDim)
                     .group(countPerNone)
                     .x(d3.scale.linear().domain([0, 0]))
-                    // .y(d3.scale.linear().domain([0, 30]))
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('None')
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram3.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
                 histogram3.yAxis().tickValues([0, 0, 0, 0]);
-
+            
                 dataHistogram3 = function (d) { return d.properties.None; };
             }
 
             if (input4 == "As") {
-
                 histogram4
                     .width(250)
                     .height(250)
@@ -1454,119 +1738,140 @@ window.onload = function () {
                     .group(countPerAs)
                     .x(d3.scale.linear().domain([0, 282]))
                     .y(d3.scale.linear().domain([0, 30]))
+                    .xUnits(function () { return 282; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Arsenic')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram4.yAxis().tickValues([0, 10, 20, 30]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 10; // MCL for As is 10
+                        var As_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram4.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram4.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([As_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                ;
+                histogram4.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                 dataHistogram4 = function (d) { return d.properties.As; };
             }
+            
             else if (input4 == "Ba") {
-
                 histogram4
                     .width(250)
                     .height(250)
                     .dimension(BaDim)
                     .group(countPerBa)
-                    .x(d3.scale.linear().domain([0, 1500]))
+                    .x(d3.scale.linear().domain([0, 1250]))
                     .y(d3.scale.linear().domain([0, 30]))
+                    .xUnits(function () { return 1250 })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Barium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram4.xAxis().tickValues([0, 300, 600, 900, 1200, 1500]);
-                histogram4.yAxis().tickValues([0, 10, 20, 30]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 2; // MCL for Ba is 2
+                        var Ba_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram4.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram4.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Ba_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                ;
+                histogram4.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                 dataHistogram4 = function (d) { return d.properties.Ba; };
             }
+            
             else if (input4 == "Ca") {
-
+            
                 histogram4
                     .width(250)
                     .height(250)
                     .dimension(CaDim)
                     .group(countPerCa)
-                    .x(d3.scale.linear().domain([0, 970]))
+                    .x(d3.scale.linear().domain([0, 976]))
                     .y(d3.scale.linear().domain([0, 13]))
+                    .xUnits(function () { return 976 })
                     .elasticY(false)
                     .centerBar(true)
-                    .barPadding(20)
-                    // .xAxisLabel('Calcium')
+                    .barPadding(3)
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    ;
                 histogram4.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-                histogram4.yAxis().tickValues([0, 3, 6, 9, 12]);
-
+            
                 dataHistogram4 = function (d) { return d.properties.Ca; };
             }
-            else if (input4 == "Cl_") {
-
+            else if (input4 == "Chloride") {
+            
                 histogram4
                     .width(250)
                     .height(250)
-                    .dimension(Cl_Dim)
-                    .group(countPerCl_)
+                    .dimension(ChlorideDim)
+                    .group(countPerChloride)
                     .x(d3.scale.linear().domain([0, 41800]))
                     .y(d3.scale.linear().domain([0, 3]))
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Clorine')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram4.xAxis().tickValues([0, 10000, 20000, 30000, 40000]);
-                histogram4.yAxis().tickValues([0, 1, 2, 3]);
-
-                dataHistogram4 = function (d) { return d.properties.Cl_; };
-            }
-            else if (input4 == "Cr") {
-
-                histogram4
-                    .width(250)
-                    .height(250)
-                    .dimension(CrDim)
-                    .group(countPerCr)
-                    .x(d3.scale.linear().domain([0, 30]))
-                    .y(d3.scale.linear().domain([0, 20]))
-                    .elasticY(false)
-                    .centerBar(true)
-                    .barPadding(3)
-                    // .xAxisLabel('Chromium')
-                    .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram4.xAxis().tickValues([0, 10, 20, 30]);
-                histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
-
-                dataHistogram4 = function (d) { return d.properties.Cr; };
-            }
-            else if (input4 == "GrossAlpha_U_Nat") {
-
-                histogram4
-                    .width(250)
-                    .height(250)
-                    .dimension(GrossAlpha_U_NatDim)
-                    .group(countPerGrossAlpha_U_Nat)
-                    .x(d3.scale.linear().domain([0, 780]))
-                    .y(d3.scale.linear().domain([0, 2]))
-                    .elasticY(false)
-                    .centerBar(true)
-                    .barPadding(3)
-                    // .xAxisLabel('GrossAlpha_U_Nat')
-                    .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram4.xAxis().tickValues([0, 200, 400, 600, 800]);
-                histogram4.yAxis().tickValues([0, 1, 2]);
-
-                dataHistogram4 = function (d) { return d.properties.GrossAlpha_U_Nat; };
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 250; // MCL for chloride is 250
+                        var Cl_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram4.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram4.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Cl_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'yellow')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                histogram4.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
+            
+                dataHistogram4 = function (d) { return d.properties.Chloride; };
             }
             else if (input4 == "Nitrate") {
-
+            
                 histogram4
                     .width(250)
                     .height(250)
@@ -1577,16 +1882,36 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Nitrate')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram4.yAxis().tickValues([0, 1, 2, 3]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 10; // MCL for Nitrate is 10
+                        var Ni_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram4.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram4.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Ni_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                histogram4.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
+            
                 dataHistogram4 = function (d) { return d.properties.Nitrate; };
             }
             else if (input4 == "Pb") {
-
+            
                 histogram4
                     .width(250)
                     .height(250)
@@ -1597,34 +1922,53 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Lead')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 0; // MCL for Pb is 0
+                        var Pb_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram4.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram4.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Pb_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
                 histogram4.xAxis().tickValues([0, 100, 200, 300]);
-                histogram4.yAxis().tickValues([0, 5, 10, 15]);
-
+            
                 dataHistogram4 = function (d) { return d.properties.Pb; };
             }
             else if (input4 == "Ra_Total") {
-
                 histogram4
                     .width(250)
                     .height(250)
                     .dimension(Ra_TotalDim)
                     .group(countPerRa_Total)
                     .x(d3.scale.linear().domain([0, 1]))
+                    .xUnits(function () { return 2; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Ra_Total')
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram4.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
-
+            
                 dataHistogram4 = function (d) { return d.properties.Ra_Total; };
             }
             else if (input4 == "Se") {
-
+            
                 histogram4
                     .width(250)
                     .height(250)
@@ -1635,53 +1979,94 @@ window.onload = function () {
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Selenium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 0.05; // MCL for BSe is 0.05
+                        var Se_MCL = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram4.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram4.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([Se_MCL]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    })
+                    ;
+                histogram4.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
+            
                 dataHistogram4 = function (d) { return d.properties.Se; };
             }
             else if (input4 == "U") {
-
+            
                 histogram4
                     .width(250)
                     .height(250)
                     .dimension(UDim)
                     .group(countPerU)
-                    .x(d3.scale.linear().domain([0, 282]))
+                    .x(d3.scale.linear().domain([0, 700]))
                     .y(d3.scale.linear().domain([0, 20]))
+                    .xUnits(function () { return 700; })
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('Uranium')
                     .yAxisLabel('Count')
-                    .margins({ top: 10, right: 20, bottom: 50, left: 50 });
-                histogram4.xAxis().tickValues([0, 50, 100, 150, 200, 250]);
-                histogram4.yAxis().tickValues([0, 5, 10, 15, 20]);
-
+                    .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                    .on('pretransition', function (mcl) {
+                        var x_vert = 30; // MCL for U is 30
+                        var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+                            { x: mcl.x()(x_vert), y: 0 },
+                            { x: mcl.x()(x_vert), y: histogram4.effectiveHeight() }
+                        ];
+                        var line = d3.svg.line()
+                            .x(function (d) { return d.x; })
+                            .y(function (d) { return d.y; })
+                            .interpolate('linear')
+                        var chartBody = histogram4.select('g.chart-body');
+                        var path = chartBody.selectAll('path.extra').data([extra_data]);
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line);
+                    });
+                ;
+                histogram4.xAxis().tickValues([30, 200, 400, 600])
+            
                 dataHistogram4 = function (d) { return d.properties.U; };
             }
-
+            
+            
+            
             else if (input4 == "None") {
-
+            
                 histogram4
                     .width(250)
                     .height(250)
                     .dimension(NoneDim)
                     .group(countPerNone)
                     .x(d3.scale.linear().domain([0, 0]))
-                    // .y(d3.scale.linear().domain([0, 30]))
                     .elasticY(false)
                     .centerBar(true)
                     .barPadding(3)
-                    // .xAxisLabel('None')
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram4.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
                 histogram4.yAxis().tickValues([0, 0, 0, 0]);
-
+            
                 dataHistogram4 = function (d) { return d.properties.None; };
             }
 
@@ -1704,28 +2089,23 @@ window.onload = function () {
                     },
                     {
                         label: input1,
-                        // Mess around with adding conditional here based on what input1 is
                         format: dataHistogram1
                     },
                     {
                         label: input2,
-                        // Mess around with adding conditional here based on what input1 is
                         format: dataHistogram2
                     },
                     {
                         label: input3,
-                        // Mess around with adding conditional here based on what input1 is
                         format: dataHistogram3
                     },
                     {
                         label: input4,
-                        // Mess around with adding conditional here based on what input1 is
                         format: dataHistogram4
                     },
 
                 ])
                 .on('renderlet', function (table) {
-                    // each time table is rendered remove nasty extra row dc.js insists on adding
                     table.select('tr.dc-table-group').remove();
 
                     wellMarkers.clearLayers();
@@ -1855,17 +2235,13 @@ window.onload = function () {
                         wellMarkers.addLayer(marker);
                     });
 
-                    //remove Layers from map
-                    // map.removeLayer(wellMarkers);   //Problem since wellMarkers is not global
-
                     // Add markers to map:
-                    map.addLayer(wellMarkers);  //Says map.addLayer is not a function for some reason.
+                    map.addLayer(wellMarkers);
                     map.fitBounds(wellMarkers.getBounds());
 
                 });
 
             dc.renderAll();
-            //xdocument.getElementById("histogram1").innerHTML=histogram1;
         });
 
     }
