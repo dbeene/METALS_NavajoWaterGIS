@@ -214,6 +214,14 @@ text {
   border-radius: 50%;
   display: inline-block;
 }
+
+.button{
+  border: 0px solid #9fa2a4;
+  height: 18px;
+  border-radius: 5px;
+  /* background: linear-gradient(#fbfbfb, #d1d1d1);  */
+}
+
 .update-button{
   padding-top: 10px;
   padding-bottom: 10px;

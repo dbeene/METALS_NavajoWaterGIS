@@ -334,17 +334,27 @@
     <!--Legend bar-->
     <div id="section2" class="container">
         <div class="row legend">
-            <strong>Well Use: </strong>
-            <span class="dot-dom"></span>
-            Domestic
-            <span class="dot-liv"></span>
-            Livestock
-            <span class="dot-mun"></span>
-            Municipal
-            <span class="dot-oth"></span>
-            Other
-            <span class="dot-unk"></span>
-            Unknown
+            <strong>Filter Wells by Use: </strong>
+            Domestic: 
+            <button onclick="select('Domestic')">
+                <div class="dot-dom"></div>
+            </button>
+            Livestock: 
+            <button onclick="select('Livestock')">
+                <div class="dot-liv"></div>
+            </button>
+            Municipal: 
+            <button onclick="select('Municipal')">
+                <div class="dot-mun"></div>
+            </button>
+            Other: 
+            <button onclick="select('Other')">
+                <div class="dot-oth"></div>
+            </button>
+            Unknown: 
+            <button id="updateMarker_btn" type="button">
+                <div class="dot-unk"></div>
+            </button>
         </div>
     </div>
     <!--Plots-->
@@ -495,10 +505,10 @@
                 </div>
                 <div class="col-md-12 text-center">
                     <i><small><br><br>Red dashed line on histograms indicates primary maximum contaminant level (MCL)
-                        <br>Yellow dashed line indicates secondary MCL.
-                    <br>More information on primary and secondary water contaminants can be found <a
-                        href='https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations'
-                        target='_blank'>here</a>.</small></i>
+                            <br>Yellow dashed line indicates secondary MCL.
+                            <br>More information on primary and secondary water contaminants can be found <a
+                                href='https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations'
+                                target='_blank'>here</a>.</small></i>
                 </div>
             </div>
             <!--Scatterplots-->

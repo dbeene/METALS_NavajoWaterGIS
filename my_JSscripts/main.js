@@ -176,6 +176,7 @@ window.onload = function () {
             d.U = Math.round(+d.properties.U / 100) * 100;
 
         });
+
         // set crossfilter
         var ndx = crossfilter(wellData);
 
@@ -370,6 +371,33 @@ window.onload = function () {
 
                     // Add circle markers
                     var marker = L.circleMarker([filLoc.lat, filLoc.long], markerOptions);
+
+                    // Filter markers by use using button on click event
+                    function render(data, USE) {
+                        d3.select("body").selectAll(marker) // <-B
+                            .data(data.filter(function (d) { return d.properties.USE == USE; }))
+                            .enter()
+                            .append("div")
+                            .attr("class", marker)
+                            .append("span");
+
+                        d3.select("body").selectAll(marker) // <-D
+                            .data(data.filter(function (d) { return d.properties.USE == USE; }))
+                            .attr("class", marker)
+                            .select("span")
+                            .text(function (d) {
+                                return d.properties.USE;
+                            });
+
+                        d3.select("body").selectAll(marker) // <-C
+                            .data(data.filter(function (d) { return d.properties.USE == USE; }))
+                            .exit().remove();
+                    }
+
+                    function select(USE) {
+                        render(data, USE);
+
+                    }
 
                     marker.bindPopup(
                         "<dl><dt> <h5><b><i>WELL INFORMATION- NAVAJO NATION WELL</i></b></h5><br>"
@@ -1089,7 +1117,7 @@ window.onload = function () {
                 histogram2.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                 dataHistogram2 = function (d) { return d.properties.As; };
             }
-            
+
             else if (input2 == "Ba") {
                 histogram2
                     .width(250)
@@ -1130,9 +1158,9 @@ window.onload = function () {
                 histogram2.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                 dataHistogram2 = function (d) { return d.properties.Ba; };
             }
-            
+
             else if (input2 == "Ca") {
-            
+
                 histogram2
                     .width(250)
                     .height(250)
@@ -1148,11 +1176,11 @@ window.onload = function () {
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                     ;
                 histogram2.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-            
+
                 dataHistogram2 = function (d) { return d.properties.Ca; };
             }
             else if (input2 == "Chloride") {
-            
+
                 histogram2
                     .width(250)
                     .height(250)
@@ -1187,11 +1215,11 @@ window.onload = function () {
                         path.attr('d', line);
                     });
                 histogram2.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
-            
+
                 dataHistogram2 = function (d) { return d.properties.Chloride; };
             }
             else if (input2 == "Nitrate") {
-            
+
                 histogram2
                     .width(250)
                     .height(250)
@@ -1227,11 +1255,11 @@ window.onload = function () {
                     })
                     ;
                 histogram2.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
-            
+
                 dataHistogram2 = function (d) { return d.properties.Nitrate; };
             }
             else if (input2 == "Pb") {
-            
+
                 histogram2
                     .width(250)
                     .height(250)
@@ -1267,7 +1295,7 @@ window.onload = function () {
                     })
                     ;
                 histogram2.xAxis().tickValues([0, 100, 200, 300]);
-            
+
                 dataHistogram2 = function (d) { return d.properties.Pb; };
             }
             else if (input2 == "Ra_Total") {
@@ -1284,11 +1312,11 @@ window.onload = function () {
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram2.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
-            
+
                 dataHistogram2 = function (d) { return d.properties.Ra_Total; };
             }
             else if (input2 == "Se") {
-            
+
                 histogram2
                     .width(250)
                     .height(250)
@@ -1324,11 +1352,11 @@ window.onload = function () {
                     })
                     ;
                 histogram2.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
-            
+
                 dataHistogram2 = function (d) { return d.properties.Se; };
             }
             else if (input2 == "U") {
-            
+
                 histogram2
                     .width(250)
                     .height(250)
@@ -1365,14 +1393,14 @@ window.onload = function () {
                     });
                 ;
                 histogram2.xAxis().tickValues([30, 200, 400, 600])
-            
+
                 dataHistogram2 = function (d) { return d.properties.U; };
             }
-            
-            
-            
+
+
+
             else if (input2 == "None") {
-            
+
                 histogram2
                     .width(250)
                     .height(250)
@@ -1386,7 +1414,7 @@ window.onload = function () {
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram2.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
                 histogram2.yAxis().tickValues([0, 0, 0, 0]);
-            
+
                 dataHistogram2 = function (d) { return d.properties.None; };
             }
 
@@ -1429,7 +1457,7 @@ window.onload = function () {
                 histogram3.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                 dataHistogram3 = function (d) { return d.properties.As; };
             }
-            
+
             else if (input3 == "Ba") {
                 histogram3
                     .width(250)
@@ -1470,9 +1498,9 @@ window.onload = function () {
                 histogram3.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                 dataHistogram3 = function (d) { return d.properties.Ba; };
             }
-            
+
             else if (input3 == "Ca") {
-            
+
                 histogram3
                     .width(250)
                     .height(250)
@@ -1488,11 +1516,11 @@ window.onload = function () {
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                     ;
                 histogram3.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-            
+
                 dataHistogram3 = function (d) { return d.properties.Ca; };
             }
             else if (input3 == "Chloride") {
-            
+
                 histogram3
                     .width(250)
                     .height(250)
@@ -1527,11 +1555,11 @@ window.onload = function () {
                         path.attr('d', line);
                     });
                 histogram3.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
-            
+
                 dataHistogram3 = function (d) { return d.properties.Chloride; };
             }
             else if (input3 == "Nitrate") {
-            
+
                 histogram3
                     .width(250)
                     .height(250)
@@ -1567,11 +1595,11 @@ window.onload = function () {
                     })
                     ;
                 histogram3.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
-            
+
                 dataHistogram3 = function (d) { return d.properties.Nitrate; };
             }
             else if (input3 == "Pb") {
-            
+
                 histogram3
                     .width(250)
                     .height(250)
@@ -1607,7 +1635,7 @@ window.onload = function () {
                     })
                     ;
                 histogram3.xAxis().tickValues([0, 100, 200, 300]);
-            
+
                 dataHistogram3 = function (d) { return d.properties.Pb; };
             }
             else if (input3 == "Ra_Total") {
@@ -1624,11 +1652,11 @@ window.onload = function () {
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram3.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
-            
+
                 dataHistogram3 = function (d) { return d.properties.Ra_Total; };
             }
             else if (input3 == "Se") {
-            
+
                 histogram3
                     .width(250)
                     .height(250)
@@ -1664,11 +1692,11 @@ window.onload = function () {
                     })
                     ;
                 histogram3.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
-            
+
                 dataHistogram3 = function (d) { return d.properties.Se; };
             }
             else if (input3 == "U") {
-            
+
                 histogram3
                     .width(250)
                     .height(250)
@@ -1705,14 +1733,14 @@ window.onload = function () {
                     });
                 ;
                 histogram3.xAxis().tickValues([30, 200, 400, 600])
-            
+
                 dataHistogram3 = function (d) { return d.properties.U; };
             }
-            
-            
-            
+
+
+
             else if (input3 == "None") {
-            
+
                 histogram3
                     .width(250)
                     .height(250)
@@ -1726,7 +1754,7 @@ window.onload = function () {
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram3.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
                 histogram3.yAxis().tickValues([0, 0, 0, 0]);
-            
+
                 dataHistogram3 = function (d) { return d.properties.None; };
             }
 
@@ -1769,7 +1797,7 @@ window.onload = function () {
                 histogram4.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                 dataHistogram4 = function (d) { return d.properties.As; };
             }
-            
+
             else if (input4 == "Ba") {
                 histogram4
                     .width(250)
@@ -1810,9 +1838,9 @@ window.onload = function () {
                 histogram4.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                 dataHistogram4 = function (d) { return d.properties.Ba; };
             }
-            
+
             else if (input4 == "Ca") {
-            
+
                 histogram4
                     .width(250)
                     .height(250)
@@ -1828,11 +1856,11 @@ window.onload = function () {
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                     ;
                 histogram4.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
-            
+
                 dataHistogram4 = function (d) { return d.properties.Ca; };
             }
             else if (input4 == "Chloride") {
-            
+
                 histogram4
                     .width(250)
                     .height(250)
@@ -1867,11 +1895,11 @@ window.onload = function () {
                         path.attr('d', line);
                     });
                 histogram4.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
-            
+
                 dataHistogram4 = function (d) { return d.properties.Chloride; };
             }
             else if (input4 == "Nitrate") {
-            
+
                 histogram4
                     .width(250)
                     .height(250)
@@ -1907,11 +1935,11 @@ window.onload = function () {
                     })
                     ;
                 histogram4.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
-            
+
                 dataHistogram4 = function (d) { return d.properties.Nitrate; };
             }
             else if (input4 == "Pb") {
-            
+
                 histogram4
                     .width(250)
                     .height(250)
@@ -1947,7 +1975,7 @@ window.onload = function () {
                     })
                     ;
                 histogram4.xAxis().tickValues([0, 100, 200, 300]);
-            
+
                 dataHistogram4 = function (d) { return d.properties.Pb; };
             }
             else if (input4 == "Ra_Total") {
@@ -1964,11 +1992,11 @@ window.onload = function () {
                     .yAxisLabel('Count')
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram4.xAxis().tickValues([0.2, 0.4, 0.6, 0.8, 1]);
-            
+
                 dataHistogram4 = function (d) { return d.properties.Ra_Total; };
             }
             else if (input4 == "Se") {
-            
+
                 histogram4
                     .width(250)
                     .height(250)
@@ -2004,11 +2032,11 @@ window.onload = function () {
                     })
                     ;
                 histogram4.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
-            
+
                 dataHistogram4 = function (d) { return d.properties.Se; };
             }
             else if (input4 == "U") {
-            
+
                 histogram4
                     .width(250)
                     .height(250)
@@ -2045,14 +2073,14 @@ window.onload = function () {
                     });
                 ;
                 histogram4.xAxis().tickValues([30, 200, 400, 600])
-            
+
                 dataHistogram4 = function (d) { return d.properties.U; };
             }
-            
-            
-            
+
+
+
             else if (input4 == "None") {
-            
+
                 histogram4
                     .width(250)
                     .height(250)
@@ -2066,7 +2094,7 @@ window.onload = function () {
                     .margins({ top: 10, right: 20, bottom: 50, left: 50 });
                 histogram4.xAxis().tickValues([0, 0, 0, 0, 0, 0]);
                 histogram4.yAxis().tickValues([0, 0, 0, 0]);
-            
+
                 dataHistogram4 = function (d) { return d.properties.None; };
             }
 
@@ -2239,8 +2267,7 @@ window.onload = function () {
                     map.addLayer(wellMarkers);
                     map.fitBounds(wellMarkers.getBounds());
 
-                });
-
+                });                
             dc.renderAll();
         });
 
