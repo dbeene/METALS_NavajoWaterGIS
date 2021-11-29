@@ -27,10 +27,6 @@ body {
   padding-right: 40px;
 }
 
-.pie-chart {
-  height: 150px;
-}
-
 .box-padding {
   padding-top: 15px
 }
@@ -46,6 +42,22 @@ text {
 
 .mapframe {
   padding-top: 10px
+}
+
+.mapbox {
+  position: relative;
+}
+
+.mapbox .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 314159;
+  pointer-events: none;
+}
+
+.overlay {
+  padding-top: 5%;
 }
 
 /* custom scrollable popup styles*/

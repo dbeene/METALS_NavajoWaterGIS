@@ -102,7 +102,7 @@
                                             (CRUMP),
                                             Navajo Nation Environmental Protection Agency (NNEPA), U.S. Centers for
                                             Disease
-                                            Control (CDC), Tolani Lake Enterprises, Northern Arizona University (NAU),
+                                            Control (CDC), T&oacute; &Lstrok;ani Enterprises (TLE), Northern Arizona University (NAU),
                                             U.S. Army Corps of Engineers (ACOE), and other fellow researchers. <i>To
                                                 date, none
                                                 of these compiled data have been disseminated publicly</i> and in a
@@ -279,9 +279,9 @@
                                     <div class="modal-body">
                                         <p>
                                             <a href="https://dbeene.github.io/" target="_blank">Daniel Beene</a>
-                                            (darbeene@salud.unm.edu), Team Member, University of New Mexico<br>
+                                            (darbeene@salud.unm.edu), Developer, University of New Mexico<br>
                                             <a href="https://manideeppotluru.github.io/" target="_blank">Manideep
-                                                Potluru</a> (mpotluru@unm.edu), Team Member, University of New
+                                                Potluru</a> (mpotluru@unm.edu), Developer, University of New
                                             Mexico<br>
                                             <a href="https://www.lipingyang.org/" target="_blank">Dr. Liping Yang</a>
                                             (lipingyang@unm.edu), Ph.D., Project Advisor, University of New
@@ -324,37 +324,35 @@
     </nav>
 
     <!--Map frame-->
-    <div id="section1" class="container">
+    <!-- <div id="section1" class="container">
         <div class="row">
             <div class="col-md-12 mapframe">
                 <div id="map"></div>
+            </div>
+        </div>
+    </div> -->
+    <div class="container-fluid">
+        <div class="mapbox">
+            <div class="row-fluid some" id="map"></div>
+            <div class="row-fluid overlay col-md-12">
+                <!-- <div class="pull-right dc-chart" id="chart-ring-use"></div> -->
             </div>
         </div>
     </div>
     <!--Legend bar-->
     <div id="section2" class="container">
         <div class="row legend">
-            <strong>Filter Wells by Use: </strong>
-            Domestic: 
-            <button onclick="select('Domestic')">
-                <div class="dot-dom"></div>
-            </button>
-            Livestock: 
-            <button onclick="select('Livestock')">
-                <div class="dot-liv"></div>
-            </button>
-            Municipal: 
-            <button onclick="select('Municipal')">
-                <div class="dot-mun"></div>
-            </button>
-            Other: 
-            <button onclick="select('Other')">
-                <div class="dot-oth"></div>
-            </button>
-            Unknown: 
-            <button id="updateMarker_btn" type="button">
-                <div class="dot-unk"></div>
-            </button>
+            <strong>Well Use: </strong>
+            <span class="dot-dom"></span>
+            Domestic
+            <span class="dot-liv"></span>
+            Livestock
+            <span class="dot-mun"></span>
+            Municipal
+            <span class="dot-oth"></span>
+            Other
+            <span class="dot-unk"></span>
+            Unknown
         </div>
     </div>
     <!--Plots-->

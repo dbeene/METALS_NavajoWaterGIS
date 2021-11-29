@@ -174,6 +174,8 @@ window.onload = function () {
             d.Ca = Math.round(+d.properties.Ca / 100) * 100;
             d.Ra_Total = Math.round(+d.properties.Ra_Total / 1) * 1;
             d.U = Math.round(+d.properties.U / 100) * 100;
+            // Well use
+            d.USE = d.properties.USE
 
         });
 
@@ -186,6 +188,9 @@ window.onload = function () {
         var Ra_TotalDim = ndx.dimension(function (d) { return d.properties.Ra_Total; });
         var UDim = ndx.dimension(function (d) { return d.properties.U; });
 
+        //20210825 attempt to build pie chart
+        var useDim = ndx.dimension(dc.pluck('USE'));
+
         var allDim = ndx.dimension(function (d) { return d; });
 
         // create groups (y-axis values)
@@ -196,6 +201,7 @@ window.onload = function () {
         var countPerCa = CaDim.group().reduceCount();
         var countPerRa_Total = Ra_TotalDim.group().reduceCount();
         var countPerU = UDim.group().reduceCount();
+        var countPerUse = useDim.group().reduceCount();
 
         //specify charts
 
@@ -207,6 +213,12 @@ window.onload = function () {
 
         //data table declare
         var dataTable = dc.dataTable('#data-table');
+
+        // Register handler
+        d3.selectAll('a#all').on('click', function () {
+            dc.filterAll();
+            dc.renderAll();
+        })
 
         // Default histograms
         caCountChart
@@ -257,7 +269,9 @@ window.onload = function () {
                     .attr('id', 'oeLine')
                     .attr("stroke-width", 2)
                     .style("stroke-dasharray", ("4,3"))
-                path.attr('d', line);
+                path.attr('d', line)
+                path.exit().remove()
+                ;
             });
         ;
         uCountChart.xAxis().tickValues([30, 200, 400, 600])
@@ -295,7 +309,9 @@ window.onload = function () {
                     .attr('id', 'oeLine')
                     .attr("stroke-width", 2)
                     .style("stroke-dasharray", ("4,3"))
-                path.attr('d', line);
+                path.attr('d', line)
+                path.exit().remove()
+                ;
             })
             ;
         ;
@@ -371,33 +387,6 @@ window.onload = function () {
 
                     // Add circle markers
                     var marker = L.circleMarker([filLoc.lat, filLoc.long], markerOptions);
-
-                    // Filter markers by use using button on click event
-                    function render(data, USE) {
-                        d3.select("body").selectAll(marker) // <-B
-                            .data(data.filter(function (d) { return d.properties.USE == USE; }))
-                            .enter()
-                            .append("div")
-                            .attr("class", marker)
-                            .append("span");
-
-                        d3.select("body").selectAll(marker) // <-D
-                            .data(data.filter(function (d) { return d.properties.USE == USE; }))
-                            .attr("class", marker)
-                            .select("span")
-                            .text(function (d) {
-                                return d.properties.USE;
-                            });
-
-                        d3.select("body").selectAll(marker) // <-C
-                            .data(data.filter(function (d) { return d.properties.USE == USE; }))
-                            .exit().remove();
-                    }
-
-                    function select(USE) {
-                        render(data, USE);
-
-                    }
 
                     marker.bindPopup(
                         "<dl><dt> <h5><b><i>WELL INFORMATION- NAVAJO NATION WELL</i></b></h5><br>"
@@ -773,7 +762,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 ;
                 histogram1.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
@@ -813,7 +804,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 ;
@@ -874,7 +867,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 histogram1.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
@@ -913,7 +908,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram1.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
@@ -953,7 +950,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram1.xAxis().tickValues([0, 100, 200, 300]);
@@ -1010,7 +1009,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram1.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
@@ -1051,7 +1052,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 ;
                 histogram1.xAxis().tickValues([30, 200, 400, 600])
@@ -1111,7 +1114,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 ;
                 histogram2.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
@@ -1151,7 +1156,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 ;
@@ -1212,7 +1219,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 histogram2.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
@@ -1251,7 +1260,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram2.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
@@ -1291,7 +1302,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram2.xAxis().tickValues([0, 100, 200, 300]);
@@ -1348,7 +1361,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram2.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
@@ -1389,7 +1404,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 ;
                 histogram2.xAxis().tickValues([30, 200, 400, 600])
@@ -1451,7 +1468,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 ;
                 histogram3.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
@@ -1491,7 +1510,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 ;
@@ -1552,7 +1573,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 histogram3.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
@@ -1591,7 +1614,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram3.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
@@ -1631,7 +1656,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram3.xAxis().tickValues([0, 100, 200, 300]);
@@ -1688,7 +1715,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram3.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
@@ -1729,7 +1758,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 ;
                 histogram3.xAxis().tickValues([30, 200, 400, 600])
@@ -1791,7 +1822,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 ;
                 histogram4.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
@@ -1831,7 +1864,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 ;
@@ -1892,7 +1927,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 histogram4.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
@@ -1931,7 +1968,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram4.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
@@ -1971,7 +2010,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram4.xAxis().tickValues([0, 100, 200, 300]);
@@ -2028,7 +2069,9 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     })
                     ;
                 histogram4.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
@@ -2069,15 +2112,15 @@ window.onload = function () {
                             .attr('id', 'oeLine')
                             .attr("stroke-width", 2)
                             .style("stroke-dasharray", ("4,3"))
-                        path.attr('d', line);
+                        path.attr('d', line)
+                        path.exit().remove()
+                        ;
                     });
                 ;
                 histogram4.xAxis().tickValues([30, 200, 400, 600])
 
                 dataHistogram4 = function (d) { return d.properties.U; };
             }
-
-
 
             else if (input4 == "None") {
 
@@ -2267,7 +2310,7 @@ window.onload = function () {
                     map.addLayer(wellMarkers);
                     map.fitBounds(wellMarkers.getBounds());
 
-                });                
+                });
             dc.renderAll();
         });
 
