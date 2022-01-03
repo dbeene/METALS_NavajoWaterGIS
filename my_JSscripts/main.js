@@ -343,10 +343,12 @@ window.onload = function () {
         //default dataTable
         dataTable
             .dimension(allDim)
-            .group(function (d) { return 'dc.js insists on putting a row here so I remove it using JS'; })
+            .group(function (d) { return ''; }) //remove empty top row 
             .size(1000)
             .columns([
                 function (d) { return d.properties.well_no; },
+                function (d) { return d.properties.lat; },
+                function (d) { return d.properties.long; },
                 column2,
                 column3,
                 column4,
@@ -2156,6 +2158,18 @@ window.onload = function () {
                         label: "Well No.",
                         format: function (d) {
                             return d.properties.well_no
+                        }
+                    },
+                    {
+                        label: "Lat",
+                        format: function (d) {
+                            return d.properties.lat
+                        }
+                    },
+                    {
+                        label: "Long",
+                        format: function (d) {
+                            return d.properties.long
                         }
                     },
                     {
