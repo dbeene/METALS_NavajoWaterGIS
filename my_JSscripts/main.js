@@ -6,11 +6,11 @@ window.onload = function () {
     window.map = L.map('map').setView([36.292, -110.090], 8);
     //Global Variable - wellMarkers
     window.wellMarkers = new L.FeatureGroup();
-    var HikeBike_HikeBike = L.tileLayer('https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png', {
+    var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     });
-    HikeBike_HikeBike.addTo(map);
+    OpenStreetMap_Mapnik.addTo(map);
 
     var esri_world = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         maxZoom: 19,
@@ -77,7 +77,7 @@ window.onload = function () {
 
             // Leaflet layer control
             var baseMaps = {
-                'Topo': HikeBike_HikeBike,
+                'Topo': OpenStreetMap_Mapnik,
                 'Sattelite': esri_world,
                 'Hybrid': USGS_USImageryTopo
             }
