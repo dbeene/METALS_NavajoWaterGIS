@@ -165,7 +165,7 @@ window.onload = function () {
     }
 
     // create charts
-    d3.json('data/AnalytesSel.json', function (error, data) {
+    d3.json('data/AnalytesSel_new.json', function (error, data) {
         var wellData = data.features;
         _.each(wellData, function (d) {
             d.count = +d.count;
@@ -347,6 +347,8 @@ window.onload = function () {
             .size(1000)
             .columns([
                 function (d) { return d.properties.well_no; },
+                function (d) { return d.properties.Chapter},
+                function (d) { return d.properties.nn_agency},
                 function (d) { return d.properties.lat; },
                 function (d) { return d.properties.long; },
                 column2,
@@ -483,6 +485,11 @@ window.onload = function () {
                 // Add markers to map:
                 map.addLayer(wellMarkers);
                 map.fitBounds(wellMarkers.getBounds());
+                // Label chapters using this example: http://bl.ocks.org/katossky/367a68ffb7d70f59d070
+                // But be sure they don't clutter when zoomed out
+                // If I can't get it to work, implement search function on next iteration
+                // using this SO answer: https://stackoverflow.com/questions/70284344/filtering-leaflet-map-based-on-dropdown-selection-in-d3
+                // and this: http://www.d3noob.org/2014/02/searching-leafletjs-map-using.html
 
             });
         dc.renderAll();
@@ -668,7 +675,7 @@ window.onload = function () {
         selected4 = document.getElementById("selectbox4");
         input4 = selected4.options[selected4.selectedIndex].value;
 
-        d3.json('data/AnalytesSel.json', function (error, data) {
+        d3.json('data/AnalytesSel_new.json', function (error, data) {
             var wellData = data.features;
             _.each(wellData, function (d) {
                 d.count = +d.count;
@@ -2158,6 +2165,18 @@ window.onload = function () {
                         label: "Well No.",
                         format: function (d) {
                             return d.properties.well_no
+                        }
+                    },
+                    {
+                        label: "Chapter",
+                        format: function (d) {
+                            return d.properties.Chapter
+                        }
+                    },
+                    {
+                        label: "Agency",
+                        format: function (d) {
+                            return d.properties.nn_agency
                         }
                     },
                     {
