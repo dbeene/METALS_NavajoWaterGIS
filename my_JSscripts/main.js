@@ -22,7 +22,152 @@ window.onload = function () {
         attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
     });
 
-    // NN Layers
+// NN Layers
+var chapter1Marker = L.marker([35.854359, -111.596276]);
+var chapter2Marker = L.marker([36.295128, -111.617351]);
+var chapter3Marker = L.marker([36.573259, -111.454201]);
+var chapter4Marker = L.marker([36.260344, -111.219877]);
+var chapter5Marker = L.marker([35.841619, -111.188685]);
+var chapter6Marker = L.marker([35.316745, -111.111526]);
+var chapter7Marker = L.marker([36.744196, -111.290189]);
+var chapter8Marker = L.marker([36.663304, -111.047236]);
+var chapter9Marker = L.marker([36.402562, -110.969491]);
+var chapter10Marker = L.marker([36.803719, -110.959495]);
+var chapter11Marker = L.marker([35.482540, -110.907713]);
+var chapter12Marker = L.marker([35.261735, -110.733304]);
+var chapter13Marker = L.marker([37.033103, -110.782274]);
+var chapter14Marker = L.marker([36.662394, -110.597599]);
+var chapter15Marker = L.marker([36.688746, -110.305346]);
+var chapter16Marker = L.marker([36.327780, -110.297442]);
+var chapter17Marker = L.marker([36.103359, -110.475360]);
+var chapter18Marker = L.marker([35.464345, -110.473690]);
+var chapter19Marker = L.marker([35.311866, -110.399548]);
+var chapter20Marker = L.marker([35.554114, -110.128561]);
+var chapter21Marker = L.marker([35.770350, -110.058503]);
+var chapter22Marker = L.marker([35.945223, -109.972888]);
+var chapter23Marker = L.marker([35.762918, -109.829705]);
+var chapter24Marker = L.marker([36.023184, -110.093109]);
+var chapter25Marker = L.marker([36.107762, -110.222020]);
+var chapter26Marker = L.marker([35.331335, -110.097371]);
+var chapter27Marker = L.marker([35.434930, -109.891448]);
+var chapter28Marker = L.marker([35.333932, -109.563239]);
+var chapter29Marker = L.marker([35.508010, -109.536790]);
+var chapter30Marker = L.marker([35.625297, -109.687522]);
+var chapter31Marker = L.marker([35.746783, -109.571015]);
+var chapter32Marker = L.marker([36.024685, -109.794542]);
+var chapter33Marker = L.marker([35.948643, -109.428830]);
+var chapter34Marker = L.marker([35.748142, -109.318498]);
+var chapter35Marker = L.marker([36.160490, -109.992571]);
+var chapter36Marker = L.marker([36.332415, -110.033454]);
+var chapter37Marker = L.marker([36.374207, -109.558864]);
+var chapter38Marker = L.marker([36.168278, -109.580283]);
+var chapter39Marker = L.marker([36.529027, -109.449944]);
+var chapter40Marker = L.marker([36.392616, -109.783876]);
+var chapter41Marker = L.marker([36.655991, -109.589476]);
+var chapter42Marker = L.marker([36.840412, -109.838163]);
+var chapter43Marker = L.marker([36.553807, -110.021987]);
+var chapter44Marker = L.marker([37.074655, -110.217268]);
+var chapter45Marker = L.marker([36.812634, -109.362195]);
+var chapter46Marker = L.marker([37.012045, -109.607465]);
+var chapter47Marker = L.marker([37.146433, -109.378818]);
+var chapter48Marker = L.marker([37.300522, -109.205827]);
+var chapter49Marker = L.marker([36.960042, -109.162218]);
+var chapter50Marker = L.marker([36.243735, -109.231646]);
+var chapter51Marker = L.marker([35.293327, -109.275328]);
+var chapter52Marker = L.marker([35.268120, -109.113710]);
+var chapter53Marker = L.marker([35.462960, -109.173451]);
+var chapter54Marker = L.marker([35.617939, -109.127031]);
+var chapter55Marker = L.marker([35.761240, -109.047576]);
+var chapter56Marker = L.marker([35.888682, -109.038602]);
+var chapter57Marker = L.marker([36.004919, -109.180546]);
+var chapter58Marker = L.marker([36.067849, -109.024308]);
+var chapter59Marker = L.marker([36.452290, -108.842877]);
+var chapter60Marker = L.marker([36.830323, -108.939227]);
+
+
+    var chapterBounds = {
+        'Cameron': L.latLngBounds([chapter1Marker.getLatLng()]),
+        'Bodaway Gap': L.latLngBounds([chapter2Marker.getLatLng()]),
+        'Coppermine': L.latLngBounds([chapter3Marker.getLatLng()]),
+        'Tuba City': L.latLngBounds([chapter4Marker.getLatLng()]),
+        'Coalmine Mesa': L.latLngBounds([chapter5Marker.getLatLng()]),
+        'Leupp': L.latLngBounds([chapter6Marker.getLatLng()]),
+        'Lechee': L.latLngBounds([chapter7Marker.getLatLng()]),
+        'Kaibeto': L.latLngBounds([chapter8Marker.getLatLng()]),
+        'Tonalea': L.latLngBounds([chapter9Marker.getLatLng()]),
+        'Inscription House': L.latLngBounds([chapter10Marker.getLatLng()]),
+        'Tolani Lake': L.latLngBounds([chapter11Marker.getLatLng()]),
+        'Bird Springs': L.latLngBounds([chapter12Marker.getLatLng()]),
+        'Navajo Mountain': L.latLngBounds([chapter13Marker.getLatLng()]),
+        'Shonto': L.latLngBounds([chapter14Marker.getLatLng()]),
+        'Kayenta': L.latLngBounds([chapter15Marker.getLatLng()]),
+        'Forest Lake': L.latLngBounds([chapter16Marker.getLatLng()]),
+        'Hard Rock': L.latLngBounds([chapter17Marker.getLatLng()]),
+        'Teesto': L.latLngBounds([chapter18Marker.getLatLng()]),
+        'Dilkon': L.latLngBounds([chapter19Marker.getLatLng()]),
+        'White Cone': L.latLngBounds([chapter20Marker.getLatLng()]),
+        'Jeddito': L.latLngBounds([chapter21Marker.getLatLng()]),
+        'Low Mountain': L.latLngBounds([chapter22Marker.getLatLng()]),
+        'Steamboat': L.latLngBounds([chapter23Marker.getLatLng()]),
+        'Whippoorwill': L.latLngBounds([chapter24Marker.getLatLng()]),
+        'Pinon': L.latLngBounds([chapter25Marker.getLatLng()]),
+        'Indian Wells': L.latLngBounds([chapter26Marker.getLatLng()]),
+        'Greasewood Springs': L.latLngBounds([chapter27Marker.getLatLng()]),
+        'Wide Ruins': L.latLngBounds([chapter28Marker.getLatLng()]),
+        'Klagetoh': L.latLngBounds([chapter29Marker.getLatLng()]),
+        'Cornfields': L.latLngBounds([chapter30Marker.getLatLng()]),
+        'Ganado': L.latLngBounds([chapter31Marker.getLatLng()]),
+        'Tselani': L.latLngBounds([chapter32Marker.getLatLng()]),
+        'Nazlini': L.latLngBounds([chapter33Marker.getLatLng()]),
+        'Kinlichee': L.latLngBounds([chapter34Marker.getLatLng()]),
+
+        'Blue Gap/Tachee': L.latLngBounds([chapter35Marker.getLatLng()]),
+        'Black Mesa': L.latLngBounds([chapter36Marker.getLatLng()]),
+        'Many Farms': L.latLngBounds([chapter37Marker.getLatLng()]),
+        'Chinle': L.latLngBounds([chapter38Marker.getLatLng()]),
+        'Round Rock': L.latLngBounds([chapter39Marker.getLatLng()]),
+        'Rough Rock': L.latLngBounds([chapter40Marker.getLatLng()]),
+        'Rock Point': L.latLngBounds([chapter41Marker.getLatLng()]),
+        'Dennehotso': L.latLngBounds([chapter42Marker.getLatLng()]),
+        'Chilchinbeto': L.latLngBounds([chapter43Marker.getLatLng()]),
+        'Oljato': L.latLngBounds([chapter44Marker.getLatLng()]),
+        'Sweet Water': L.latLngBounds([chapter45Marker.getLatLng()]),
+        'Mexican Water': L.latLngBounds([chapter46Marker.getLatLng()]),
+        'Red Mesa': L.latLngBounds([chapter47Marker.getLatLng()]),
+        'Aneth': L.latLngBounds([chapter48Marker.getLatLng()]),
+        'Teec Nos Pos': L.latLngBounds([chapter49Marker.getLatLng()]),
+        'Tsaile/Wheatfields': L.latLngBounds([chapter50Marker.getLatLng()]),
+        'Houck': L.latLngBounds([chapter51Marker.getLatLng()]),
+        'Lupton': L.latLngBounds([chapter52Marker.getLatLng()]),
+        'Oak Springs': L.latLngBounds([chapter53Marker.getLatLng()]),
+        'Saint Michaels': L.latLngBounds([chapter54Marker.getLatLng()]),
+        'Fort Defiance': L.latLngBounds([chapter55Marker.getLatLng()]),
+        'Red Lake': L.latLngBounds([chapter56Marker.getLatLng()]),
+        'Sawmill': L.latLngBounds([chapter57Marker.getLatLng()]),
+        'Crystal': L.latLngBounds([chapter58Marker.getLatLng()]),
+        'Sanostee': L.latLngBounds([chapter59Marker.getLatLng()]),
+        'Beclahbito': L.latLngBounds([chapter60Marker.getLatLng()]),
+    };
+    
+    // When a user selects a chapter, update the map's view to the bounds of the corresponding marker
+    function selectChapter(chapter) {
+        // Check if the chapter exists in the bounds object
+        if (chapterBounds[chapter]) {
+            map.fitBounds(chapterBounds[chapter], { padding: [50, 50], maxZoom: 12 });
+        } else {
+            console.log('Chapter not found in bounds object');
+        }
+    }
+    
+    // Call the selectChapter function 
+    selectChapter('');
+
+    var chapterDropdown = document.getElementById('chapter-dropdown');
+  chapterDropdown.addEventListener('change', function() {
+    selectChapter(chapterDropdown.value);
+  });
+  
+  
 
     // City markers
     var cityMarkers = {
@@ -260,7 +405,7 @@ window.onload = function () {
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 });
             caCountChart.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
             caCountChart.yAxis().tickValues([0, 3, 6, 9, 12]);
-
+          
             uCountChart
                 .width(250)
                 .height(250)
@@ -274,7 +419,9 @@ window.onload = function () {
                 .barPadding(3)
                 .yAxisLabel('Count')
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 })
-                .on('pretransition', function (mcl) {
+                
+                 .on('pretransition', function (mcl) {
+            
                     var x_vert = 30; // MCL for U is 30
                     var extra_data = [ // Array to define vertical line starting at (MCL, 0)
                         { x: mcl.x()(x_vert), y: 0 },
@@ -286,20 +433,46 @@ window.onload = function () {
                         .interpolate('linear')
                     var chartBody = uCountChart.select('g.chart-body');
                     var path = chartBody.selectAll('path.extra').data([extra_data]);
-                    path.enter()
+               
+                  /*  // Only draw the line for arsenic chart
+                        path.enter()
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                            .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line)
+                  
+                        path.remove(); // Remove the line for other charts
+                    
+                    */
+                    // Only draw the line for uranium chart
+                 
+                        path.enter()
                         .append('path')
                         .attr('class', 'oeExtra')
                         .attr('stroke', 'red')
                         .attr('id', 'oeLine')
                         .attr("stroke-width", 2)
                         .style("stroke-dasharray", ("4,3"))
-                    path.attr('d', line)
-                    path.exit().remove()
-                        ;
-                });
-            ;
-            uCountChart.xAxis().tickValues([30, 200, 400, 600])
+                        .attr('d', line);
+                        mclDrawn = true;
+                    
+                
+                    // Remove the event listener after drawing the line
+                  //  uCountChart.on('pretransition', null);
+                 
+           
+        }); 
 
+               
+                   
+                        
+                //});
+            ; 
+            uCountChart.xAxis().tickValues([30, 200, 400, 600])
+            var mclDrawn = false;
             as_CountChart
                 .width(250)
                 .height(250)
@@ -314,31 +487,68 @@ window.onload = function () {
                 .yAxisLabel('Count')
                 .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                 // Add vertical line at MCL using example from https://github.com/dc-js/dc.js/blob/develop/web-src/examples/row-vertical-line.html
-                .on('pretransition', function (mcl) {
-                    var x_vert = 10; // MCL for As is 10
-                    var extra_data = [ // Array to define vertical line starting at (MCL, 0)
-                        { x: mcl.x()(x_vert), y: 0 },
-                        { x: mcl.x()(x_vert), y: as_CountChart.effectiveHeight() }
-                    ];
-                    var line = d3.svg.line()
-                        .x(function (d) { return d.x; })
-                        .y(function (d) { return d.y; })
-                        .interpolate('linear')
-                    var chartBody = as_CountChart.select('g.chart-body'); //select g.chart-body will select the rect object within the svg
-                    var path = chartBody.selectAll('path.extra').data([extra_data]);
-                    path.enter()
-                        .append('path')
-                        .attr('class', 'oeExtra')
-                        .attr('stroke', 'red')
-                        .attr('id', 'oeLine')
-                        .attr("stroke-width", 2)
-                        .style("stroke-dasharray", ("4,3"))
-                    path.attr('d', line)
-                    path.exit().remove()
-                        ;
-                })
-                ;
+            
+                // .on('pretransition', function (mcl) {
+                   
+                //     var x_vert = 10; // MCL for As is 10
+                //     var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+                //         { x: mcl.x()(x_vert), y: 0 },
+                //         { x: mcl.x()(x_vert), y: as_CountChart.effectiveHeight() }
+                //     ];
+                //     var line = d3.svg.line()
+                //         .x(function (d) { return d.x; })
+                //         .y(function (d) { return d.y; })
+                //         .interpolate('linear')
+                //     var chartBody = as_CountChart.select('g.chart-body'); //select g.chart-body will select the rect object within the svg
+                //     var path = chartBody.selectAll('path.extra').data([extra_data]);
+                    
+                    
+              
+                       
+                //             path.enter()
+                //             .append('path')
+                //             .attr('class', 'oeExtra')
+                //             .attr('stroke', 'red')
+                //             .attr('id', 'oeLine')
+                //             .attr("stroke-width", 2)
+                //             .style("stroke-dasharray", ("4,3"))
+                //             .attr('d', line)
+                           
+                        
+                    
+                        // Remove the event listener after drawing the line
+                        //as_CountChart.on('pretransition', null);
+                        //histogram1.on('pretransition', null);
+
+                        .on('pretransition', function (chart) {
+                            if (!mclDrawn) {
+                                var x_vert = 10; // MCL for As is 10
+                                var extra_data = [ // Array to define vertical line starting at (MCL, 0)
+                                    { x: chart.x()(x_vert), y: 0 },
+                                    { x: chart.x()(x_vert), y: chart.effectiveHeight() }
+                                ];
+                                var line = d3.svg.line()
+                                    .x(function (d) { return d.x; })
+                                    .y(function (d) { return d.y; })
+                                    .interpolate('linear');
+                                var chartBody = chart.select('g.chart-body'); //select g.chart-body will select the rect object within the svg
+                                var path = chartBody.selectAll('path.extra').data([extra_data]);
+                                path.enter()
+                                    .append('path')
+                                    .attr('class', 'oeExtra')
+                                    .attr('stroke', 'red')
+                                    .attr('id', 'oeLine')
+                                    .attr("stroke-width", 2)
+                                    .style("stroke-dasharray", ("4,3"))
+                                    .attr('d', line); 
+                                mclDrawn = false
+                            }
+    
+     
+                   
+                }); 
             ;
+            
             as_CountChart.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
 
             ra_TotalCountChart
@@ -777,8 +987,11 @@ window.onload = function () {
                         .barPadding(3)
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
-                        .on('pretransition', function (mcl) {
-                            var x_vert = 10; // MCL for As is 10
+                       
+                        .on('pretransition', function () {
+                            //chart.select("#oeLine").remove();
+
+                           // var x_vert = 10; // MCL for As is 10
                             var As_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
                                 { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
@@ -788,24 +1001,33 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram1.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([As_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
-                                .attr('stroke', 'red')
+                               .attr('stroke', 'red')
                                 .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
+                                
                             path.attr('d', line)
-                            path.exit().remove()
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram1.on('pretransition', null);
+                            });
+                            // Remove the event listener after drawing the line
+                           // histogram1.on('pretransition', null);
                                 ;
-                        });
+                        }); 
                     ;
                     histogram1.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                     dataHistogram1 = function (d) { return d.properties.As; };
+                    histogram1.on('pretransition', null); 
                 }
-
+                
                 else if (input1 == "Ba") {
+                    var baLineDrawn = true;
                     histogram1
                         .width(250)
                         .height(250)
@@ -819,7 +1041,10 @@ window.onload = function () {
                         .barPadding(3)
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+
                         .on('pretransition', function (mcl) {
+                            if (!baLineDrawn) {
+                         
                             var x_vert = 2000; // MCL for Ba is 2000
                             var Ba_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -830,18 +1055,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram1.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Ba_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                             //   .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
+                            baLineDrawn = true;
+                        }
                                 ;
-                        })
+                        }) 
                         ;
                     ;
                     histogram1.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
@@ -883,6 +1111,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            //chart.select("#oeLine").remove();
                             var x_vert = 250; // MCL for chloride is 250
                             var Cl_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -893,18 +1122,24 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram1.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Cl_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'yellow')
-                                .attr('id', 'oeLine')
+                              //  .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
-                        });
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram1.on('pretransition', null);
+                            });
+                           
+                                ; 
+                        }); 
+                     //   histogram1.on('pretransition', null); 
                     histogram1.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
                     dataHistogram1 = function (d) { return d.properties.Chloride; };
@@ -924,6 +1159,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            chart.select("#oeLine").remove();
                             var x_vert = 10; // MCL for Nitrate is 10
                             var Ni_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -934,20 +1170,27 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram1.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Ni_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                              //  .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram1.on('pretransition', null);
+                            });
+                           
                                 ;
-                        })
+                        }) 
                         ;
+                        histogram1.on('pretransition', null); 
                     histogram1.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
+                   
 
                     dataHistogram1 = function (d) { return d.properties.Nitrate; };
                 }
@@ -966,6 +1209,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            //histogram1.select("#oeLine").remove();
                             var x_vert = 0; // MCL for Pb is 0
                             var Pb_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -976,19 +1220,25 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram1.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Pb_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                               // .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram1.on('pretransition', null);
+                            });
+                           
                                 ;
-                        })
+                        }) 
                         ;
+                        histogram1.on('pretransition', null); 
                     histogram1.xAxis().tickValues([0, 100, 200, 300]);
 
                     dataHistogram1 = function (d) { return d.properties.Pb; };
@@ -1028,7 +1278,8 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
-                            var x_vert = 0.05; // MCL for BSe is 0.05
+                           // histogram1.select("#oeLine").remove();
+                            //var x_vert = 0.05; // MCL for BSe is 0.05
                             var Se_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
                                 { x: mcl.x()(x_vert), y: histogram1.effectiveHeight() }
@@ -1038,19 +1289,25 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram1.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Se_MCL]);
                             path.enter()
                                 .append('path')
-                                .attr('class', 'oeExtra')
+                               .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                              //  .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
-                        })
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram1.on('pretransition', null);
+                            });
+                 
+                                
+                        }) 
                         ;
+                        histogram1.on('pretransition', null); 
                     histogram1.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
 
                     dataHistogram1 = function (d) { return d.properties.Se; };
@@ -1070,7 +1327,9 @@ window.onload = function () {
                         .barPadding(3)
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                        
                         .on('pretransition', function (mcl) {
+                           // chart.select("#oeLine").remove();
                             var x_vert = 30; // MCL for U is 30
                             var extra_data = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1081,19 +1340,25 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram1.select('g.chart-body');
+                         
                             var path = chartBody.selectAll('path.extra').data([extra_data]);
                             path.enter()
-                                .append('path')
+                               .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                               // .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram1.on('pretransition', null);
+                            });
+                           
                                 ;
                         });
                     ;
+                    histogram1.on('pretransition', null); 
                     histogram1.xAxis().tickValues([30, 200, 400, 600])
 
                     dataHistogram1 = function (d) { return d.properties.U; };
@@ -1133,6 +1398,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            //chart.select("#oeLine").remove();
                             var x_vert = 10; // MCL for As is 10
                             var As_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1143,7 +1409,9 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram2.select('g.chart-body');
+                          
                             var path = chartBody.selectAll('path.extra').data([As_MCL]);
+                           
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
@@ -1152,10 +1420,19 @@ window.onload = function () {
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
-                        });
+                      
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram2.on('pretransition', null);
+                            });
+                            histogram2.on('pretransition', null)
+                         
+                                
+                              
+                        }); 
+                    
                     ;
+                    histogram1.on('pretransition', null); 
                     histogram2.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                     dataHistogram2 = function (d) { return d.properties.As; };
                 }
@@ -1175,6 +1452,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            chart.select("#oeLine").remove();
                             var x_vert = 2000; // MCL for Ba is 2000
                             var Ba_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1185,20 +1463,22 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram2.select('g.chart-body');
+                        
                             var path = chartBody.selectAll('path.extra').data([Ba_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
-                                .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                               .attr('stroke', 'red')
+                               // .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        })
+                                ; 
+                        }) 
                         ;
                     ;
+                    histogram2.on('pretransition', null); 
                     histogram2.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                     dataHistogram2 = function (d) { return d.properties.Ba; };
                 }
@@ -1219,6 +1499,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         ;
+                    histogram2.on('pretransition', null); 
                     histogram2.xAxis().tickValues([0, 200, 400, 600, 800, 1000]);
 
                     dataHistogram2 = function (d) { return d.properties.Ca; };
@@ -1238,6 +1519,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            //chart.select("#oeLine").remove();
                             var x_vert = 250; // MCL for chloride is 250
                             var Cl_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1248,18 +1530,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram2.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Cl_MCL]);
+                            
                             path.enter()
                                 .append('path')
-                                .attr('class', 'oeExtra')
-                                .attr('stroke', 'yellow')
-                                .attr('id', 'oeLine')
+                               .attr('class', 'oeExtra')
+                               .attr('stroke', 'yellow')
+                               //.attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        });
+                                ; 
+                        }); 
+                        histogram2.on('pretransition', null); 
                     histogram2.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
                     dataHistogram2 = function (d) { return d.properties.Chloride; };
@@ -1279,6 +1564,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            chart.select("#oeLine").remove();
                             var x_vert = 10; // MCL for Nitrate is 10
                             var Ni_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1289,19 +1575,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram2.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Ni_MCL]);
                             path.enter()
                                 .append('path')
-                                .attr('class', 'oeExtra')
+                              .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
-                                .attr("stroke-width", 2)
+                             //   .attr('id', 'oeLine')
+                                .attr("stroke-width", 6)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        })
+                                ; 
+                        }) 
                         ;
+                        histogram2.on('pretransition', null); 
                     histogram2.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
 
                     dataHistogram2 = function (d) { return d.properties.Nitrate; };
@@ -1321,6 +1609,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            chart.select("#oeLine").remove();
                             var x_vert = 0; // MCL for Pb is 0
                             var Pb_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1331,19 +1620,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram2.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Pb_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
-                                .attr("stroke-width", 2)
+                             //  .attr('id', 'oeLine')
+                                .attr("stroke-width", 5)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
-                        })
+            
+                                ; 
+                        }) 
                         ;
+                        histogram2.on('pretransition', null); 
                     histogram2.xAxis().tickValues([0, 100, 200, 300]);
 
                     dataHistogram2 = function (d) { return d.properties.Pb; };
@@ -1362,6 +1653,7 @@ window.onload = function () {
                         .barPadding(3)
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                        histogram2.on('pretransition', null); 
                     histogram2.xAxis().tickValues([0, 25, 50, 75, 100]);
 
                     dataHistogram2 = function (d) { return d.properties.Ra_Total; };
@@ -1381,6 +1673,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            chart.select("#oeLine").remove();
                             var x_vert = 0.05; // MCL for BSe is 0.05
                             var Se_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1391,19 +1684,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram2.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Se_MCL]);
-                            path.enter()
+                           path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
-                                .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                               .attr('stroke', 'red')
+                             //  .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
+                                ; 
                         })
                         ;
+                        histogram2.on('pretransition', null); 
                     histogram2.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
 
                     dataHistogram2 = function (d) { return d.properties.Se; };
@@ -1424,6 +1719,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            histogram2.select("#oeLine").remove();
                             var x_vert = 30; // MCL for U is 30
                             var extra_data = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1434,19 +1730,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram2.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([extra_data]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                            //   .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        });
+                                ; 
+                        }); 
                     ;
+                    histogram2.on('pretransition', null); 
                     histogram2.xAxis().tickValues([30, 200, 400, 600])
 
                     dataHistogram2 = function (d) { return d.properties.U; };
@@ -1488,6 +1786,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                          //  histogram3.select("#oeLine").remove();
                             var x_vert = 10; // MCL for As is 10
                             var As_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1498,19 +1797,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram3.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([As_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                             //   .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        });
+                                ; 
+                        }); 
                     ;
+                    histogram3.on('pretransition', null); 
                     histogram3.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                     dataHistogram3 = function (d) { return d.properties.As; };
                 }
@@ -1530,6 +1831,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                           // histogram3.select("#oeLine").remove();
                             var x_vert = 2000; // MCL for Ba is 2000
                             var Ba_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1540,20 +1842,22 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram3.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Ba_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                               // .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        })
+                                ; 
+                        }) 
                         ;
                     ;
+                    histogram3.on('pretransition', null); 
                     histogram3.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                     dataHistogram3 = function (d) { return d.properties.Ba; };
                 }
@@ -1593,6 +1897,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                          // histogram3.select("#oeLine").remove();
                             var x_vert = 250; // MCL for chloride is 250
                             var Cl_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1603,18 +1908,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram3.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Cl_MCL]);
+                         
                             path.enter()
-                                .append('path')
-                                .attr('class', 'oeExtra')
-                                .attr('stroke', 'yellow')
-                                .attr('id', 'oeLine')
-                                .attr("stroke-width", 2)
-                                .style("stroke-dasharray", ("4,3"))
-                            path.attr('d', line)
-                            path.exit().remove()
-                                ;
-                        });
+                            .append('path')
+                            .attr('class', 'oeExtra')
+                            .attr('stroke', 'red')
+                           // .attr('id', 'oeLine')
+                            .attr("stroke-width", 2)
+                            .style("stroke-dasharray", ("4,3"))
+                        path.attr('d', line)
+                        path.exit().remove()
+                            ;  
+                        }); 
+                        histogram3.on('pretransition', null); 
                     histogram3.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
                     dataHistogram3 = function (d) { return d.properties.Chloride; };
@@ -1634,6 +1942,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            histogram3.select("#oeLine").remove();
                             var x_vert = 10; // MCL for Nitrate is 10
                             var Ni_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1644,19 +1953,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram3.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Ni_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                               // .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        })
+                                ; 
+                        }) 
                         ;
+                        histogram3.on('pretransition', null); 
                     histogram3.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
 
                     dataHistogram3 = function (d) { return d.properties.Nitrate; };
@@ -1676,6 +1987,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                           // histogram3.select("#oeLine").remove();
                             var x_vert = 0; // MCL for Pb is 0
                             var Pb_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1686,19 +1998,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram3.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Pb_MCL]);
-                            path.enter()
+                           path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                             //   .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
                                 ;
-                        })
+                        }) 
                         ;
+                        histogram3.on('pretransition', null); 
                     histogram3.xAxis().tickValues([0, 100, 200, 300]);
 
                     dataHistogram3 = function (d) { return d.properties.Pb; };
@@ -1736,6 +2050,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            //histogram3.select("#oeLine").remove();
                             var x_vert = 0.05; // MCL for BSe is 0.05
                             var Se_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1746,19 +2061,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram3.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Se_MCL]);
-                            path.enter()
+                           path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                              //  .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        })
+                                ; 
+                        }) 
                         ;
+                        histogram3.on('pretransition', null); 
                     histogram3.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
 
                     dataHistogram3 = function (d) { return d.properties.Se; };
@@ -1779,6 +2096,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                          //  histogram3.select("#oeLine").remove();
                             var x_vert = 30; // MCL for U is 30
                             var extra_data = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1789,19 +2107,21 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram3.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([extra_data]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                              //  .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
                             path.exit().remove()
-                                ;
-                        });
+                                ; 
+                        }); 
                     ;
+                    histogram3.on('pretransition', null); 
                     histogram3.xAxis().tickValues([30, 200, 400, 600])
 
                     dataHistogram3 = function (d) { return d.properties.U; };
@@ -1842,7 +2162,9 @@ window.onload = function () {
                         .barPadding(3)
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
+                       
                         .on('pretransition', function (mcl) {
+                           // histogram4.select("#oeLine").remove();
                             var x_vert = 10; // MCL for As is 10
                             var As_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1853,19 +2175,26 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram4.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([As_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
-                                .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                                //.attr('stroke', 'red')
+                              //  .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
+                         
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram4.on('pretransition', null); 
+                       
+                            }); 
+                                
                         });
                     ;
+                    histogram4.on('pretransition', null); 
                     histogram4.xAxis().tickValues([10, 125, 250, 375, 500]); //Lowest tick value set at MCL
                     dataHistogram4 = function (d) { return d.properties.As; };
                 }
@@ -1885,6 +2214,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                         //   histogram4.select("#oeLine").remove();
                             var x_vert = 2000; // MCL for Ba is 2000
                             var Ba_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1895,20 +2225,25 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram4.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Ba_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                              //  .attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram4.on('pretransition', null);
+                            }); 
+                                ;  
                         })
                         ;
                     ;
+                    histogram4.on('pretransition', null); 
                     histogram4.xAxis().tickValues([2, 300, 600, 900, 1200, 1500]);
                     dataHistogram4 = function (d) { return d.properties.Ba; };
                 }
@@ -1948,6 +2283,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                          //  histogram4.select("#oeLine").remove();
                             var x_vert = 250; // MCL for chloride is 250
                             var Cl_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1958,18 +2294,23 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram4.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Cl_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'yellow')
-                                .attr('id', 'oeLine')
+                                //.attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram4.on('pretransition', null);
+                            });
+                                ; 
                         });
+                        histogram4.on('pretransition', null); 
                     histogram4.xAxis().tickValues([250, 10000, 20000, 30000, 40000]);
 
                     dataHistogram4 = function (d) { return d.properties.Chloride; };
@@ -1989,6 +2330,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                          //  histogram4.select("#oeLine").remove();
                             var x_vert = 10; // MCL for Nitrate is 10
                             var Ni_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -1999,19 +2341,25 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram4.select('g.chart-body');
+                         
                             var path = chartBody.selectAll('path.extra').data([Ni_MCL]);
                             path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
-                                .attr('id', 'oeLine')
+                                //.attr('id', 'oeLine')
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram4.on('pretransition', null);
+                            });
+                            histogram4.on('pretransition', null);
+                                ; 
                         })
                         ;
+                        histogram4.on('pretransition', null); 
                     histogram4.xAxis().tickValues([10, 50, 100, 150, 200, 250]);
 
                     dataHistogram4 = function (d) { return d.properties.Nitrate; };
@@ -2031,6 +2379,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                            //histogram4.select("#oeLine").remove();
                             var x_vert = 0; // MCL for Pb is 0
                             var Pb_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -2041,8 +2390,9 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram4.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Pb_MCL]);
-                            path.enter()
+                           path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
@@ -2050,10 +2400,14 @@ window.onload = function () {
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram4.on('pretransition', null);
+                            });
+                                ; 
                         })
                         ;
+                        histogram4.on('pretransition', null); 
                     histogram4.xAxis().tickValues([0, 100, 200, 300]);
 
                     dataHistogram4 = function (d) { return d.properties.Pb; };
@@ -2072,6 +2426,7 @@ window.onload = function () {
                         .barPadding(3)
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 });
+                        histogram4.on('pretransition', null); 
                     histogram4.xAxis().tickValues([0, 25, 50, 75, 100]);
                     
                     dataHistogram4 = function (d) { return d.properties.Ra_Total; };
@@ -2091,6 +2446,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                          //  histogram4.select("#oeLine").remove();
                             var x_vert = 0.05; // MCL for BSe is 0.05
                             var Se_MCL = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -2101,6 +2457,7 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram4.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([Se_MCL]);
                             path.enter()
                                 .append('path')
@@ -2110,10 +2467,15 @@ window.onload = function () {
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram4.on('pretransition', null);
+                            });
+                            ; 
                         })
                         ;
+                        histogram4.on('pretransition', null); 
+                       
                     histogram4.xAxis().tickValues([0.05, 50, 100, 150, 200, 250]);
 
                     dataHistogram4 = function (d) { return d.properties.Se; };
@@ -2134,6 +2496,7 @@ window.onload = function () {
                         .yAxisLabel('Count')
                         .margins({ top: 10, right: 20, bottom: 50, left: 50 })
                         .on('pretransition', function (mcl) {
+                           // histogram4.select("#oeLine").remove();
                             var x_vert = 30; // MCL for U is 30
                             var extra_data = [ // Array to define vertical line starting at (MCL, 0)
                                 { x: mcl.x()(x_vert), y: 0 },
@@ -2144,8 +2507,9 @@ window.onload = function () {
                                 .y(function (d) { return d.y; })
                                 .interpolate('linear')
                             var chartBody = histogram4.select('g.chart-body');
+                            chartBody.selectAll('path.extra').remove(); // Remove any existing lines
                             var path = chartBody.selectAll('path.extra').data([extra_data]);
-                            path.enter()
+                          path.enter()
                                 .append('path')
                                 .attr('class', 'oeExtra')
                                 .attr('stroke', 'red')
@@ -2153,10 +2517,14 @@ window.onload = function () {
                                 .attr("stroke-width", 2)
                                 .style("stroke-dasharray", ("4,3"))
                             path.attr('d', line)
-                            path.exit().remove()
-                                ;
+                            .on('end', function() {
+                                // Remove the event listener after drawing the line
+                                histogram4.on('pretransition', null);
+                            });
+                                ; 
                         });
                     ;
+                    histogram4.on('pretransition', null); 
                     histogram4.xAxis().tickValues([30, 200, 400, 600])
 
                     dataHistogram4 = function (d) { return d.properties.U; };
@@ -2378,6 +2746,17 @@ window.onload = function () {
                 dc.renderAll();
             });
         }
-    }
+}
+  //  }
 //     )
-// }
+// } 
+
+
+ $(document).ready(function() {
+    $(".navbar-toggle").on("click", function() {
+      $(this).toggleClass("active");
+      $("#myNavbar").toggleClass("in");
+    });
+  });
+  
+  
