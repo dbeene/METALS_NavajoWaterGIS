@@ -4,7 +4,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Navajo WaterGIS</title>
+    <title>Navajo WaterGIS - Dashboard</title>
     <meta charset="UTF-8">
     <!--Stylesheets-->
     <link rel="stylesheet" type="text/css" href="JS_CSS_downladed_libraries/dc.css">
@@ -40,10 +40,15 @@
     </script>
 </head>
 
-<body data-spy="scroll" data-target=".navbar" data-offset="50">
+<body>
+    <!-- Loading wheel -->
+    <div class="loading-overlay">
+        <div class="loader"></div>
+        <p>Starting up...</p>
+    </div>
 
     <!--Fixed position website title with counter of data records displayed-->
-    <nav class="navbar navbar-default navbar-fixed-top fixed-top">
+    <nav class="navbar-default navbar-fixed-top fixed-top">
         <div class="container">
 
             <div class="navbar-header">
@@ -60,7 +65,7 @@
                         <li class="scroller"><a href="#">Map</a></li>
                         <li class="scroller"><a href="#section2">Dashboard</a></li>
                         <li class="scroller"><a href="#section3">Data Table</a></li>
-                       
+
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -100,7 +105,7 @@
                                             relational database.<br><br>
 
                                             Researchers at the <b>University of New Mexico Center for Native
-                                                Environmental Health Equity Research of the New
+                                                Environmental Health Equity Research</b>, the <b> New
                                                 Mexico METALS Superfund Research Program</b>, <b>University of
                                                 Arizona</b>, <b>Northern Arizona University</b>, and the
                                             <b>Southwest Research and Information Center</b> have compiled a database of
@@ -136,7 +141,7 @@
                                                 tool should not be interpreted as a definitive or
                                                 complete record of all wells and water quality results in the
                                                 region.</i> In total, the dataset presented here visualized
-                                            results for 1,101 water sources.<br><br>
+                                            results for 4,824 water sources.<br><br>
                                             Some studies recorded uranium concentrations in units of activity
                                             (picocuries per liter), which were converted to mass
                                             per unit volume (&mu;g/L) by dividing activity by 0.67. If multiple
@@ -271,7 +276,9 @@
                                             New Mexico, Montana State University
                                             Billings, the Southwest Research and Information Center, and Navajo Nation
                                             Department of Water Resources. Funding for
-                                            the development of this web application was provided by the Agnese Nelms
+                                            the development of this web application was provided by the New Mexico
+                                            Integrative Science Program Incorporating Research in Environmental Sciences
+                                            (NM-INSPIRES) Center at the University of New Mexico (1P30ES032755); Agnese Nelms
                                             Haury Program in Environment and Social Justice
                                             at the University of Arizona. Additional funding for the projects that
                                             contributed to the water sample collection and
@@ -279,11 +286,11 @@
                                             (RO1ES014565, R25ES013208, P30ES012072); a
                                             NIGMS ASERT IRACDA postdoctoral fellowship (K12 GM088021); the UNM Center
                                             for Native Environmental Health Equity
-                                            Research- A Center of Excellence In Environmental Health Disparities
-                                            Research ((1P50ES026102) & USEPA (#83615701);
+                                            Research -- A Center of Excellence In Environmental Health Disparities
+                                            Research (1P50ES026102 & USEPA #83615701);
                                             University of New Mexico METALS Superfund Research Program (1P42ES025589);
                                             and the Navajo Birth Cohort Study (U01
-                                            TS000135-05, NBCS/ECHO (1UG3OD023344)).
+                                            TS000135-05, NBCS/ECHO 1UG3OD023344).
                                         </p>
                                     </div>
                                     <div class="modal-header">
@@ -292,22 +299,26 @@
                                     <div class="modal-body">
                                         <p>
                                             <a href="https://dbeene.github.io/" target="_blank">Daniel Beene</a>
-                                            (darbeene@salud.unm.edu), App development and data storage, University of
+                                            (darbeene@salud.unm.edu), Co-Investigator/Project Lead: App development,
+                                            data management and analysis, University of
                                             New Mexico<br>
-                                            Joseph Hoover, Ph.D. (joseph.hoover@msubillings.edu), Data compilation and
-                                            database development, Montana State
-                                            University Billings<br>
+                                            <a href="https://yanlingeo.wordpress.com/" target="_blank">Yan Lin,
+                                                Ph.D.</a>, Principal Investigator (yanlin@unm.edu) <br>
+                                            <a href="https://environmentalscience.cales.arizona.edu/person/joe-hoover" ,
+                                                target="_blank">Joseph Hoover, Ph.D.</a> (jhoover@arizona.edu),
+                                            Co-Investigator: Data compilation and
+                                            database development, University of Arizona<br>
+                                            <a href="https://www.linkedin.com/in/aliqramalahee/"
+                                            target="_blank">Al-Ekram Elahee Hridoy</a>
+                                            (ahridoy@unm.edu), Software Developer, University of New
+                                            Mexico<br><br>
                                             <a href="https://manideeppotluru.github.io/" target="_blank">Manideep
-                                                Potluru</a> (mpotluru@unm.edu), App development, University of New
+                                                Potluru</a> (mpotluru@unm.edu), Software development, University of New
                                             Mexico<br>
                                             <a href="https://www.lipingyang.org/" target="_blank">Dr. Liping Yang</a>
-                                            (lipingyang@unm.edu), Ph.D., Project Advisor, University of New
+                                            (lipingyang@unm.edu), Ph.D., Web Design Project Advisor, University of New
                                             Mexico<br>
-                                            
-                                            <a href="https://www.linkedin.com/in/aliqramalahee/" target="_blank">Al-Ekram Elahee Hridoy</a>
-                                            (ahridoy@unm.edu), App development, University of New
-                                            Mexico<br><br>
-                                           
+
                                             Questions about database content and the compilation process should be
                                             directed to Joseph
                                             Hoover, and questions about the visualization tool and data access should be
@@ -316,13 +327,18 @@
                                         </p>
                                     </div>
                                     <div class="modal-footer">
-                                        <div class="col-md-2"></div>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-3">
+                                            <a href="https://hsc.unm.edu/pharmacy/research/areas/nm-inspires/"
+                                                target="_blank">
+                                                <img src="myCSS_styleFiles/images/nm-inspires.png" height="55px">
+                                        </div>
                                         <div class="col-md-1">
                                             <a href="https://hsc.unm.edu/pharmacy/research/areas/metals/"
                                                 target="_blank">
                                                 <img src="myCSS_styleFiles/images/metals-logo.png" height="55px">
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <a href="https://www.haury.arizona.edu/" target="_blank">
                                                 <img src="myCSS_styleFiles/images/haury-foundation.jpg" height="55px">
                                         </div>
@@ -351,122 +367,120 @@
     </nav>
 
     <!--Map frame-->
-    <!-- <div id="section1" class="container">
-        <div class="row">
-            <div class="col-md-12 mapframe">
-                <div id="map"></div>
-            </div>
-        </div>
-    </div> -->
+
     <div class="container-fluid">
         <div class="mapbox">
             <div class="row-fluid some" id="map"></div>
             <div class="row-fluid overlay">
 
-                <div class="col-xs-12"
->
-</div>                <!-- <div class="pull-right dc-chart" id="chart-ring-use"></div> -->
+                <div class="col-xs-12">
+                </div> <!-- <div class="pull-right dc-chart" id="chart-ring-use"></div> -->
             </div>
         </div>
     </div>
-    <!--Legend bar-->
-    <div id="section2" class="container">
-        <div class="row legend">
-            <div class="col-xs-12">
 
-            
-            <strong>Well Use: </strong>
-            <span class="dot-dom"></span>
-            Domestic
-            <span class="dot-liv"></span>
-            Livestock
-            <span class="dot-mun"></span>
-            Municipal
-            <span class="dot-oth"></span>
-            Other
-            <span class="dot-unk"></span>
-            Unknown
+    <!-- Nav bar -->
+    <div id="section2" class="container">
+        <div class="legend">
+            <div class="col-xs-6">
+                <b>Display wells by recommended use:</b>
+                <div class="radio-buttons">
+                    <label>
+                        <input type="radio" name="marker-option" value="all" checked>Show All
+                    </label>
+                    <label>
+                        <input type="radio" name="marker-option" value="avoid">Avoid
+                    </label>
+                    <label>
+                        <input type="radio" name="marker-option" value="household">Household
+                    </label>
+                    <label>
+                        <input type="radio" name="marker-option" value="irrigation">Irrigation
+                    </label>
+                    <label>
+                        <input type="radio" name="marker-option" value="livestock">Livestock
+                    </label>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <b>Select Chapter:<b>
+                <div id="dropdown-container">
+
+                    <select id="chapter-dropdown">
+                        <option value="all" selected>All Chapters</option>
+                        <option value="Cameron">Cameron</option>
+                        <option value="Bodaway Gap">Bodaway Gap</option>
+                        <option value="Coppermine">Coppermine</option>
+                        <option value="Tuba City">Tuba City</option>
+                        <option value="Coalmine Mesa">Coalmine Mesa</option>
+                        <option value="Leupp">Leupp</option>
+                        <option value="Lechee">Lechee</option>
+                        <option value="Kaibeto">Kaibeto</option>
+                        <option value="Tonalea">Tonalea</option>
+                        <option value="Inscription House">Inscription House</option>
+                        <option value="Tolani Lake">Tolani Lake</option>
+                        <option value="Bird Springs">Bird Springs</option>
+                        <option value="Navajo Mountain">Navajo Mountain</option>
+                        <option value="Shonto">Shonto</option>
+                        <option value="Kayenta">Kayenta</option>
+                        <option value="Forest Lake">Forest Lake</option>
+                        <option value="Hard Rock">Hard Rock</option>
+                        <option value="Teesto">Teesto</option>
+                        <option value="Dilkon">Dilkon</option>
+                        <option value="White Cone">White Cone</option>
+                        <option value="Jeddito">Jeddito</option>
+                        <option value="Low Mountain">Low Mountain</option>
+                        <option value="Steamboat">Steamboat</option>
+                        <option value="Whippoorwill">Whippoorwill</option>
+                        <option value="Pinon">Pinon</option>
+                        <option value="Indian Wells">Indian Wells</option>
+                        <option value="Greasewood Springs">Greasewood Springs</option>
+                        <option value="Wide Ruins">Wide Ruins</option>
+                        <option value="Klagetoh">Klagetoh</option>
+                        <option value="Cornfields">Cornfields</option>
+                        <option value="Ganado">Ganado</option>
+                        <option value="Tselani">Tselani</option>
+                        <option value="Nazlini">Nazlini</option>
+                        <option value="Kinlichee">Kinlichee</option>
+                        <option value="Blue Gap/Tachee">Blue Gap/Tachee</option>
+                        <option value="Black Mesa">Black Mesa</option>
+                        <option value="Many Farms">Many Farms</option>
+                        <option value="Chinle">Chinle</option>
+                        <option value="Round Rock">Round Rock</option>
+                        <option value="Rough Rock">Rough Rock</option>
+                        <option value="Rock Point">Rock Point</option>
+                        <option value="Dennehotso">Dennehotso</option>
+                        <option value="Chilchinbeto">Chilchinbeto</option>
+                        <option value="Oljato">Oljato</option>
+                        <option value="Sweet Water">Sweet Water</option>
+                        <option value="Mexican Water">Mexican Water</option>
+                        <option value="Red Mesa">Red Mesa</option>
+                        <option value="Aneth">Aneth</option>
+                        <option value="Teec Nos Pos">Teec Nos Pos</option>
+                        <option value="Tsaile/Wheatfields">Tsaile/Wheatfields</option>
+                        <option value="Houck">Houck</option>
+                        <option value="Lupton">Lupton</option>
+                        <option value="Oak Springs">Oak Springs</option>
+                        <option value="Saint Michaels">Saint Michaels</option>
+                        <option value="Fort Defiance">Fort Defiance</option>
+                        <option value="Red Lake">Red Lake</option>
+                        <option value="Sawmill">Sawmill</option>
+                        <option value="Crystal">Crystal</option>
+                        <option value="Sanostee">Sanostee</option>
+                        <option value="Beclahbito">Beclahbito</option>
+                    </select>
+                </div>
+                
+            </div>
         </div>
     </div>
-</div>
 
 
 
     <!--Plots-->
     <div class="container-fluid">
         <div class="row dashboard">
-        
-            <div class="col text-center update-button">
-                <div> 
-                    <div id="dropdown-container">
-                                <label for="chapter-dropdown">Select Chapter:</label>
-                                <select id="chapter-dropdown">
-                                  <option value="all" selected>All Chapters</option>
-                                  <option value="Cameron">Cameron</option>
-                                  <option value="Bodaway Gap">Bodaway Gap</option>
-                                  <option value="Coppermine">Coppermine</option>
-                                  <option value="Tuba City">Tuba City</option>
-                                  <option value="Coalmine Mesa">Coalmine Mesa</option>
-                                  <option value="Leupp">Leupp</option>
-                                  <option value="Lechee">Lechee</option>
-                                  <option value="Kaibeto">Kaibeto</option>
-                                  <option value="Tonalea">Tonalea</option>
-                                  <option value="Inscription House">Inscription House</option>
-                                  <option value="Tolani Lake">Tolani Lake</option>
-                                  <option value="Bird Springs">Bird Springs</option>
-                                  <option value="Navajo Mountain">Navajo Mountain</option>
-                                  <option value="Shonto">Shonto</option>
-                                  <option value="Kayenta">Kayenta</option>
-                                  <option value="Forest Lake">Forest Lake</option>
-                                  <option value="Hard Rock">Hard Rock</option>
-                                  <option value="Teesto">Teesto</option>
-                                  <option value="Dilkon">Dilkon</option>
-                                  <option value="White Cone">White Cone</option>
-                                  <option value="Jeddito">Jeddito</option>
-                                  <option value="Low Mountain">Low Mountain</option>
-                                  <option value="Steamboat">Steamboat</option>
-                                  <option value="Whippoorwill">Whippoorwill</option>
-                                  <option value="Pinon">Pinon</option>
-                                  <option value="Indian Wells">Indian Wells</option>
-                                  <option value="Greasewood Springs">Greasewood Springs</option>
-                                  <option value="Wide Ruins">Wide Ruins</option>
-                                  <option value="Klagetoh">Klagetoh</option>
-                                  <option value="Cornfields">Cornfields</option>
-                                  <option value="Ganado">Ganado</option>
-                                  <option value="Tselani">Tselani</option>
-                                  <option value="Nazlini">Nazlini</option>
-                                  <option value="Kinlichee">Kinlichee</option>
-
-                                  <option value="Blue Gap/Tachee">Blue Gap/Tachee</option>
-                                <option value="Black Mesa">Black Mesa</option>
-                                <option value="Many Farms">Many Farms</option>
-                                <option value="Chinle">Chinle</option>
-                                <option value="Round Rock">Round Rock</option>
-                                <option value="Rough Rock">Rough Rock</option>
-                                <option value="Rock Point">Rock Point</option>
-                                <option value="Dennehotso">Dennehotso</option>
-                                <option value="Chilchinbeto">Chilchinbeto</option>
-                                <option value="Oljato">Oljato</option>
-                                <option value="Sweet Water">Sweet Water</option>
-                                <option value="Mexican Water">Mexican Water</option>
-                                <option value="Red Mesa">Red Mesa</option>
-                                <option value="Aneth">Aneth</option>
-                                <option value="Teec Nos Pos">Teec Nos Pos</option>
-                                <option value="Tsaile/Wheatfields">Tsaile/Wheatfields</option>
-                                <option value="Houck">Houck</option>
-                                <option value="Lupton">Lupton</option>
-                                <option value="Oak Springs">Oak Springs</option>
-                                <option value="Saint Michaels">Saint Michaels</option>
-                                <option value="Fort Defiance">Fort Defiance</option>
-                                <option value="Red Lake">Red Lake</option>
-                                <option value="Sawmill">Sawmill</option>
-                                <option value="Crystal">Crystal</option>
-                                <option value="Sanostee">Sanostee</option>
-                                <option value="Beclahbito">Beclahbito</option>
-                                </select>
-                              </div>
-                </div>
-
+            <div class="col text-center update-button">              
                 <h3><strong>Data Dashboard</strong></h3>
                 <!--Update plots button-->
                 <input id="updatePlot_btn" type="button" value="Update Plots/Data Table"
@@ -609,36 +623,37 @@
                         </option>
                     </select>
                 </div>
-            
+
             </div>
             <!--Scatterplots-->
             <div class="col-xs-6" id="scatterplot">
                 <table id="content"></table>
             </div>
-            <div class="col-md-12  col-sm-12 text-center d-flex flex-column align-items-center">
-                <i><small class="w-100"><br><br>Red dashed line on histograms indicates primary maximum contaminant level (MCL)
+            <!--Record counter-->
+            <div class="col-xs-12">
+            <div class="col-sm-6 text-center d-flex flex-column align-items-center">
+                <i><small class="w-100"><br><br>Red dashed line on histograms indicates primary maximum contaminant
+                        level (MCL)
                         <br>Yellow dashed line indicates secondary MCL.
                         <br>More information on primary and secondary water contaminants can be found <a
                             href='https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations'
                             target='_blank'>here</a>.</small></i>
             </div>
-            <!--Record counter-->
-            <div class="col-xs-12"></div>
-          
-                <div class="col-md-12 col-sm-6 col-xs-3">
-                    <ul class="nav navbar-nav navbar-right" id="data-count">
-                        <h1><b><span class="filter-count"></span></b></h1>
-                        <p style="text-align: center"><i>records selected</i></p>
-                    </ul>
-                </div>
-                <div class="col-md-12 col-sm-6 col-xs-3">
-                    <ul class="nav navbar-nav navbar-right" id="data-count">
-                        <h1><b>1,116</b></h1>
-                        <p style="text-align: center"><i>total records</i></p>
-                    </ul>
-                </div>
-           
-            
+            <div class="col-sm-6 col-xs-3">
+                <ul class="nav navbar-nav navbar-right" id="data-count">
+                    <h1><b><span class="filter-count">0</span></b></h1>
+                    <p style="text-align: center"><i>records selected</i></p>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-xs-3">
+                <ul class="nav navbar-nav navbar-right" id="data-count">
+                    <h1><b>4,824</b></h1>
+                    <p style="text-align: center"><i>total records</i></p>
+                </ul>
+            </div>
+            </div>
+
+
         </div>
     </div>
     <!--Data table-->
@@ -667,33 +682,33 @@
                 </div>
             </div>
         </div>
-        </div>
+    </div>
 
-<!-- Add a reference to the jQuery library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Add a reference to the jQuery library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<!-- Add the script to filter the table rows -->
-<script>
-    $(document).ready(function() {
-        // Event listener for the 'change' event on the chapter-dropdown element
-        $("#chapter-dropdown").on("change", function() {
-            // Get the selected chapter value
-            let selectedChapter = $(this).val();
-            
-            // Filter the table rows based on the selected chapter value
-            $("#data-table tbody tr").each(function() {
-                let chapterCell = $(this).find("td:eq(1)"); // Find the chapter cell (2nd cell) in the row
-                if (selectedChapter === "all" || chapterCell.text() === selectedChapter) {
-                    $(this).show(); // Show the row if the selected chapter is 'all' or matches the row's chapter
-                } else {
-                    $(this).hide(); // Hide the row if the selected chapter does not match the row's chapter
-                }
+    <!-- Add the script to filter the table rows -->
+    <script>
+        $(document).ready(function () {
+            // Event listener for the 'change' event on the chapter-dropdown element
+            $("#chapter-dropdown").on("change", function () {
+                // Get the selected chapter value
+                let selectedChapter = $(this).val();
+
+                // Filter the table rows based on the selected chapter value
+                $("#data-table tbody tr").each(function () {
+                    let chapterCell = $(this).find("td:eq(1)"); // Find the chapter cell (2nd cell) in the row
+                    if (selectedChapter === "all" || chapterCell.text() === selectedChapter) {
+                        $(this).show(); // Show the row if the selected chapter is 'all' or matches the row's chapter
+                    } else {
+                        $(this).hide(); // Hide the row if the selected chapter does not match the row's chapter
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 
-        
+
 </body>
 
 </html>
