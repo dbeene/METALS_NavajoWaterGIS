@@ -64,5 +64,6 @@ Daniel Beene (darbeene@salud.unm.edu), App development and data storage, Univers
 Joseph Hoover, Ph.D. (joseph.hoover@msubillings.edu), Data compilation and database development, Montana State University Billings
 Manideep Potluru (mpotluru@unm.edu), App development, University of New Mexico
 Dr. Liping Yang (lipingyang@unm.edu), Ph.D., Project Advisor, University of New Mexico
+Al-Ekram Elahee Hridoy (ahridoy@unm.edu), App development, University of New Mexico
 
 Questions about database content and the compilation process should be directed to Joseph Hoover, and questions about the visualization tool and data access should be directed to Daniel Beene.
