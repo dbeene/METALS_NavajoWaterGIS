@@ -57,7 +57,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Navajo WaterGIS</a>
+                <a class="navbar-brand" href="#">Navajo WaterGIS 2.0</a>
             </div>
             <div>
                 <div class="collapse navbar-collapse" id="myNavbar">
@@ -480,177 +480,90 @@
     <!--Plots-->
     <div class="container-fluid">
         <div class="row dashboard">
-            <div class="col text-center update-button">              
+            <div class="col text-center">              
                 <h3><strong>Data Dashboard</strong></h3>
-                <!--Update plots button-->
-                <input id="updatePlot_btn" type="button" value="Update Plots/Data Table"
-                    style="font-weight: bold; text-align: center; padding-left: 10px; padding-right: 10px;" />
+                <button id="clear-filters-button">Clear all filters</button>
             </div>
-            <div class="col-xs-6">
-                <div class="col-xs-6">
-                    <div class="dc-chart" id="histogram1"></div>
-                    <select class="col-md-12 text-center" id="selectbox1">
-                        <option value="As">
-                            Arsenic (&mu;g/L)
-                        </option>
-                        <option value="Ba">
-                            Barium (&mu;g/L)
-                        </option>
-                        <option value="Ca">
-                            Calcium (mg/L)
-                        </option>
-                        <option value="Chloride">
-                            Chloride (mg/L)
-                        </option>
-                        <option value="Nitrate">
-                            Nitrate (mg/L)
-                        </option>
-                        <option value="Pb">
-                            Lead (&mu;g/L)
-                        </option>
-                        <option value="Ra_Total">
-                            Radium (&mu;g/L)
-                        </option>
-                        <option value="Se">
-                            Selenium (&mu;g/L)
-                        </option>
-                        <option value="U">
-                            Uranium (&mu;g/L)
-                        </option>
-                        <option value="None">
-                            None
-                        </option>
-                    </select>
-                    <div class="dc-chart" id="histogram2"></div>
-                    <select class="col-md-12 text-center" id="selectbox2">
-                        <option value="Ca">
-                            Calcium (mg/L)
-                        </option>
-                        <option value="As">
-                            Arsenic (&mu;g/L)
-                        </option>
-                        <option value="Ba">
-                            Barium (&mu;g/L)
-                        </option>
-                        <option value="Chloride">
-                            Chloride (mg/L)
-                        </option>
-                        <option value="Nitrate">
-                            Nitrate (mg/L)
-                        </option>
-                        <option value="Pb">
-                            Lead (&mu;g/L)
-                        </option>
-                        <option value="Ra_Total">
-                            Radium (&mu;g/L)
-                        </option>
-                        <option value="Se">
-                            Selenium (&mu;g/L)
-                        </option>
-                        <option value="U">
-                            Uranium (&mu;g/L)
-                        </option>
-                        <option value="None">
-                            None
-                        </option>
-                    </select>
-                </div>
-                <div class="col-xs-6">
-                    <div class="dc-chart" id="histogram3"></div>
-                    <select class="col-md-12 text-center" id="selectbox3">
-                        <option value="Ra_Total">
-                            Radium (&mu;g/L)
-                        </option>
-                        <option value="As">
-                            Arsenic (&mu;g/L)
-                        </option>
-                        <option value="Ba">
-                            Barium (&mu;g/L)
-                        </option>
-                        <option value="Ca">
-                            Calcium (mg/L)
-                        </option>
-                        <option value="Chloride">
-                            Chloride (mg/L)
-                        </option>
-                        <option value="Nitrate">
-                            Nitrate (mg/L)
-                        </option>
-                        <option value="Pb">
-                            Lead (&mu;g/L)
-                        </option>
-                        <option value="Se">
-                            Selenium (&mu;g/L)
-                        </option>
-                        <option value="U">
-                            Uranium (&mu;g/L)
-                        </option>
-                        <option value="None">
-                            None
-                        </option>
-                    </select>
-                    <div class="dc-chart" id="histogram4"></div>
-                    <select class="col-md-12 text-center" id="selectbox4">
-                        <option value="U">
-                            Uranium (&mu;g/L)
-                        </option>
-                        <option value="As">
-                            Arsenic (&mu;g/L)
-                        </option>
-                        <option value="Ba">
-                            Barium (&mu;g/L)
-                        </option>
-                        <option value="Ca">
-                            Calcium (mg/L)
-                        </option>
-                        <option value="Chloride">
-                            Chloride (mg/L)
-                        </option>
-                        <option value="Nitrate">
-                            Nitrate (mg/L)
-                        </option>
-                        <option value="Pb">
-                            Lead (&mu;g/L)
-                        </option>
-                        <option value="Ra_Total">
-                            Radium (&mu;g/L)
-                        </option>
-                        <option value="Se">
-                            Selenium (&mu;g/L)
-                        </option>
-                        <option value="None">
-                            None
-                        </option>
-                    </select>
+            <div class="col-md-12">
+                <div class="col-xs-3">
+                    <div class="col-xs-12 record-counter">
+                        <div class="nav navbar-nav navbar-right" id="data-count">
+                            <h1><b><span class="filter-count">0</span></b></h1>
+                            <p style="text-align: center"><i>records selected</i></p>
+                        </div>
+                        <div class="nav navbar-nav navbar-right" id="data-count">
+                            <h1><b>4824</b></h1>
+                            <p style="text-align: center"><i>total records</i><br></p>
+                        </div>
+                        <div class="chart-title">
+                            Recommended Uses
+                        </div>
+                        <!-- <div class ="col-xs-12" style="text-align: center;">
+                            <div class="col-md-6">
+                                <div class="avoidChart"></div>
+                                <div class="irrigationChart"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="householdChart"></div>
+                                <div class="livestockChart"></div>
+                            </div> -->
+                        <div class="col-xs-12">
+                            <div class="avoidChart"></div>
+                            <div class="irrigationChart"></div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="householdChart"></div>
+                            <div class="livestockChart"></div>
+                        </div>
+                        <div class="chart-title">
+                            Recommendation Confidence
+                        </div>
+                        <div class="col-xs-12 donut-center" id="donut"></div>
+                        <div class="reclegend">
+                            <span class="reclegend-item">
+                                <div class="reclegend-circle" style="background-color: #1a9641;"></div>
+                                High
+                            </span>
+                            <span class="reclegend-item">
+                                <div class="reclegend-circle" style="background-color: #fdae61;"></div>
+                                Moderate
+                            </span>
+                            <span class="reclegend-item">
+                                <div class="reclegend-circle" style="background-color: #d7191c;"></div>
+                                Low
+                            </span>
+                        </div>
+                    </div>
                 </div>
 
-            </div>
-            <!--Scatterplots-->
-            <div class="col-xs-6" id="scatterplot">
-                <table id="content"></table>
-            </div>
+
+                <div class="col-xs-3">
+                    
+                    <div class="dc-chart" id="histogram1"></div>                                     
+                    <div class="dc-chart" id="histogram4"></div>
+                    <div class="dc-chart" id="histogram7"></div>                     
+                </div>
+                <div class="col-xs-3">
+                    <div class="dc-chart" id="histogram2"></div>                    
+                    <div class="dc-chart" id="histogram5"></div>
+                    <div class="dc-chart" id="histogram8"></div>                                         
+                </div>
+                <div class="col-xs-3">
+                    <div class="dc-chart" id="histogram3"></div>                                     
+                    <div class="dc-chart" id="histogram6"></div> 
+                    <div class="dc-chart" id="histogram9"></div> 
+                    <div class="dc-chart" id="histogram10"></div>                   
+                </div>
+            </div>          
             <!--Record counter-->
-            <div class="col-xs-12">
-            <div class="col-sm-6 text-center d-flex flex-column align-items-center">
+            
+            <div class="col-sm-12 text-center d-flex flex-column align-items-center">
                 <i><small class="w-100"><br><br>Red dashed line on histograms indicates primary maximum contaminant
                         level (MCL)
                         <br>Yellow dashed line indicates secondary MCL.
                         <br>More information on primary and secondary water contaminants can be found <a
                             href='https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations'
                             target='_blank'>here</a>.</small></i>
-            </div>
-            <div class="col-sm-6 col-xs-3">
-                <ul class="nav navbar-nav navbar-right" id="data-count">
-                    <h1><b><span class="filter-count">0</span></b></h1>
-                    <p style="text-align: center"><i>records selected</i></p>
-                </ul>
-            </div>
-            <div class="col-sm-6 col-xs-3">
-                <ul class="nav navbar-nav navbar-right" id="data-count">
-                    <h1><b>4,824</b></h1>
-                    <p style="text-align: center"><i>total records</i></p>
-                </ul>
-            </div>
             </div>
 
 
@@ -672,9 +585,15 @@
                                 <th>Agency</th>
                                 <th>Lat</th>
                                 <th>Long</th>
+                                <th>Al</th>
                                 <th>As</th>
-                                <th>Ca</th>
-                                <th>Ra_Total</th>
+                                <th>Ba</th>
+                                <th>Cd</th>
+                                <th>Cu</th>
+                                <th>Fe</th>
+                                <th>Mn</th>
+                                <th>Pb</th>
+                                <th>Se</th>
                                 <th>U</th>
                             </tr>
                         </thead>

@@ -82,7 +82,7 @@ text {
   font-size: 12px;
   line-height: 10px;
   height: 10 px ;
-  max-height: 450px;
+  max-height: 495px;
   }
 /* custom scrollable popup styles*/
 .custom-popup, .leaflet-popup-tip {
@@ -110,7 +110,7 @@ text {
   margin-right: 2px;
   padding-right: 12px;
   min-width: 100 px !important;
-  max-height: 400px;
+  max-height: 455px;
   overflow: auto;
   }
 
@@ -159,6 +159,23 @@ text {
   -webkit-animation-duration: 0.4s;
   animation-name: animatetop;
   animation-duration: 0.4s
+}
+
+.record-counter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 50px; 
+  font-weight: 800; 
+  height: 100%;
+  background-color: #adadad; 
+  max-width: fit-content;
+  min-width: 240px;
+  border-radius: 10px; 
+  padding: 20px; 
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 }
 
 /* Add Animation */
@@ -355,14 +372,18 @@ th, td {
   }
 }
 
+
+
 #data-count {
   margin: 0;
   padding: 0;
   list-style: none;
+  font-size: 56px; 
+  font-weight: 800; 
 }
 
 #data-count h1 {
-  font-size: 24px;
+  font-size: 56px;
   margin-bottom: 0;
 }
 
@@ -379,6 +400,91 @@ th, td {
   text-align: center;
 }
 
+/* Donut chart */
+.donut-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  height: 250px;
+}
+
+.chart-title, .chart-title-small {
+  text-align: center;
+  /* Other styles you want to apply to both .chart-title and .chart-title-small */
+}
+
+.chart-title {
+  font-size: 18px !important;
+  font-weight: 600;
+  color: #000;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.chart-title-small {
+  font-size: 12px !important;
+  font-weight: 400;
+  color: #000;
+  margin-top: 1px;
+  margin-bottom: 1px;
+}
+
+.chart-container {
+  text-align: center; /* Center the text within the container */
+}
+
+.reclegend {
+  display: flex;
+  align-items: center;
+  font-size: 12px !important;
+  color: #000;
+}
+
+.reclegend-item {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.reclegend-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.avoidChart {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.irrigationChart {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.householdChart {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.livestockChart {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  text-align: center;
+  margin-top: 5px;
+}
 
 @media only screen and (max-width: 767px) {
   .col-xs-12 {
@@ -519,6 +625,7 @@ body {
 }
 
 .loading-overlay {
+  display: none; /* Initially hide overlay */
   /* Style for the loading overlay */
   position: fixed;
   top: 0;
@@ -577,3 +684,4 @@ body {
   display: block !important; /* Center-align images within a block container */
   margin: 0 auto !important; /* Center-align horizontally */
 }
+
