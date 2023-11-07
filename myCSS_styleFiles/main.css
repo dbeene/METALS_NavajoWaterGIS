@@ -18,6 +18,20 @@ body {
 
 }
 
+.container-top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #007A86;
+  box-shadow: 1px 1px 8px #adacac;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 999;
+}
+
 .fixed-top {
     padding-left: 40px;
     padding-right: 40px;
@@ -35,6 +49,7 @@ body {
   opacity: 89%;
   /* padding: 10px 10px 10px 10px; */
 }
+
 .container-fluid {
   padding-left: 2%;
   padding-right: 2%;
@@ -115,9 +130,9 @@ text {
   }
 
 .navbar-brand {
-  padding-top: 20px;
+  /* padding-top: 20px; */
   font-size: 24px;
-  margin-left: 20px;
+  margin-left: 2px;
   color: #ffffff !important;
 }
 
@@ -128,6 +143,12 @@ text {
 .navbar-right {
   padding-top: 15px;
   padding-right: 20px;
+}
+
+#myBtn {
+  position: absolute;
+  right: 20px;
+  top: 20px;
 }
 
 /* The Modal (background) */
@@ -372,7 +393,12 @@ th, td {
   }
 }
 
-
+/* Style the table container to take most of the screen */
+#data-table-container {
+  max-width: 100%; /* Adjust this value to control the maximum width */
+  overflow-x: auto; /* Enable horizontal scrolling */
+  direction: rtl; /* Reverse the direction to make the scrollbar appear at the top */
+}
 
 #data-count {
   margin: 0;

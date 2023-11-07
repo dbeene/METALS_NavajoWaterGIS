@@ -183,9 +183,9 @@ window.onload = function () {
     // When a user selects a chapter or 'all', update the map's view accordingly
     function selectChapter(chapter) {
         if (chapter === 'all') {
-            map.fitBounds(combinedBounds, { padding: [50, 50], maxZoom: 12 });
+            map.fitBounds(combinedBounds, { padding: [150, 150], maxZoom: 11 });
         } else if (chapterBounds[chapter]) {
-            map.fitBounds(chapterBounds[chapter], { padding: [50, 50], maxZoom: 12 });
+            map.fitBounds(chapterBounds[chapter], { padding: [150, 150], maxZoom: 11 });
         } else {
             console.log('Chapter not found in bounds object');
         }
@@ -978,16 +978,16 @@ window.onload = function () {
         // Check data for livestock chart
         console.log("Livestock Data:", livestockGroup.all());
           
-        var column2 = function (d) { return d.properties.Al; };
-        var column3 = function (d) { return d.properties.As; };
-        var column4 = function (d) { return d.properties.Ba; };
-        var column5 = function (d) { return d.properties.Cd; };
-        var column6 = function (d) { return d.properties.Cu; };
-        var column7 = function (d) { return d.properties.Fe; };
-        var column8 = function (d) { return d.properties.Mn; };
-        var column9 = function (d) { return d.properties.Pb; };
-        var column10 = function (d) { return d.properties.Se; };
-        var column11 = function (d) { return d.properties.U; };
+        var column2 = function (d) { return d.properties.Al.toFixed(3); };
+        var column3 = function (d) { return d.properties.As.toFixed(3); };
+        var column4 = function (d) { return d.properties.Ba.toFixed(3); };
+        var column5 = function (d) { return d.properties.Cd.toFixed(3); };
+        var column6 = function (d) { return d.properties.Cu.toFixed(3); };
+        var column7 = function (d) { return d.properties.Fe.toFixed(3); };
+        var column8 = function (d) { return d.properties.Mn.toFixed(3); };
+        var column9 = function (d) { return d.properties.Pb.toFixed(3); };
+        var column10 = function (d) { return d.properties.Se.toFixed(3); };
+        var column11 = function (d) { return d.properties.U.toFixed(3); };
 
 
         //default dataTable
@@ -999,8 +999,8 @@ window.onload = function () {
                 function (d) { return d.properties.well_no; },
                 function (d) { return d.properties.Chapter },
                 function (d) { return d.properties.nn_agency },
-                function (d) { return d.properties.lat; },
-                function (d) { return d.properties.long; },
+                function (d) { return d.properties.lat.toFixed(5); },
+                function (d) { return d.properties.long.toFixed(5); },
                 column2,
                 column3,
                 column4,
@@ -1104,7 +1104,7 @@ window.onload = function () {
 
                                 + "<br><b>Confidence: </b>"
                                 + (d.properties.recConfidence === "RED" ? '<img src="myCSS_styleFiles/images/red.png" height="60px"><br>Our confidence level for this recommendation is <i>LOW</i>. This may be due to missing data that we might have interpolated, the standard error of our interpolation, old observational data, or few laboratory samples.' :
-                                    (d.properties.recConfidence === "YELLOW" ? '<img src="myCSS_styleFiles/images/yellow.png" height="60px"><br>Our confidence level for this recommendation is MODERATE. There is at least one sample for blah blah blah.' :
+                                    (d.properties.recConfidence === "YELLOW" ? '<img src="myCSS_styleFiles/images/yellow.png" height="60px"><br>Our confidence level for this recommendation is MODERATE. There is at least one laboratory sample available from a list of 10 key analytes to support our conclusion.' :
                                         (d.properties.recConfidence === "GREEN" ? '<img src="myCSS_styleFiles/images/green.png" height="60px"><br>Our confidence level for this recommendation is HIGH. There are sufficient field samples taken within the last decade to support our conclusion.' : '')
                                     )
                                 ) + "</dd>"
@@ -1330,7 +1330,6 @@ window.onload = function () {
                     // Redraw the charts after clearing filters
                     dc.redrawAll();
                 });
-
             });//close on pretransition
 
 
