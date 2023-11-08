@@ -375,7 +375,8 @@ th, td {
   }
 
   .col-xs-3 {
-    left: 45px;
+    max-width: 100%;
+    /* left: 45px; */
   }
 
   table {
@@ -426,7 +427,8 @@ th, td {
   }
 
   .col-xs-3 {
-    left: 50px;
+    max-width: 100%;
+    /* left: 50px; */
   }
 
   .record-counter {
@@ -446,7 +448,7 @@ th, td {
 }
 
 .col-xs-3 {
-  max-width: 300px;
+  max-width: 325px;
   width: 25%;
   float: left;
   text-align: center;
@@ -455,8 +457,10 @@ th, td {
 @media (max-width: 1024px) {
   .col-xs-6, .col-xs-3 {
     width: 100%;
+    max-width: 100%;
     float: none;
     text-align: center;
+    left: 45px;
   }
 }
 
