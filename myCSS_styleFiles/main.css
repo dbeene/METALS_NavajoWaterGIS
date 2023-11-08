@@ -15,7 +15,6 @@ body {
   padding-top: 75px; 
   position: relative;
   background-color: #dadada;
-
 }
 
 .container-top {
@@ -193,10 +192,16 @@ text {
   height: 100%;
   background-color: #adadad; 
   max-width: fit-content;
-  min-width: 240px;
+  min-width: 350px;
   border-radius: 10px; 
   padding: 20px; 
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.col-xs-12 {
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 
 /* Add Animation */
@@ -362,9 +367,15 @@ th, td {
   border-bottom: 1px solid #ddd;
 }
 
-@media (max-width: 767px) {
+/* Styles for phones (max-width: 500px) */
+@media (max-width: 500px) {
   .col-md-12 {
     padding: 0;
+    width: fit-content;
+  }
+
+  .col-xs-3 {
+    left: 45px;
   }
 
   table {
@@ -372,20 +383,76 @@ th, td {
     overflow-x: auto;
     white-space: nowrap;
   }
+
+  .dc-chart {
+    max-width: 75%;
+    width: auto;
+    height: auto;
+  }
+
+  .dc-chart svg {
+      width: 90%;
+      height: auto;
+      max-height: fit-content;
+  }
+
+  .record-counter {
+    top: 20px;
+    bottom: 20px;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: fit-content;
+    align-content: center;
+    bottom: 25px;
+    left: 1%;
+  }
+
+  .dc-chart#donut svg {
+    max-width: 75%; 
+    height: auto;
+    max-height: fit-content;
+  }
+
+  #map {
+    height: 400px;
+    padding-top: 40px;
+  }
+}
+
+/* Styles for tablets (min-width: 501px and max-width: 1024px) */
+@media (min-width: 501px) and (max-width: 1024px) {
+  .dc-chart#donut svg {
+    max-width: 75%;
+  }
+
+  .col-xs-3 {
+    left: 50px;
+  }
+
+  .record-counter {
+    top: 20px;
+    bottom: 20px;
+    min-width: 50%;
+    max-height: fit-content;
+    align-content: center;
+    bottom: 25px;
+    left: 25px;
+  }
 }
 
 .col-xs-6 {
-  width: 50%;
+  width: 75%;
   float: left;
 }
 
 .col-xs-3 {
+  max-width: 300px;
   width: 25%;
   float: left;
   text-align: center;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .col-xs-6, .col-xs-3 {
     width: 100%;
     float: none;
@@ -427,13 +494,15 @@ th, td {
 }
 
 /* Donut chart */
-.donut-center {
-  display: flex;
+.donut {
+  /* display: flex; */
   justify-content: center;
   align-items: center;
   width: 250px;
   height: 250px;
 }
+
+
 
 .chart-title, .chart-title-small {
   text-align: center;
@@ -488,12 +557,20 @@ th, td {
   margin-top: 5px;
 }
 
+#avoidChart text.pie-slice {
+  fill: black;
+}
+
 .irrigationChart {
   display: flex;
   align-items: center;
   margin-right: 20px;
   text-align: center;
   margin-top: 5px;
+}
+
+#irrigationChart text.pie-slice {
+  fill: black;
 }
 
 .householdChart {
@@ -504,6 +581,10 @@ th, td {
   margin-top: 5px;
 }
 
+#householdChart text.pie-slice {
+  fill: black;
+}
+
 .livestockChart {
   display: flex;
   align-items: center;
@@ -512,7 +593,11 @@ th, td {
   margin-top: 5px;
 }
 
-@media only screen and (max-width: 767px) {
+#livestockChart text.pie-slice {
+  fill: black;
+}
+
+@media only screen and (max-width: 1024px) {
   .col-xs-12 {
     width: 100%;
     padding: 0;
@@ -522,7 +607,7 @@ th, td {
     font-size: 14px;
   }
 }
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .dashboard {
     flex-direction: column;
   }
@@ -550,13 +635,13 @@ th, td {
   color: #333;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   #selectbox1, #selectbox2,  #selectbox3, #selectbox4 {
     max-width: 100%;
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   /* Styles for mobile devices */
   .table-responsive {
       width: 100%;
@@ -565,7 +650,7 @@ th, td {
 }
 
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   /* Styles for mobile devices */
   .row.dashboard {
     overflow-x: scroll;
@@ -578,7 +663,7 @@ th, td {
 
 /* Media query for mobile devices */
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .dashboard {
     flex-direction: column;
   }
@@ -587,7 +672,7 @@ th, td {
   }
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 1024px) {
   .col-xs-12 {
     width: 100%;
     padding: 0;
@@ -598,12 +683,14 @@ th, td {
   }
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   .dc-charts {
     flex-direction: column;
   }
   .dc-chart {
+    margin-top: 30px;
     margin-bottom: 20px;
+    min-width: 225;
   }
   .dc-select {
     width: 100%;
@@ -630,7 +717,7 @@ th, td {
   color: #333;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 1024px) {
   #selectbox1, #selectbox2,  #selectbox3, #selectbox4 {
     max-width: 100%;
   }
@@ -710,4 +797,3 @@ body {
   display: block !important; /* Center-align images within a block container */
   margin: 0 auto !important; /* Center-align horizontally */
 }
-

@@ -1,4 +1,4 @@
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
   .col-md-12 {
     padding: 0;
   }
@@ -8,21 +8,25 @@
     overflow-x: auto;
     white-space: nowrap;
   }
+
+  .dc-chart svg {
+    width: 75%;
+  }
 }
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
   /* Styles for mobile devices */
   .table-responsive {
-      width: 100%;
+      width: 75%;
       overflow-x: auto;
   }
 }
 
 /* Media query for mobile devices */
-@media (max-width: 767px) {
+@media (max-width: 1000px) {
   /* Collapse the navbar toggle button and make it full width */
   .navbar-toggle {
     float: none;
-    width: 100%;
+    width: 75%;
   }
   
   /* Hide the navbar collapse menu by default */

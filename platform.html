@@ -402,7 +402,7 @@
                     </label>
                 </div>
             </div>
-            <div class="col-xs-6">
+            <div class="col-sm-3">
                 <b>Select Chapter:<b>
                 <div id="dropdown-container">
 
@@ -485,7 +485,7 @@
                 <button id="clear-filters-button">Clear all filters</button>
             </div>
             <div class="col-md-12">
-                <div class="col-xs-3">
+                <div class="col-xl-3">
                     <div class="col-xs-12 record-counter">
                         <div class="nav navbar-nav navbar-right" id="data-count">
                             <h1><b><span class="filter-count">0</span></b></h1>
@@ -499,17 +499,17 @@
                             Recommended Uses
                         </div>
                         <div class="col-xs-12">
-                            <div class="avoidChart"></div>
-                            <div class="irrigationChart"></div>
+                            <div class="avoidChart" id="avoidChart"></div>
+                            <div class="irrigationChart" id="irrigationChart"></div>
                         </div>
                         <div class="col-xs-12">
-                            <div class="householdChart"></div>
-                            <div class="livestockChart"></div>
+                            <div class="householdChart" id="householdChart"></div>
+                            <div class="livestockChart" id="livestockChart"></div>
                         </div>
                         <div class="chart-title">
                             Recommendation Confidence
                         </div>
-                        <div class="col-xs-12 donut-center" id="donut"></div>
+                        <div class="col-xs-12" id="donut"></div>
                         <div class="reclegend">
                             <span class="reclegend-item">
                                 <div class="reclegend-circle" style="background-color: #1a9641;"></div>
@@ -545,9 +545,8 @@
                     <div class="dc-chart" id="histogram9"></div> 
                     <div class="dc-chart" id="histogram10"></div>                   
                 </div>
-            </div>          
-            <!--Record counter-->
-            
+            </div>
+        </div> 
             <div class="col-sm-12 text-center d-flex flex-column align-items-center">
                 <i><small class="w-100"><br><br>Red dashed line on histograms indicates primary maximum contaminant
                         level (MCL)
@@ -558,7 +557,7 @@
             </div>
 
 
-        </div>
+        
     </div>
     <!--Data table-->
     <div id="section3" class="row dashboard">
