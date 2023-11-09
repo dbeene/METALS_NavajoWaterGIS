@@ -46,7 +46,8 @@ body {
   box-shadow: 0px 8px 18px #c1cece;
   border-radius: 15px;
   opacity: 89%;
-  /* padding: 10px 10px 10px 10px; */
+  max-width: 1500px;
+  margin: 0 auto;
 }
 
 .container-fluid {
@@ -63,7 +64,7 @@ text {
 }
 
 #map {
-  height: 600px;
+  height: 625px;
   padding-top: 40px;
 }
 
@@ -420,8 +421,8 @@ th, td {
   }
 }
 
-/* Styles for tablets (min-width: 501px and max-width: 1024px) */
-@media (min-width: 501px) and (max-width: 1024px) {
+/* Styles for tablets (min-width: 501px and max-width: 1366px) */
+@media (min-width: 501px) and (max-width: 1366px) {
   .dc-chart#donut svg {
     max-width: 75%;
   }
@@ -454,7 +455,7 @@ th, td {
   text-align: center;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1366px) {
   .col-xs-6, .col-xs-3 {
     width: 100%;
     max-width: 100%;
@@ -601,7 +602,7 @@ th, td {
   fill: black;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1366px) {
   .col-xs-12 {
     width: 100%;
     padding: 0;
@@ -611,7 +612,7 @@ th, td {
     font-size: 14px;
   }
 }
-@media (max-width: 1024px) {
+@media (max-width: 1366px) {
   .dashboard {
     flex-direction: column;
   }
@@ -639,13 +640,13 @@ th, td {
   color: #333;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1366px) {
   #selectbox1, #selectbox2,  #selectbox3, #selectbox4 {
     max-width: 100%;
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1366px) {
   /* Styles for mobile devices */
   .table-responsive {
       width: 100%;
@@ -654,7 +655,7 @@ th, td {
 }
 
 
-@media (max-width: 1024px) {
+@media (max-width: 1366px) {
   /* Styles for mobile devices */
   .row.dashboard {
     overflow-x: scroll;
@@ -667,7 +668,7 @@ th, td {
 
 /* Media query for mobile devices */
 
-@media (max-width: 1024px) {
+@media (max-width: 1366px) {
   .dashboard {
     flex-direction: column;
   }
@@ -676,7 +677,7 @@ th, td {
   }
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (max-width: 1366px) {
   .col-xs-12 {
     width: 100%;
     padding: 0;
@@ -687,7 +688,7 @@ th, td {
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1366px) {
   .dc-charts {
     flex-direction: column;
   }
@@ -721,7 +722,7 @@ th, td {
   color: #333;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1366px) {
   #selectbox1, #selectbox2,  #selectbox3, #selectbox4 {
     max-width: 100%;
   }

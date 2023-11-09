@@ -1303,33 +1303,9 @@ window.onload = function () {
 
                 // Add an event listener to the "Clear all filters" button
                 document.getElementById('clear-filters-button').addEventListener('click', function () {
-
-                    // Clear filters on bar charts
-                    AlDim.filterAll();
-                    AsDim.filterAll();
-                    BaDim.filterAll();
-                    CdDim.filterAll();
-                    CuDim.filterAll();
-                    FeDim.filterAll();
-                    MnDim.filterAll();
-                    PbDim.filterAll();
-                    SeDim.filterAll();
-                    UDim.filterAll();
-
-                    // Clear filters on the donut chart (recChart)
-                    recChart.filterAll();
-
-                    // Set the radio buttons back to 'all'
-                    document.querySelectorAll('input[name="marker-option"]').forEach(function (radio) {
-                        radio.checked = (radio.value === 'all');
-                    });
-
-                    // Clear markers from the map
-                    map.removeLayer(activeClusterGroup);
-
-                    // Redraw the charts after clearing filters
-                    dc.redrawAll();
+                    location.reload();
                 });
+                
             });//close on pretransition
 
 
