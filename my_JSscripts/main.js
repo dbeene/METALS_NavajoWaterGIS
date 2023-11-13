@@ -1096,11 +1096,10 @@ window.onload = function () {
                                     ((d.properties.Household == 1 ? '<br><b>Household</b><br><img src="myCSS_styleFiles/images/broom.png" height="65px">' : "<br>") +
                                         (d.properties.Irrigation == 1 ? '<br><b>Irrigation</b><br><img src="myCSS_styleFiles/images/corn.png" height="65px">' : "<br>") +
                                         (d.properties.Livestock == 1 ? '<br><b>Livestock</b><br><img src="myCSS_styleFiles/images/goat.png" height="65px">' : "<br>")).replace(/, $/, "") // Remove trailing comma
-                                ) + "</dd>"
+                                ) + "</dd>"                                
                                 + "<dl>"
 
                                 // Conditional Image Display with Confidence Level Text
-                                // + "<dt><span style='font-weight:bolder'>Confidence Level: </span></dt><dd class='col-md-12.text-center.d-flex.flex-column.align-items-center'>" 
 
                                 + "<br><b>Confidence: </b>"
                                 + (d.properties.recConfidence === "RED" ? '<img src="myCSS_styleFiles/images/red.png" height="60px"><br>Our confidence level for this recommendation is <i>LOW</i>. This may be due to missing data that we might have interpolated, the standard error of our interpolation, old observational data, or few laboratory samples.' :
@@ -1108,6 +1107,7 @@ window.onload = function () {
                                         (d.properties.recConfidence === "GREEN" ? '<img src="myCSS_styleFiles/images/green.png" height="60px"><br>Our confidence level for this recommendation is HIGH. There are sufficient field samples taken within the last decade to support our conclusion.' : '')
                                     )
                                 ) + "</dd>"
+                                + "<br><br>Click <a href='index.html#section-data' target = '_blank'>here</a> for more information about our recommendations."
                                 + "</dl></div>"
 
                                 // General Well Info

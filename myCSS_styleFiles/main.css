@@ -510,6 +510,7 @@ th, td {
 
 
 .chart-title, .chart-title-small {
+  font-size: 12px !important;
   text-align: center;
   /* Other styles you want to apply to both .chart-title and .chart-title-small */
 }
