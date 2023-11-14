@@ -546,7 +546,7 @@ function toggleContent(sectionId) {
             contaminants</b> in each water source (click on each to expand):<br>
 
         <div class="content" onclick="toggleContent('aluminum')">
-            <h3 id="aluminum-header">Aluminum (click to expand)</h3>
+            <h4 id="aluminum-header">Aluminum (click to expand)</h4>
             <ul class="body-text collapsible" id="aluminum-content">
                 <p class="body-text">
                     Aluminum is highly abundant in the environment and low-dose exposure is common. According to the Agency 
@@ -568,7 +568,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('arsenic')">
-            <h3 id="arsenic-header">Arsenic (click to expand)</h3>
+            <h4 id="arsenic-header">Arsenic (click to expand)</h4>
             <ul class="body-text collapsible" id="arsenic-content">
                 <p class="body-text">
                     Arsenic is common metalloid in the environment. Inorganic arsenic is often colocated with mining activities, specifically coal and gold, 
@@ -590,7 +590,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('barium')">
-            <h3 id="barium-header">Barium (click to expand)</h3>
+            <h4 id="barium-header">Barium (click to expand)</h4>
             <ul class="body-text collapsible" id="barium-content">
                 <p class="body-text">
                     Barium is most often found underground as naturally occurring ore deposits. It does not dissolve well in water, 
@@ -613,7 +613,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('cadmium')">
-            <h3 id="cadmium-header">Cadmium (click to expand)</h3>
+            <h4 id="cadmium-header">Cadmium (click to expand)</h4>
             <ul class="body-text collapsible" id="cadmium-content">
                 <p class="body-text">
                     Cadmium is an environmental metal most often associated with zinc, lead, and copper ore. It is also commonly found in batteries 
@@ -631,7 +631,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('copper')">
-            <h3 id="copper-header">Copper (click to expand)</h3>
+            <h4 id="copper-header">Copper (click to expand)</h4>
             <ul class="body-text collapsible" id="copper-content">
                 <p class="body-text">
                     Copper is an abundant chemical element in the earth's crust associated with mining and corrosion of household water pipes. It is an essential nutrient found 
@@ -649,7 +649,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('iron')">
-            <h3 id="iron-header">Iron (click to expand)</h3>
+            <h4 id="iron-header">Iron (click to expand)</h4>
             <ul class="body-text collapsible" id="iron-content">
                 <p class="body-text">
                     Iron is a highly abundant element in the earth's crust and is also an essential trace element for the health and functioning of living organisms. According to the 
@@ -668,7 +668,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('manganese')">
-            <h3 id="manganese-header">Manganese (click to expand)</h3>
+            <h4 id="manganese-header">Manganese (click to expand)</h4>
             <ul class="body-text collapsible" id="manganese-content">
                 <p class="body-text">
                     Manganese is a trace element found in some rocks and soil and is used mainly in steel production to improve hardness. The primary source of exposure to manganese 
@@ -688,7 +688,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('lead')">
-            <h3 id="lead-header">Lead (click to expand)</h3>
+            <h4 id="lead-header">Lead (click to expand)</h4>
             <ul class="body-text collapsible" id="lead-content">
                 <p class="body-text">
                     Lead is a highly toxic metal distributed in ore deposits across the world. It is associated with various ore smelting and improper waste disposal that 
@@ -709,7 +709,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('selenium')">
-            <h3 id="selenium-header">Selenium (click to expand)</h3>
+            <h4 id="selenium-header">Selenium (click to expand)</h4>
             <ul class="body-text collapsible" id="selenium-content">
                 <p class="body-text">
                     Selenium is a naturally occurring element that is concentrated in certain pockets of the earth's crust in some rocks and soil. It's also often produced 
@@ -730,7 +730,7 @@ function toggleContent(sectionId) {
         </div>
 
         <div class="content" onclick="toggleContent('uranium')">
-            <h3 id="uranium-header">Uranium (click to expand)</h3>
+            <h4 id="uranium-header">Uranium (click to expand)</h4>
             <ul class="body-text collapsible" id="uranium-content">
                 <p class="body-text">
                     Uranium is a naturally occurring radioactive element found in deposits across the earth's crust. Today, enriched uranium is mainly used as fuel for nuclear 
@@ -750,13 +750,14 @@ function toggleContent(sectionId) {
                 </p>
             </ul>
         </div>
+        <h3>The Recommendation Model:</h3>
         <p class="body-text">
             For each of the ten chemicals we define degrees of safe concentrations based on multiple guidelines regulations
             discussed above. Then, we utilized a machine learning model, adaptive fuzzy neural inference system (ANFIS), to
             define and parameterize more than 1.3 million rules based on every possible combination of high, medium
             high, medium low, and low concentrations of each chemical in each water source.
         </p>
-        <h3 id="section-household">Household use:</h3>
+        <h4 id="section-household">Household use:</h4>
         <p class="body-text">
             Household water uses may typically include cleaning (such as dishes or laundry)
             or sanitation, but not any
@@ -766,14 +767,14 @@ function toggleContent(sectionId) {
             regional screening levels (RSL) to make our recommendations. 
             <br>
         </p>
-        <h3 id="section-irrigation">Irrigation:</h3>
+        <h4 id="section-irrigation">Irrigation:</h4>
         <p class="body-text">
             Hauled water may be used to irrigate small gardens or other food sources for consumption. Our recommendations
             for irrigaiton water are based on the Navajo Nation agricultural water supply limits, which you can see 
             <a href="https://www.epa.gov/wqs-tech/water-quality-standards-regulations-navajo-nation" target="_blank">here</a>.
             <br>
         </p>
-        <h3 id="section-livestock">Livestock watering:</h3>
+        <h4 id="section-livestock">Livestock watering:</h4>
         <p class="body-text">
             Many of the water sources included in this resource are livestock wells, though without complete records we can't
             adequately detetrmine the exact number of livestoc-specific wells, nor can we be sure that multi-purpose wells aren't
@@ -781,7 +782,7 @@ function toggleContent(sectionId) {
             watering guidlines, which you can see <a href="https://www.epa.gov/wqs-tech/water-quality-standards-regulations-navajo-nation" target="_blank">here</a>.
             <br>
         </p>
-        <h3 id="section-avoid">Avoid:</h3>
+        <h4 id="section-avoid">Avoid:</h4>
         <p class="body-text">
             We recommend avoiding any water sources with concentrations of Al, As, Ba, Cd, Cu, Fe, Mn, Pb, Se, and U higher than those defined in the guidelines discussed above. 
             Furthermore, we individually assessed water sources with measurements of radioactive elements like
