@@ -1,5 +1,5 @@
 window.onload = function () {
-    
+
     // Get the loading overlay element
     const loadingOverlay = document.querySelector('.loading-overlay');
 
@@ -15,11 +15,11 @@ window.onload = function () {
     setTimeout(hideLoadingOverlay, 2000);
 
     function clearMarkers() {
-    map.eachLayer(function (layer) {
-        if (layer instanceof L.MarkerClusterGroup) {
-            layer.clearLayers();
-        }
-    });
+        map.eachLayer(function (layer) {
+            if (layer instanceof L.MarkerClusterGroup) {
+                layer.clearLayers();
+            }
+        });
     }
 
     // Call leaflet map into map frame
@@ -55,31 +55,31 @@ window.onload = function () {
     var chapter8Marker = L.marker([36.663304, -111.047236]);
     var chapter9Marker = L.marker([36.402562, -110.969491]);
     var chapter10Marker = L.marker([36.803719, -110.959495]);
-    var chapter11Marker = L.marker([35.482540, -110.907713]);
+    var chapter11Marker = L.marker([35.48254, -110.907713]);
     var chapter12Marker = L.marker([35.261735, -110.733304]);
     var chapter13Marker = L.marker([37.033103, -110.782274]);
     var chapter14Marker = L.marker([36.662394, -110.597599]);
     var chapter15Marker = L.marker([36.688746, -110.305346]);
-    var chapter16Marker = L.marker([36.327780, -110.297442]);
-    var chapter17Marker = L.marker([36.103359, -110.475360]);
-    var chapter18Marker = L.marker([35.464345, -110.473690]);
+    var chapter16Marker = L.marker([36.32778, -110.297442]);
+    var chapter17Marker = L.marker([36.103359, -110.47536]);
+    var chapter18Marker = L.marker([35.464345, -110.47369]);
     var chapter19Marker = L.marker([35.311866, -110.399548]);
     var chapter20Marker = L.marker([35.554114, -110.128561]);
-    var chapter21Marker = L.marker([35.770350, -110.058503]);
+    var chapter21Marker = L.marker([35.77035, -110.058503]);
     var chapter22Marker = L.marker([35.945223, -109.972888]);
     var chapter23Marker = L.marker([35.762918, -109.829705]);
     var chapter24Marker = L.marker([36.023184, -110.093109]);
-    var chapter25Marker = L.marker([36.107762, -110.222020]);
+    var chapter25Marker = L.marker([36.107762, -110.22202]);
     var chapter26Marker = L.marker([35.331335, -110.097371]);
-    var chapter27Marker = L.marker([35.434930, -109.891448]);
+    var chapter27Marker = L.marker([35.43493, -109.891448]);
     var chapter28Marker = L.marker([35.333932, -109.563239]);
-    var chapter29Marker = L.marker([35.508010, -109.536790]);
+    var chapter29Marker = L.marker([35.50801, -109.53679]);
     var chapter30Marker = L.marker([35.625297, -109.687522]);
     var chapter31Marker = L.marker([35.746783, -109.571015]);
     var chapter32Marker = L.marker([36.024685, -109.794542]);
-    var chapter33Marker = L.marker([35.948643, -109.428830]);
+    var chapter33Marker = L.marker([35.948643, -109.42883]);
     var chapter34Marker = L.marker([35.748142, -109.318498]);
-    var chapter35Marker = L.marker([36.160490, -109.992571]);
+    var chapter35Marker = L.marker([36.16049, -109.992571]);
     var chapter36Marker = L.marker([36.332415, -110.033454]);
     var chapter37Marker = L.marker([36.374207, -109.558864]);
     var chapter38Marker = L.marker([36.168278, -109.580283]);
@@ -96,78 +96,181 @@ window.onload = function () {
     var chapter49Marker = L.marker([36.960042, -109.162218]);
     var chapter50Marker = L.marker([36.243735, -109.231646]);
     var chapter51Marker = L.marker([35.293327, -109.275328]);
-    var chapter52Marker = L.marker([35.268120, -109.113710]);
-    var chapter53Marker = L.marker([35.462960, -109.173451]);
+    var chapter52Marker = L.marker([35.26812, -109.11371]);
+    var chapter53Marker = L.marker([35.46296, -109.173451]);
     var chapter54Marker = L.marker([35.617939, -109.127031]);
-    var chapter55Marker = L.marker([35.761240, -109.047576]);
+    var chapter55Marker = L.marker([35.76124, -109.047576]);
     var chapter56Marker = L.marker([35.888682, -109.038602]);
     var chapter57Marker = L.marker([36.004919, -109.180546]);
     var chapter58Marker = L.marker([36.067849, -109.024308]);
-    var chapter59Marker = L.marker([36.452290, -108.842877]);
+    var chapter59Marker = L.marker([36.45229, -108.842877]);
     var chapter60Marker = L.marker([36.830323, -108.939227]);
-
+    var chapter61Marker = L.marker([36.06072023900711, -110.04985857478128]);
+    var chapter62Marker = L.marker([35.38620835864987, -109.28792539640408]);
+    var chapter63Marker = L.marker([36.80478327439627, -109.095361974349]);
+    var chapter64Marker = L.marker([36.3611436343144, -109.25089370154812]);
+    var chapter65Marker = L.marker([35.12531684429638, -109.36576545631557]);
+    var chapter66Marker = L.marker([36.4657581748412, -109.11103357081461]);
+    var chapter67Marker = L.marker([36.99777267121339, -108.652046466324]);
+    var chapter68Marker = L.marker([36.771580977972334, -108.63523242461984]);
+    var chapter69Marker = L.marker([36.73619267417381, -108.25770172790521]);
+    var chapter70Marker = L.marker([36.84339943998291, -108.65253382684824]);
+    var chapter71Marker = L.marker([36.74962986428461, -108.63183968998209]);
+    var chapter72Marker = L.marker([36.22798303269989, -108.7217663239343]);
+    var chapter73Marker = L.marker([36.22114882754804, -108.55186997220717]);
+    var chapter74Marker = L.marker([36.21450431643332, -108.27178291470794]);
+    var chapter75Marker = L.marker([36.209347608644826, -108.27185399981917]);
+    var chapter76Marker = L.marker([35.76311202328424, -108.70219083204088]);
+    var chapter77Marker = L.marker([35.70006475771182, -108.26973987545387]);
+    var chapter78Marker = L.marker([35.80566911629855, -108.28589464093857]);
+    var chapter79Marker = L.marker([35.6597450765023, -108.49299293154112]);
+    var chapter80Marker = L.marker([35.659862190442986, -108.73123378112044]);
+    var chapter81Marker = L.marker([35.984775930048286, -108.86323901482454]);
+    var chapter82Marker = L.marker([36.22798303269986, -108.72176632393432]);
+    var chapter83Marker = L.marker([35.535786612503756, -108.86404098510506]);
+    var chapter84Marker = L.marker([36.18085557706471, -108.0591848773362]);
+    var chapter85Marker = L.marker([36.724948369143014, -108.24930407733068]);
+    var chapter86Marker = L.marker([35.81255292602995, -108.00293712252764]);
+    var chapter87Marker = L.marker([35.78374481387582, -108.25264879206023]);
+    var chapter88Marker = L.marker([35.50054336285875, -107.86597217915593]);
+    var chapter89Marker = L.marker([35.61691643782455, -108.12817322204432]);
+    var chapter90Marker = L.marker([35.33397829054442, -107.92880507994455]);
+    var chapter91Marker = L.marker([35.40512918648576, -108.21812645136667]);
+    var chapter92Marker = L.marker([35.56695398510084, -108.41458385629879]);
+    var chapter93Marker = L.marker([36.33591553648302, -107.74967442966137]);
+    var chapter94Marker = L.marker([36.02012393069316, -107.32389959718378]);
+    var chapter95Marker = L.marker([35.99904046242444, -107.37748734079616]);
+    var chapter96Marker = L.marker([35.65327295966712, -107.3977233373563]);
+    var chapter97Marker = L.marker([35.81852912135637, -107.59427132747203]);
+    var chapter98Marker = L.marker([35.64593000882607, -107.2952705897397]);
+    var chapter99Marker = L.marker([34.71190920419565, -108.3447006429268]);
+    var chapter100Marker = L.marker([34.376358011223935, -107.56372903626131]);
+    var chapter101Marker = L.marker([35.059061877166315, -106.97478970891673]);
+    var chapter102Marker = L.marker([35.386749939875315, -108.91884406540585]);
+    var chapter103Marker = L.marker([35.47969841753586, -108.75986189082802]);
+    var chapter104Marker = L.marker([35.65234527036743, -108.37011865828237]);
+    var chapter105Marker = L.marker([35.55493386576171, -108.05176263465754]);
+    var chapter106Marker = L.marker([35.55113196195737, -107.97660875106943]);
+    var chapter107Marker = L.marker([35.501312511658476, -108.71128639919819]);
+    var chapter108Marker = L.marker([35.33573702875052, -108.60028073692013]);
+    var chapter109Marker = L.marker([35.34277074312719, -108.79501399974022]);
+    var chapter110Marker = L.marker([35.65997489859645, -108.87043265176675]);
+    var chapter111Marker = L.marker([35.53727580734836, -108.72460499325837]);
+    var chapter112Marker = L.marker([36.00238172121207, -108.3762642258194]);
 
     var chapterBounds = {
-        'Cameron': L.latLngBounds([chapter1Marker.getLatLng()]),
-        'Bodaway Gap': L.latLngBounds([chapter2Marker.getLatLng()]),
-        'Coppermine': L.latLngBounds([chapter3Marker.getLatLng()]),
-        'Tuba City': L.latLngBounds([chapter4Marker.getLatLng()]),
-        'Coalmine Mesa': L.latLngBounds([chapter5Marker.getLatLng()]),
-        'Leupp': L.latLngBounds([chapter6Marker.getLatLng()]),
-        'Lechee': L.latLngBounds([chapter7Marker.getLatLng()]),
-        'Kaibeto': L.latLngBounds([chapter8Marker.getLatLng()]),
-        'Tonalea': L.latLngBounds([chapter9Marker.getLatLng()]),
-        'Inscription House': L.latLngBounds([chapter10Marker.getLatLng()]),
-        'Tolani Lake': L.latLngBounds([chapter11Marker.getLatLng()]),
-        'Bird Springs': L.latLngBounds([chapter12Marker.getLatLng()]),
-        'Navajo Mountain': L.latLngBounds([chapter13Marker.getLatLng()]),
-        'Shonto': L.latLngBounds([chapter14Marker.getLatLng()]),
-        'Kayenta': L.latLngBounds([chapter15Marker.getLatLng()]),
-        'Forest Lake': L.latLngBounds([chapter16Marker.getLatLng()]),
-        'Hard Rock': L.latLngBounds([chapter17Marker.getLatLng()]),
-        'Teesto': L.latLngBounds([chapter18Marker.getLatLng()]),
-        'Dilkon': L.latLngBounds([chapter19Marker.getLatLng()]),
-        'White Cone': L.latLngBounds([chapter20Marker.getLatLng()]),
-        'Jeddito': L.latLngBounds([chapter21Marker.getLatLng()]),
-        'Low Mountain': L.latLngBounds([chapter22Marker.getLatLng()]),
-        'Steamboat': L.latLngBounds([chapter23Marker.getLatLng()]),
-        'Whippoorwill': L.latLngBounds([chapter24Marker.getLatLng()]),
-        'Pinon': L.latLngBounds([chapter25Marker.getLatLng()]),
-        'Indian Wells': L.latLngBounds([chapter26Marker.getLatLng()]),
-        'Greasewood Springs': L.latLngBounds([chapter27Marker.getLatLng()]),
-        'Wide Ruins': L.latLngBounds([chapter28Marker.getLatLng()]),
-        'Klagetoh': L.latLngBounds([chapter29Marker.getLatLng()]),
-        'Cornfields': L.latLngBounds([chapter30Marker.getLatLng()]),
-        'Ganado': L.latLngBounds([chapter31Marker.getLatLng()]),
-        'Tselani': L.latLngBounds([chapter32Marker.getLatLng()]),
-        'Nazlini': L.latLngBounds([chapter33Marker.getLatLng()]),
-        'Kinlichee': L.latLngBounds([chapter34Marker.getLatLng()]),
-        'Blue Gap/Tachee': L.latLngBounds([chapter35Marker.getLatLng()]),
-        'Black Mesa': L.latLngBounds([chapter36Marker.getLatLng()]),
-        'Many Farms': L.latLngBounds([chapter37Marker.getLatLng()]),
-        'Chinle': L.latLngBounds([chapter38Marker.getLatLng()]),
-        'Round Rock': L.latLngBounds([chapter39Marker.getLatLng()]),
-        'Rough Rock': L.latLngBounds([chapter40Marker.getLatLng()]),
-        'Rock Point': L.latLngBounds([chapter41Marker.getLatLng()]),
-        'Dennehotso': L.latLngBounds([chapter42Marker.getLatLng()]),
-        'Chilchinbeto': L.latLngBounds([chapter43Marker.getLatLng()]),
-        'Oljato': L.latLngBounds([chapter44Marker.getLatLng()]),
-        'Sweet Water': L.latLngBounds([chapter45Marker.getLatLng()]),
-        'Mexican Water': L.latLngBounds([chapter46Marker.getLatLng()]),
-        'Red Mesa': L.latLngBounds([chapter47Marker.getLatLng()]),
-        'Aneth': L.latLngBounds([chapter48Marker.getLatLng()]),
-        'Teec Nos Pos': L.latLngBounds([chapter49Marker.getLatLng()]),
-        'Tsaile/Wheatfields': L.latLngBounds([chapter50Marker.getLatLng()]),
-        'Houck': L.latLngBounds([chapter51Marker.getLatLng()]),
-        'Lupton': L.latLngBounds([chapter52Marker.getLatLng()]),
-        'Oak Springs': L.latLngBounds([chapter53Marker.getLatLng()]),
-        'Saint Michaels': L.latLngBounds([chapter54Marker.getLatLng()]),
-        'Fort Defiance': L.latLngBounds([chapter55Marker.getLatLng()]),
-        'Red Lake': L.latLngBounds([chapter56Marker.getLatLng()]),
-        'Sawmill': L.latLngBounds([chapter57Marker.getLatLng()]),
-        'Crystal': L.latLngBounds([chapter58Marker.getLatLng()]),
-        'Sanostee': L.latLngBounds([chapter59Marker.getLatLng()]),
-        'Beclahbito': L.latLngBounds([chapter60Marker.getLatLng()]),
+        "Cameron": L.latLngBounds([chapter1Marker.getLatLng()]),
+        "Bodaway Gap": L.latLngBounds([chapter2Marker.getLatLng()]),
+        "Coppermine": L.latLngBounds([chapter3Marker.getLatLng()]),
+        "Tuba City": L.latLngBounds([chapter4Marker.getLatLng()]),
+        "Coalmine Mesa": L.latLngBounds([chapter5Marker.getLatLng()]),
+        "Leupp": L.latLngBounds([chapter6Marker.getLatLng()]),
+        "Lechee": L.latLngBounds([chapter7Marker.getLatLng()]),
+        "Kaibeto": L.latLngBounds([chapter8Marker.getLatLng()]),
+        "Tonalea": L.latLngBounds([chapter9Marker.getLatLng()]),
+        "Inscription House": L.latLngBounds([chapter10Marker.getLatLng()]),
+        "Tolani Lake": L.latLngBounds([chapter11Marker.getLatLng()]),
+        "Bird Springs": L.latLngBounds([chapter12Marker.getLatLng()]),
+        "Navajo Mountain": L.latLngBounds([chapter13Marker.getLatLng()]),
+        "Shonto": L.latLngBounds([chapter14Marker.getLatLng()]),
+        "Kayenta": L.latLngBounds([chapter15Marker.getLatLng()]),
+        "Forest Lake": L.latLngBounds([chapter16Marker.getLatLng()]),
+        "Hard Rock": L.latLngBounds([chapter17Marker.getLatLng()]),
+        "Teesto": L.latLngBounds([chapter18Marker.getLatLng()]),
+        "Dilkon": L.latLngBounds([chapter19Marker.getLatLng()]),
+        "White Cone": L.latLngBounds([chapter20Marker.getLatLng()]),
+        "Jeddito": L.latLngBounds([chapter21Marker.getLatLng()]),
+        "Low Mountain": L.latLngBounds([chapter22Marker.getLatLng()]),
+        "Steamboat": L.latLngBounds([chapter23Marker.getLatLng()]),
+        "Whippoorwill": L.latLngBounds([chapter24Marker.getLatLng()]),
+        "Pinon": L.latLngBounds([chapter25Marker.getLatLng()]),
+        "Indian Wells": L.latLngBounds([chapter26Marker.getLatLng()]),
+        "Greasewood Springs": L.latLngBounds([chapter27Marker.getLatLng()]),
+        "Wide Ruins": L.latLngBounds([chapter28Marker.getLatLng()]),
+        "Klagetoh": L.latLngBounds([chapter29Marker.getLatLng()]),
+        "Cornfields": L.latLngBounds([chapter30Marker.getLatLng()]),
+        "Ganado": L.latLngBounds([chapter31Marker.getLatLng()]),
+        "Tselani": L.latLngBounds([chapter32Marker.getLatLng()]),
+        "Nazlini": L.latLngBounds([chapter33Marker.getLatLng()]),
+        "Kinlichee": L.latLngBounds([chapter34Marker.getLatLng()]),
+        "Blue Gap/Tachee": L.latLngBounds([chapter35Marker.getLatLng()]),
+        "Black Mesa": L.latLngBounds([chapter36Marker.getLatLng()]),
+        "Many Farms": L.latLngBounds([chapter37Marker.getLatLng()]),
+        "Chinle": L.latLngBounds([chapter38Marker.getLatLng()]),
+        "Round Rock": L.latLngBounds([chapter39Marker.getLatLng()]),
+        "Rough Rock": L.latLngBounds([chapter40Marker.getLatLng()]),
+        "Rock Point": L.latLngBounds([chapter41Marker.getLatLng()]),
+        "Dennehotso": L.latLngBounds([chapter42Marker.getLatLng()]),
+        "Chilchinbeto": L.latLngBounds([chapter43Marker.getLatLng()]),
+        "Oljato": L.latLngBounds([chapter44Marker.getLatLng()]),
+        "Sweet Water": L.latLngBounds([chapter45Marker.getLatLng()]),
+        "Mexican Water": L.latLngBounds([chapter46Marker.getLatLng()]),
+        "Red Mesa": L.latLngBounds([chapter47Marker.getLatLng()]),
+        "Aneth": L.latLngBounds([chapter48Marker.getLatLng()]),
+        "Teec Nos Pos": L.latLngBounds([chapter49Marker.getLatLng()]),
+        "Tsaile/Wheatfields": L.latLngBounds([chapter50Marker.getLatLng()]),
+        "Houck": L.latLngBounds([chapter51Marker.getLatLng()]),
+        "Lupton": L.latLngBounds([chapter52Marker.getLatLng()]),
+        "Oak Springs": L.latLngBounds([chapter53Marker.getLatLng()]),
+        "Saint Michaels": L.latLngBounds([chapter54Marker.getLatLng()]),
+        "Fort Defiance": L.latLngBounds([chapter55Marker.getLatLng()]),
+        "Red Lake": L.latLngBounds([chapter56Marker.getLatLng()]),
+        "Sawmill": L.latLngBounds([chapter57Marker.getLatLng()]),
+        "Crystal": L.latLngBounds([chapter58Marker.getLatLng()]),
+        "Sanostee": L.latLngBounds([chapter59Marker.getLatLng()]),
+        "Beclahbito": L.latLngBounds([chapter60Marker.getLatLng()]),
+        "Whippoorwill": L.latLngBounds([chapter61Marker.getLatLng()]),
+        "Wide Ruins": L.latLngBounds([chapter62Marker.getLatLng()]),
+        "Red Valley": L.latLngBounds([chapter63Marker.getLatLng()]),
+        "Lukachukai": L.latLngBounds([chapter64Marker.getLatLng()]),
+        "Nahat'a'dzil": L.latLngBounds([chapter65Marker.getLatLng()]),
+        "Cove": L.latLngBounds([chapter66Marker.getLatLng()]),
+        "Gadaihai": L.latLngBounds([chapter67Marker.getLatLng()]),
+        "San Juan/Nenahnezad": L.latLngBounds([chapter68Marker.getLatLng()]),
+        "Upper Fruitland": L.latLngBounds([chapter69Marker.getLatLng()]),
+        "Shiprock": L.latLngBounds([chapter70Marker.getLatLng()]),
+        "Hogback": L.latLngBounds([chapter71Marker.getLatLng()]),
+        "Two Grey Hills": L.latLngBounds([chapter72Marker.getLatLng()]),
+        "Sheep Springs": L.latLngBounds([chapter73Marker.getLatLng()]),
+        "Burnham": L.latLngBounds([chapter74Marker.getLatLng()]),
+        "Whiterock": L.latLngBounds([chapter75Marker.getLatLng()]),
+        "Tohatchi": L.latLngBounds([chapter76Marker.getLatLng()]),
+        "Nahodishgish": L.latLngBounds([chapter77Marker.getLatLng()]),
+        "Standing Rock": L.latLngBounds([chapter78Marker.getLatLng()]),
+        "Coyote Canyon": L.latLngBounds([chapter79Marker.getLatLng()]),
+        "Twin Lakes": L.latLngBounds([chapter80Marker.getLatLng()]),
+        "Mexican Springs": L.latLngBounds([chapter81Marker.getLatLng()]),
+        "Newcomb": L.latLngBounds([chapter82Marker.getLatLng()]),
+        "Tsayatoh": L.latLngBounds([chapter83Marker.getLatLng()]),
+        "Lake Valley": L.latLngBounds([chapter84Marker.getLatLng()]),
+        "Huerfano": L.latLngBounds([chapter85Marker.getLatLng()]),
+        "Becenti": L.latLngBounds([chapter86Marker.getLatLng()]),
+        "Crownpoint": L.latLngBounds([chapter87Marker.getLatLng()]),
+        "Littlewater": L.latLngBounds([chapter88Marker.getLatLng()]),
+        "Mariano Lake": L.latLngBounds([chapter89Marker.getLatLng()]),
+        "Baca/Prewitt": L.latLngBounds([chapter90Marker.getLatLng()]),
+        "Thoreau": L.latLngBounds([chapter91Marker.getLatLng()]),
+        "Iyanbito": L.latLngBounds([chapter92Marker.getLatLng()]),
+        "Nageezi": L.latLngBounds([chapter93Marker.getLatLng()]),
+        "Counselor": L.latLngBounds([chapter94Marker.getLatLng()]),
+        "Ojo Encino": L.latLngBounds([chapter95Marker.getLatLng()]),
+        "Whitehorse Lake": L.latLngBounds([chapter96Marker.getLatLng()]),
+        "Pueblo Pintado": L.latLngBounds([chapter97Marker.getLatLng()]),
+        "Torreon": L.latLngBounds([chapter98Marker.getLatLng()]),
+        "Ramah": L.latLngBounds([chapter99Marker.getLatLng()]),
+        "Alamo": L.latLngBounds([chapter100Marker.getLatLng()]),
+        "Tohajilee": L.latLngBounds([chapter101Marker.getLatLng()]),
+        "Manuelito": L.latLngBounds([chapter102Marker.getLatLng()]),
+        "Red Rock": L.latLngBounds([chapter103Marker.getLatLng()]),
+        "Pinedale": L.latLngBounds([chapter104Marker.getLatLng()]),
+        "Smith Lake": L.latLngBounds([chapter105Marker.getLatLng()]),
+        "Casamero Lake": L.latLngBounds([chapter106Marker.getLatLng()]),
+        "Church Rock": L.latLngBounds([chapter107Marker.getLatLng()]),
+        "Baahaalii": L.latLngBounds([chapter108Marker.getLatLng()]),
+        "Chichiltah": L.latLngBounds([chapter109Marker.getLatLng()]),
+        "Rock Springs": L.latLngBounds([chapter110Marker.getLatLng()]),
+        "City of Gallup": L.latLngBounds([chapter111Marker.getLatLng()]),
+        "Naschitti": L.latLngBounds([chapter112Marker.getLatLng()]),
     };
 
     // When a user selects a chapter, update the map's view to the bounds of the corresponding marker
@@ -400,7 +503,7 @@ window.onload = function () {
         var householdDim = ndx.dimension(function (d) { return d.properties.Household; });
         var livestockDim = ndx.dimension(function (d) { return d.properties.Livestock; });
 
- 
+
         // Draw features according to use
         var allDim = ndx.dimension(function (d) { return d; });
 
@@ -421,7 +524,7 @@ window.onload = function () {
         var irrigationGroup = irrigationDim.group();
         var householdGroup = householdDim.group();
         var livestockGroup = livestockDim.group();
-              
+
         // Specify charts
 
         var alCountChart = dc.barChart('#histogram1');
@@ -663,7 +766,7 @@ window.onload = function () {
         cuCountChart.xAxis().tickValues([0, 2000, 4000]);
 
         // Iron
-       feCountChart
+        feCountChart
             .width(250)
             .height(250)
             .dimension(FeDim)
@@ -874,7 +977,7 @@ window.onload = function () {
         ;
         uCountChart.xAxis().tickValues([30, 300, 600])
         var mclDrawn = false;
-        
+
         // Donut chart
         // Define color scale
         var recColors = d3.scale.ordinal()
@@ -887,11 +990,11 @@ window.onload = function () {
             .group(countPerRec)
             .innerRadius(40)
             .colors(recColors)
-            .label(function(d) {
+            .label(function (d) {
                 return '';
             })
-            .filter = function () {};  
-            
+            .filter = function () { };
+
         // Pie charts
         avoidChart
             .ordinalColors(['#cccccc', '#007A86']) // Set colors for 0 and 1
@@ -908,7 +1011,7 @@ window.onload = function () {
                 // Return an empty string for other values to hide their labels
                 return '';
             })
-            .filter = function () {};
+            .filter = function () { };
 
         irrigationChart
             .ordinalColors(['#cccccc', '#007A86']) // Set colors for 0 and 1
@@ -925,7 +1028,7 @@ window.onload = function () {
                 // Return an empty string for other values to hide their labels
                 return '';
             })
-            .filter = function () {};
+            .filter = function () { };
 
         householdChart
             .ordinalColors(['#cccccc', '#007A86']) // Set colors for 0 and 1
@@ -942,7 +1045,7 @@ window.onload = function () {
                 // Return an empty string for other values to hide their labels
                 return '';
             })
-            .filter = function () {};   
+            .filter = function () { };
 
         livestockChart
             .ordinalColors(['#cccccc', '#007A86']) // Set colors for 0 and 1
@@ -959,7 +1062,7 @@ window.onload = function () {
                 // Return an empty string for other values to hide their labels
                 return '';
             })
-            .filter = function () {};
+            .filter = function () { };
 
         avoidChart.render();
         irrigationChart.render();
@@ -977,7 +1080,7 @@ window.onload = function () {
 
         // Check data for livestock chart
         console.log("Livestock Data:", livestockGroup.all());
-          
+
         var column2 = function (d) { return d.properties.Al.toFixed(3); };
         var column3 = function (d) { return d.properties.As.toFixed(3); };
         var column4 = function (d) { return d.properties.Ba.toFixed(3); };
@@ -1040,16 +1143,16 @@ window.onload = function () {
                 function displayMarkers(option) {
                     // Clear the active cluster group
                     activeClusterGroup.clearLayers();
-                
+
                     // Get the filtered data based on the data table's dimension
                     var filteredData = allDim.top(Infinity);
 
                     // Reset the marker count for each call to displayMarkers
                     markerCount = 0;
-             
+
                     filteredData.forEach(function (d) {
                         var fillColor = "#404040"; // Default color
-                
+
                         if (
                             option === 'all' ||
                             (option === 'avoid' && d.properties.Avoid === 1) ||
@@ -1072,7 +1175,7 @@ window.onload = function () {
                                         break;
                                 }
                             }
-                
+
                             // Create marker with appropriate options
                             var markerOptions = {
                                 radius: 6.5,
@@ -1081,12 +1184,12 @@ window.onload = function () {
                                 weight: 0.6,
                                 fillOpacity: 0.75,
                             };
-                
+
                             var marker = L.circleMarker([d.properties.lat, d.properties.long], markerOptions);
-                
+
                             // Add popup content here
                             marker.bindPopup(
-                                "<dl><dt> <h5><b><i>WELL NAME:<br>" + d.properties.well_name + "</i></b></h5>" 
+                                "<dl><dt> <h5><b><i>WELL NAME:<br>" + d.properties.well_name + "</i></b></h5>"
                                 + "<dt><span style='font-weight:bolder'></span></dt>" // Damn thing won't center without this
 
                                 // Conditional Recommendations with images
@@ -1096,7 +1199,7 @@ window.onload = function () {
                                     ((d.properties.Household == 1 ? '<br><b>Household</b><br><img src="myCSS_styleFiles/images/broom.png" height="65px">' : "<br>") +
                                         (d.properties.Irrigation == 1 ? '<br><b>Irrigation</b><br><img src="myCSS_styleFiles/images/corn.png" height="65px">' : "<br>") +
                                         (d.properties.Livestock == 1 ? '<br><b>Livestock</b><br><img src="myCSS_styleFiles/images/goat.png" height="65px">' : "<br>")).replace(/, $/, "") // Remove trailing comma
-                                ) + "</dd>"                                
+                                ) + "</dd>"
                                 + "<dl>"
 
                                 // Conditional Image Display with Confidence Level Text
@@ -1276,25 +1379,25 @@ window.onload = function () {
                     // Update the markers when the histogram filter changes
                     displayMarkers(document.querySelector('input[name="marker-option"]:checked').value);
                 });
-                
+
                 avoidChart.on('filtered', function (chart, filter) {
                     clearMarkers();
                     // Update the markers when the histogram filter changes
                     displayMarkers(document.querySelector('input[name="marker-option"]:checked').value);
                 });
-                
+
                 irrigationChart.on('filtered', function (chart, filter) {
                     clearMarkers();
                     // Update the markers when the histogram filter changes
                     displayMarkers(document.querySelector('input[name="marker-option"]:checked').value);
                 });
-                
+
                 householdChart.on('filtered', function (chart, filter) {
                     clearMarkers();
                     // Update the markers when the histogram filter changes
                     displayMarkers(document.querySelector('input[name="marker-option"]:checked').value);
                 });
-                
+
                 livestockChart.on('filtered', function (chart, filter) {
                     clearMarkers();
                     // Update the markers when the histogram filter changes
@@ -1305,7 +1408,7 @@ window.onload = function () {
                 document.getElementById('clear-filters-button').addEventListener('click', function () {
                     location.reload();
                 });
-                
+
             });//close on pretransition
 
 
