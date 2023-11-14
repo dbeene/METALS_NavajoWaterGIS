@@ -12,7 +12,7 @@ window.onload = function () {
     }
 
     // Automatically hide the loading overlay after 4 seconds (4000 milliseconds)
-    setTimeout(hideLoadingOverlay, 2000);
+    setTimeout(hideLoadingOverlay, 4000);
 
     function clearMarkers() {
         map.eachLayer(function (layer) {
@@ -1195,7 +1195,7 @@ window.onload = function () {
                                 // Conditional Recommendations with images
                                 + "<div class='popup-content'>" + // Apply the CSS class to center-align content
                                 "<dt><span style='font-weight:bolder'><i><u>Recommended Uses:</u></i><br> </span></dt>"
-                                + (d.properties.Avoid == 1 ? '<img src="myCSS_styleFiles/images/avoid.png" height="75px"><b>We recommend <i>AVOIDING</i> this water source.</b>.' :
+                                + (d.properties.Avoid == 1 ? '<img src="myCSS_styleFiles/images/avoid.png" height="75px"><b>We recommend <i>AVOIDING</i> this water source.</b>' :
                                     ((d.properties.Household == 1 ? '<br><b>Household</b><br><img src="myCSS_styleFiles/images/broom.png" height="65px">' : "<br>") +
                                         (d.properties.Irrigation == 1 ? '<br><b>Irrigation</b><br><img src="myCSS_styleFiles/images/corn.png" height="65px">' : "<br>") +
                                         (d.properties.Livestock == 1 ? '<br><b>Livestock</b><br><img src="myCSS_styleFiles/images/goat.png" height="65px">' : "<br>")).replace(/, $/, "") // Remove trailing comma

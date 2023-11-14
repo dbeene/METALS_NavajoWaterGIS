@@ -676,6 +676,9 @@ th, td {
   .col-xs-6 {
     width: 100%;
   }
+  .custom-popup {
+    max-height: 300px;
+  }  
 }
 
 @media only screen and (max-width: 1366px) {
