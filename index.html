@@ -228,6 +228,20 @@
             /* Smooth opacity transition */
         }
 
+        .collapsible-text {
+            font-size: 18px;
+            font-weight: lighter;
+            /* Adjust font size for body text */
+            max-width: 750px;
+            /* Set max width to match the desired width */
+            margin: 0 auto;
+            /* Center the text horizontally */
+            text-align: left;
+            /* Justify text */
+            position: relative;
+            /* Smooth opacity transition */
+        }
+
         .disclaimer-text {
             font-size: 15px;
             font-weight: lighter;
@@ -404,7 +418,6 @@ function toggleContent(sectionId) {
     }
 }
 
-
     </script>
 
 </head>
@@ -412,23 +425,25 @@ function toggleContent(sectionId) {
 <body>
     <div class="top-bar">
         <a href="platform.html" class="navajo-link">Navajo WaterGIS 2.0</a>
+
     </div>
     <div class="landing-container">
-        <a href="platform.html" class="enter-link">Navajo WaterGIS 2.0<br>Enter here</a>
+        <a href="platform.html" class="enter-link">Navajo WaterGIS 2.0:<br>Launch The Web Map</a>
     </div>
     <div class="navigation-panel initial-position">
         <ul>
             <li><a href="#section-what-is">What is Navajo WaterGIS 2.0?</a></li>
             <li><a href="#section-background">Background</a></li>
-            <li><a href="#section-data">The data</a></li>
-            <li><a href="#section-recommendations">Our recommendations</a></li>
+            <li><a href="#section-data">The Data</a></li>
+            <li><a href="#section-recommendations">Suitable Uses</a></li>
 
             <li><a href="#section-confidence">Confidence</a></li>
         </ul>
     </div>
     <div class="text-container content">
-        <h2 class="header-text" id="section-what-is">What is Navajo WaterGIS 2.0?</h2>
         <div class="bounce-arrow"><b>&#x2193</b></div>
+        <h2 class="header-text" id="section-what-is">What is Navajo WaterGIS 2.0?</h2>
+
         <p class="body-text">
             This interactive web map gives you access to the <i>most complete</i> spatial database of unregulated water
             sources
@@ -436,7 +451,7 @@ function toggleContent(sectionId) {
             47 water
             quality parameters, including radionuclides, metals, and other regulated contaminants. <br><br>
 
-            We also provide data-driven recommendations for the safe use of water from these sources, indicating whether
+            We also assess each water source for its suitability for particular activities with water from these sources, indicating whether
             the water can
             be used for irrigation</b> (like watering home gardens), <b>household chores</b> (like washing laundry and
             dishes),
@@ -445,13 +460,13 @@ function toggleContent(sectionId) {
             <b>We do not recommend drinking any water from these sources.</b> However, we recognize that each water
             source in this map is used for many daily activities.<br><br>
 
-            Each recommendation comes with an easy-to-read metric of our confidence in it, which we base on a number of
+            Each determination of suitable use comes with an easy-to-read metric of our confidence in it, which we base on a number of
             factors, like how many water
             samples were taken, how old those samples are, and if we had to use statistical approaches to estimate
             concentrations of contaminants in the source.<br><br>
 
             Access the site <a href="platform.html">here</a> or by clicking on the link at
-            the top of the page, or keep reading for more background information.<br><br>
+            the top of the page or keep reading for more background information.<br><br>
         </p>
         <h2 id="section-background">Background</h2>
         <p class="body-text">
@@ -494,9 +509,9 @@ function toggleContent(sectionId) {
             will
             support individual and community decisions about water use from unregulated sources.
         </p>
-        <h2 id="section-data">The data</h2>
+        <h2 id="section-data">The Data</h2>
         <p class="body-text">
-            The compiled dataset consists of two primary data tables and can be download from the
+            The compiled dataset consists of two primary data tables and can be downloaded from the
             <a href="https://portal.edirepository.org/nis/mapbrowse?packageid=edi.517.2" target="_blank">
                 Environmental Data Initiative (EDI) Portal</a>. The first table is derived from the Navajo Nation Wells
             Database, consisting of more than 5,000 groundwater well records. The second
@@ -525,15 +540,16 @@ function toggleContent(sectionId) {
             methods for more rigorous statistical
             analysis.
         </p>
-        <h2 id="section-recommendations">Our recommendations</h2>
+        <h2 id="section-recommendations">Suitable Uses</h2>
         <p class="body-text">
             Even though we can't recommend drinking water from the unregulated sources depicted in
-            this map, we recognize that they may serve other uses for local residents. Here, we use a sophisticated
-            approach to recommend each source for household chores, such as cleaning dishes or laundry, small-scale
-            irrigation, and livestock watering. <br><br>
+            this map, we recognize that they may serve other uses for local residents. <b>Here, we evaluate water quality
+            at each source against regulatory guidelines to determine the suitable use(s) of water from them,</b> including household chores, 
+            such as cleaning dishes or laundry, small-scale irrigation, and livestock watering. These evaluations
+            <i>are not</i> recommendations.<br><br>
 
-            We relied on regulatory guidelines from the USEPA and the Navajo Nation EPA when developing our
-            recommendations.
+            We relied on regulation from the USEPA and the Navajo Nation EPA when developing our
+            assessments.
             Specifically, the <b>Navajo Nation Agricultural Water Supply and Livestock Watering standards</b>, the
             <b>USEPA
                  Recreational/Camper Regional Screening Levels (RSLs)</b>, as well as <b>primary and secondary maximum
@@ -542,19 +558,19 @@ function toggleContent(sectionId) {
             limit
             is different.<br><br>
 
-            Our recommendations are based on the presence of <b>ten chemical
+            Our assessments are based on the presence of <b>ten chemical
             contaminants</b> in each water source (click on each to expand):<br>
 
         <div class="content" onclick="toggleContent('aluminum')">
             <h4 id="aluminum-header">Aluminum (click to expand)</h4>
-            <ul class="body-text collapsible" id="aluminum-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="aluminum-content">
+                <p class="collapsible-text">
                     Aluminum is highly abundant in the environment and low-dose exposure is common. According to the Agency 
                     for Toxic Substances and Disease Registry (ATSDR) <a hrfe="https://www.atsdr.cdc.gov/toxprofiles/tp22.pdf" target="_blank"> toxicological profile</a>, 
                     oral exposure aluminum is generally not harmful. However, overexposure to aluminum is associated with Alzheimer's disease. People with certain kidney 
                     diseases may be prone to retaining excess aluminum in their body.<br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: The USEPA defines a secondary MCL of 0.05 to 0.2 mg/L for aluminum 
                             primarily because of taste, smell, and color associated with aluminum in drinking water.
                             The Navajo Nation sets an agricultural water supply standard for acid-soluble aluminum of 
@@ -569,9 +585,9 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('arsenic')">
             <h4 id="arsenic-header">Arsenic (click to expand)</h4>
-            <ul class="body-text collapsible" id="arsenic-content">
-                <p class="body-text">
-                    Arsenic is common metalloid in the environment. Inorganic arsenic is often colocated with mining activities, specifically coal and gold, 
+            <ul class="collapsible-text collapsible" id="arsenic-content">
+                <p class="collapsible-text">
+                    Arsenic is a common metalloid in the environment. Inorganic arsenic is often colocated with mining activities, specifically coal and gold, 
                     but also with uranium extraction and processing. People may often come into contact with different forms 
                     of arsenic through the air they inhale, the food they eat, and the water that they drink. Some areas have 
                     higher levels of naturally occurring arsenic that may infiltrate groundwater and surface water supplies. 
@@ -579,7 +595,7 @@ function toggleContent(sectionId) {
                     <a href="https://www.atsdr.cdc.gov/toxprofiles/tp2.pdf" target="_blank">toxicological profile </a>as a carcinogen 
                     that is implicated in numerous adverse health outcomes and even death in high doses.<br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: Both the Navajo EPA and the USEPA set an MCL for arsenic in drinking water at 10 &mu;g/L. 
                             The EPA camper/recreational RSL is 50 &mu;g/L. The Navajo Nation sets the limit for arsenic concentration 
                             in agricultural water supplies at 2000 &mu;g/L and at 200 &mu;g/L for livestock watering.<br><br>                             
@@ -591,8 +607,8 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('barium')">
             <h4 id="barium-header">Barium (click to expand)</h4>
-            <ul class="body-text collapsible" id="barium-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="barium-content">
+                <p class="collapsible-text">
                     Barium is most often found underground as naturally occurring ore deposits. It does not dissolve well in water, 
                     meaning that concentrations in drinking water supplies are usually low. However, some barium compounds, such as barium acetate, 
                     barium chloride, barium hydroxide, barium nitrate, and barium sulfide, do dissolve more easily but are not often found 
@@ -601,7 +617,7 @@ function toggleContent(sectionId) {
                     toxicological profile</a>, barium is implicated in changes in heart rhythm and paralysis as well as other adverse health outcomes. 
                     Exposure to barium in large doses may lead to death.<br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: Both the Navajo EPA and USEPA set an MCL for barium in drinking water at 2 mg/L. The 
                             EPA camper/recreational RSL is 33 mg/L. The Navajo Nation does not define a limit for barium concentration 
                             in either agricultural water supplies or for livestock watering.<br><br>
@@ -614,14 +630,14 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('cadmium')">
             <h4 id="cadmium-header">Cadmium (click to expand)</h4>
-            <ul class="body-text collapsible" id="cadmium-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="cadmium-content">
+                <p class="collapsible-text">
                     Cadmium is an environmental metal most often associated with zinc, lead, and copper ore. It is also commonly found in batteries 
                     and can be introduced into the environment via industrial discharge and waste disposal. According to the Agency for Toxic Substances 
                     and Disease Registry (ATSDR) <a href="https://www.atsdr.cdc.gov/toxprofiles/tp5.pdf" target="_blank"> toxicological profile</a> cadmium is 
                     associated with kidney disease and damage to lungs and the nasal cavity.<br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: Both the Navajo EPA and USEPA set an MCL for cadmium in drinking water at 5 &mu;g/L. The EPA 
                             camper/recreational RSL is 83 &mu;g/L. The Navajo Nation sets the limit for cadmium in both agricultural and livestock water supplies at 50 &mu;g/L.<br><br>                            
                         </p>
@@ -632,13 +648,13 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('copper')">
             <h4 id="copper-header">Copper (click to expand)</h4>
-            <ul class="body-text collapsible" id="copper-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="copper-content">
+                <p class="collapsible-text">
                     Copper is an abundant chemical element in the earth's crust associated with mining and corrosion of household water pipes. It is an essential nutrient found 
                     in many food sources. However, according to the Agency for Toxic Substances and Disease Registry (ATSDR) <a href="https://www.atsdr.cdc.gov/toxprofiles/tp132.pdf" target="_blank"> 
                         toxicological profile</a>, excess buildup of copper in humans is associated with Wilson's disease, Indian childhood cirrhosis, and other disorders of the liver. <br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: Neither the Navajo EPA nor the USEPA set an MCL for copper, but define an MCL goal of 1.3 mg/L. The EPA camper/recreational RSL is 67 mg/L. 
                             The Navajo Nation sets the limit for copper in agricultural water at 200 &mu;g/L and at 500 &mu;g/L for livestock water supplies. <br><br>
                             
@@ -650,14 +666,14 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('iron')">
             <h4 id="iron-header">Iron (click to expand)</h4>
-            <ul class="body-text collapsible" id="iron-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="iron-content">
+                <p class="collapsible-text">
                     Iron is a highly abundant element in the earth's crust and is also an essential trace element for the health and functioning of living organisms. According to the 
                     <a href="https://cdn.who.int/media/docs/default-source/wash-documents/wash-chemicals/iron-bd.pdf?sfvrsn=8bde1f09_4" target="_blank"> World Health Organization</a>
                     humans typically require anywhere from 10 to 50 mg of iron every day. Iron is ubiquitous in water supplies worldwide. Excess iron in water often comes from deterioration 
                     of household plumbing systems, leading to discoloration and metallic taste.<br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: Both the Navajo EPA and the USEPA set a secondary MCL for iron of 0.3 mg/L. The EPA camper/recreational RSL is 120,000 &mu;g/L. There are no 
                             limits for iron in agricultural or livestock water supplies.<br><br>
                             
@@ -669,15 +685,15 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('manganese')">
             <h4 id="manganese-header">Manganese (click to expand)</h4>
-            <ul class="body-text collapsible" id="manganese-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="manganese-content">
+                <p class="collapsible-text">
                     Manganese is a trace element found in some rocks and soil and is used mainly in steel production to improve hardness. The primary source of exposure to manganese 
                     is through food, and it is ubiquitous in nearly all water supplies. Low manganese levels in drinking water can affect its taste and color. According to the Agency 
                     for Toxic Substances and Disease Registry (ATSDR) <a href="https://www.atsdr.cdc.gov/toxprofiles/tp151.pdf" target="_blank"> toxicological profile</a>, manganese 
                     is an essential nutrient, though because it mainly resides in the brain, some neurological system disturbances may occur with particular adverse effects on fetuses.
                     <br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: The USEPA defines a secondary MCL for manganese in drinking water at 50 &mu;g/L. The EPA camper/recreational RSL is 7800 &mu;g/L. The 
                             Navajo Nation doesn't limit concentrations of manganese in either agricultural or livestock water supplies.<br><br>
                             
@@ -689,8 +705,8 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('lead')">
             <h4 id="lead-header">Lead (click to expand)</h4>
-            <ul class="body-text collapsible" id="lead-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="lead-content">
+                <p class="collapsible-text">
                     Lead is a highly toxic metal distributed in ore deposits across the world. It is associated with various ore smelting and improper waste disposal that 
                     may infiltrate local water supplies. Historically, lead was used in many consumer products, including gasoline, paint, and household plumbing. Many older 
                     plumbing systems still contain lead pipes or soldered joints. According to the Agency for Toxic Substances and Disease Registry (ATSDR) 
@@ -698,7 +714,7 @@ function toggleContent(sectionId) {
                     because lead is easily distributed throughout the entire body. Specifically, "neurological, renal, cardiovascular, hematological, immunological, 
                     reproductive, and developmental effects" are pronounced, with most concern on early neurological development.<br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: The USEPA sets the MCL for lead in drinking water at 0, while the Navajo EPA sets it at 15 &mu;g/L. The EPA camper/recreational 
                             RSL is 200 &mu;g/L. The Navajo Nation limit for lead in agricultural water is 10,000 &mu;g/L, and 100 &mu;g/Lfor livestock water. <br><br>
                             
@@ -710,8 +726,8 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('selenium')">
             <h4 id="selenium-header">Selenium (click to expand)</h4>
-            <ul class="body-text collapsible" id="selenium-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="selenium-content">
+                <p class="collapsible-text">
                     Selenium is a naturally occurring element that is concentrated in certain pockets of the earth's crust in some rocks and soil. It's also often produced 
                     as a byproduct in copper refining. It often binds with other metals, like copper, lead, and nickel. Because of its ubiquity in many commercial products 
                     like plastics, paints, and some shampoos, it's introduced into water supplies through waste disposal. According to the Agency for Toxic Substances and 
@@ -719,7 +735,7 @@ function toggleContent(sectionId) {
                     nutrient, though excess exposure to selenium may be associated with brittleness of the hair or nails, and though uncommon in the United States, chronic 
                     overexposure may lead to death.<br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: Both the Navajo EPA and the USEPA set the MCL for selenium in drinking water at 0.05 mg/L. The EPA camper/recreational RSL is 
                             830 &mu;g/L. The Navajo Nation limit for selenium in agricultural water is 20 &mu;g/L, and 50 &mu;g/L for livestock water.<br><br>
                             
@@ -731,8 +747,8 @@ function toggleContent(sectionId) {
 
         <div class="content" onclick="toggleContent('uranium')">
             <h4 id="uranium-header">Uranium (click to expand)</h4>
-            <ul class="body-text collapsible" id="uranium-content">
-                <p class="body-text">
+            <ul class="collapsible-text collapsible" id="uranium-content">
+                <p class="collapsible-text">
                     Uranium is a naturally occurring radioactive element found in deposits across the earth's crust. Today, enriched uranium is mainly used as fuel for nuclear 
                     power generation. It is distributed throughout the environment primarily through wind and water movement. It can be taken up into plants through root systems. 
                     Abandoned uranium mines (AUMs) across the Navajo Nation may be inadequately reclaimed, increasing the likelihood of uranium mobility through the environment. 
@@ -740,7 +756,7 @@ function toggleContent(sectionId) {
                     <a href="https://www.atsdr.cdc.gov/toxprofiles/tp150.pdf" target="_blank"> toxicological profile</a>, uranium exhibits significant adverse effects on kidneys. 
                     Animal studies show uranium residence in other organs, such as brain tissue. Some uranium compounds may cause skin irritation.<br><br>
                     <ul>
-                        <p class="body-text">
+                        <p class="collapsible-text">
                             <i>Regulation</i>: Both the Navajo EPA and USEPA set the MCL for uranium in drinking water at 30 &mu;g/L. The EPA camper/recreational RSL is E-04 mg/kg-day, 
                             based on the ATSDR Minimal Risk Level (MRL) for exposure to uranium soluble salts. There is currently no numeric standard limit for uranium in either 
                             agricultural or livestock water supplies.<br><br>
@@ -750,12 +766,17 @@ function toggleContent(sectionId) {
                 </p>
             </ul>
         </div>
-        <h3>The Recommendation Model:</h3>
+        <h3>The Assessment Model:</h3>
         <p class="body-text">
             For each of the ten chemicals we define degrees of safe concentrations based on the guidelines and regulations
             discussed above. Then, we utilized a machine learning model, adaptive fuzzy neural inference system (ANFIS), to
             define and parameterize more than 1.3 million rules based on every possible combination of high, medium
-            high, medium low, and low concentrations of each chemical in each water source.
+            high, medium low, and low concentrations of each chemical in each water source.<br><br> 
+            
+            We use this approach for two main reasons. First, elevated mixtures of multiple regulated contaminants that don't 
+            necessarily exceed regulatory limits may still present acute or long-term health hazards that need to be assessed together, rather 
+            than one contaminant at a time. Second, water quality changes over time, so we can never be completely certain what the water quality 
+            is at an exact moment. This approach lets us handle that uncertainty while still making meaningful inference.
         </p>
         <h4 id="section-household">Household use:</h4>
         <p class="body-text">
@@ -764,22 +785,22 @@ function toggleContent(sectionId) {
             human consumption. As such, concentrations of regulated contaminants may be higher than maximum
             concentration levels (MCLs) defined by either the Navajo EPA or USEPA. Because dermal exposure to
             potentially contaminated waters is possible with household use, we rely on the EPA recreational/camper
-            regional screening levels (RSL) to make our recommendations. 
+            regional screening levels (RSL) to make our assessments. 
             <br>
         </p>
         <h4 id="section-irrigation">Irrigation:</h4>
         <p class="body-text">
-            Hauled water may be used to irrigate small gardens or other food sources for consumption. Our recommendations
-            for irrigaiton water are based on the Navajo Nation agricultural water supply limits, which you can see 
+            Hauled water may be used to irrigate small gardens or other food sources for consumption. Our assessments
+            for irrigation water are based on the Navajo Nation agricultural water supply limits, which you can see 
             <a href="https://www.epa.gov/wqs-tech/water-quality-standards-regulations-navajo-nation" target="_blank">here</a>.
             <br>
         </p>
         <h4 id="section-livestock">Livestock watering:</h4>
         <p class="body-text">
             Many of the water sources included in this resource are livestock wells, though without complete records we can't
-            adequately detetrmine the exact number of livestoc-specific wells, nor can we be sure that multi-purpose wells aren't
-            also used for livestock water. We base our recommendations for livestock watering on the Navajo Nation livestock
-            watering guidlines, which you can see <a href="https://www.epa.gov/wqs-tech/water-quality-standards-regulations-navajo-nation" target="_blank">here</a>.
+            adequately determine the exact number of livestock-specific wells, nor can we be sure that multi-purpose wells aren't
+            also used for livestock water. We base our assessments for livestock watering on the Navajo Nation livestock
+            watering guidelines, which you can see <a href="https://www.epa.gov/wqs-tech/water-quality-standards-regulations-navajo-nation" target="_blank">here</a>.
             <br>
         </p>
         <h4 id="section-avoid">Avoid:</h4>
@@ -794,7 +815,7 @@ function toggleContent(sectionId) {
         <p class="body-text">
             In instances where no laboratory-based measurements of these chemicals are available, we interpolated their
             levels using spatial co-kriging between known water samples, depth-to-water measurements, and soil/sediment
-            samples. We define our level of confidence in our recommendations according to three parameters: the
+            samples. We define our level of confidence in our assessments according to three parameters: the
             accuracy of our estimates if we made one, the number of laboratory samples collected, and how recently
             samples were collected. When we estimated concentrations of chemicals in water, we also calculated the
             standard errors of our estimates. Laboratory-based observations have an estimation standard error of 0 –

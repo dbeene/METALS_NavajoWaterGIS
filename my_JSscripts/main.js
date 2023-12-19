@@ -415,7 +415,7 @@ window.onload = function () {
                 // Leaflet layer control
                 var baseMaps = {
                     'Topo': OpenStreetMap_Mapnik,
-                    'Sattelite': esri_world,
+                    'Satellite': esri_world,
                     'Hybrid': USGS_USImageryTopo
                 }
 
@@ -1194,23 +1194,31 @@ window.onload = function () {
 
                                 // Conditional Recommendations with images
                                 + "<div class='popup-content'>" + // Apply the CSS class to center-align content
-                                "<dt><span style='font-weight:bolder'><i><u>Recommended Uses:</u></i><br> </span></dt>"
-                                + (d.properties.Avoid == 1 ? '<img src="myCSS_styleFiles/images/avoid.png" height="75px"><b>We recommend <i>AVOIDING</i> this water source.</b>' :
-                                    ((d.properties.Household == 1 ? '<br><b>Household</b><br><img src="myCSS_styleFiles/images/broom.png" height="65px">' : "<br>") +
-                                        (d.properties.Irrigation == 1 ? '<br><b>Irrigation</b><br><img src="myCSS_styleFiles/images/corn.png" height="65px">' : "<br>") +
-                                        (d.properties.Livestock == 1 ? '<br><b>Livestock</b><br><img src="myCSS_styleFiles/images/goat.png" height="65px">' : "<br>")).replace(/, $/, "") // Remove trailing comma
+                                "<dt><span style='font-weight:bolder'><i><a href='index.html#section-data' target='_blank'>Suitable uses</a></i><br> </span></dt>"
+                                // + (d.properties.Avoid == 1 ? '<img src="myCSS_styleFiles/images/avoid.png" height="75px"><b>We recommend <i>AVOIDING</i> this water source.</b>' :
+                                //     ((d.properties.Household == 1 ? '<br><b>Household</b><br><img src="myCSS_styleFiles/images/broom.png" height="65px">' : "<br>") +
+                                //         (d.properties.Irrigation == 1 ? '<br><b>Irrigation</b><br><img src="myCSS_styleFiles/images/corn.png" height="65px">' : "<br>") +
+                                //         (d.properties.Livestock == 1 ? '<br><b>Livestock</b><br><img src="myCSS_styleFiles/images/goat.png" height="65px">' : "<br>")).replace(/, $/, "") // Remove trailing comma
+                                // ) + "</dd>"
+                                // + "<dl>"
+
+                                + (d.properties.Avoid == 1 ? '<img src="myCSS_styleFiles/images/avoid.png" height="75px"><h5><b>We recommend <i>AVOIDING</i> this water source.</b></h5>' :
+                                ((d.properties.Household == 1 ? '<h5><b>Household</b></h5>' : "<br>") +
+                                    (d.properties.Irrigation == 1 ? '<h5><b>Irrigation</b></h5>' : "<br>") +
+                                    (d.properties.Livestock == 1 ? '<h5><b>Livestock</b></h5>' : "<br>")).replace(/, $/, "") // Remove trailing comma
                                 ) + "</dd>"
                                 + "<dl>"
 
                                 // Conditional Image Display with Confidence Level Text
 
-                                + "<br><b>Confidence: </b>"
-                                + (d.properties.recConfidence === "RED" ? '<img src="myCSS_styleFiles/images/red.png" height="60px"><br>Our confidence level for this recommendation is <i>LOW</i>. This may be due to missing data that we might have interpolated, the standard error of our interpolation, old observational data, or few laboratory samples.' :
-                                    (d.properties.recConfidence === "YELLOW" ? '<img src="myCSS_styleFiles/images/yellow.png" height="60px"><br>Our confidence level for this recommendation is MODERATE. There is at least one laboratory sample available from a list of 10 key analytes to support our conclusion.' :
-                                        (d.properties.recConfidence === "GREEN" ? '<img src="myCSS_styleFiles/images/green.png" height="60px"><br>Our confidence level for this recommendation is HIGH. There are sufficient field samples taken within the last decade to support our conclusion.' : '')
+                                // + "<br><b><i><a href='index.html#section-confidence' target = '_blank'>Our Confidence</a></i>: </b>"
+                                + "<dt><span style='font-weight:bolder'><i><a href='index.html#section-confidence' target='_blank'>Our Confidence</a></i><br> </span></dt>"
+                                + (d.properties.recConfidence === "RED" ? '<img src="myCSS_styleFiles/images/red.png" height="60px"><br>Our confidence level for this assessment is <i>LOW</i>. This may be due to missing data that we might have interpolated, the standard error of our interpolation, old observational data, or few laboratory samples. Information about our confience levels can be found <a href="index.html#section-confidence" target = "_blank">here</a>.' :
+                                    (d.properties.recConfidence === "YELLOW" ? '<img src="myCSS_styleFiles/images/yellow.png" height="60px"><br>Our confidence level for this assessment is MODERATE. There is at least one laboratory sample available from a list of 10 key analytes to support our conclusion. Information about our confience levels can be found <a href="index.html#section-confidence" target = "_blank">here</a>.' :
+                                        (d.properties.recConfidence === "GREEN" ? '<img src="myCSS_styleFiles/images/green.png" height="60px"><br>Our confidence level for this assessment is HIGH. There are sufficient field samples taken within the last decade to support our conclusion. Information about our confience levels can be found <a href="index.html#section-confidence" target = "_blank">here</a>.' : '')
                                     )
                                 ) + "</dd>"
-                                + "<br><br>Click <a href='index.html#section-data' target = '_blank'>here</a> for more information about our recommendations."
+                                + "<br><br>Click <a href='index.html#section-data' target = '_blank'>here</a> for more information about our assessments."
                                 + "</dl></div>"
 
                                 // General Well Info
