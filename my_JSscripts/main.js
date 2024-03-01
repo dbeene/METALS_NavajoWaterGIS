@@ -566,11 +566,11 @@ window.onload = function () {
             .centerBar(true)
             .barPadding(3)
             .yAxisLabel('Count')
-            .xAxisLabel('Aluminum (mg/L)')
+            .xAxisLabel('Aluminum (μg/L)')
             .margins({ top: 10, right: 20, bottom: 50, left: 50 })
             .on('pretransition', function (chart) {
                 if (!mclDrawn) {
-                    var x_vert = 1000; // Secondary MCL for Al is 1000
+                    var x_vert = 200; // Secondary MCL for Al is 200 ug/L
                     var extra_data = [ // Array to define vertical line starting at (MCL, 0)
                         { x: chart.x()(x_vert), y: 0 },
                         { x: chart.x()(x_vert), y: chart.effectiveHeight() }
@@ -1266,7 +1266,7 @@ window.onload = function () {
                                 + "<dt><span style='font-weight:bolder'>Turbidity (NTU): </span> </dt> <dd>" + d.properties.Turbidity + " (" + d.properties.Count_Turbidity + " sample(s))<dd>"
                                 // Secondary Contaminants
                                 + "<br><dt><span style='font-weight:bolder'><i><u>Secondary Contaminants</u></i></dt>"
-                                + "<dt><span style='font-weight:bolder'>Aluminum (Al) (mg/L): </span> </dt> <dd>" + d.properties.Al + " (" + d.properties.Count_Al + " sample(s))<dd>"
+                                + "<dt><span style='font-weight:bolder'>Aluminum (Al) (&mu;g/L): </span> </dt> <dd>" + d.properties.Al + " (" + d.properties.Count_Al + " sample(s))<dd>"
                                 + "<dt><span style='font-weight:bolder'>Chloride (mg/L): </span> </dt> <dd>" + d.properties.Chloride + " (" + d.properties.Count_Chloride + " sample(s))<dd>"
                                 + "<dt><span style='font-weight:bolder'>Corrosivity (LSI): </span> </dt> <dd>" + d.properties.Corrosivity + " (" + d.properties.Count_Corrosivity + " sample(s))<dd>"
                                 + "<dt><span style='font-weight:bolder'>Iron (Fe) (&mu;g/L): </span> </dt> <dd>" + d.properties.Fe + " (" + d.properties.Count_Fe + " sample(s))<dd>"
