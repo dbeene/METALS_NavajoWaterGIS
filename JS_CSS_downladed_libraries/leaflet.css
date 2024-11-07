@@ -351,6 +351,7 @@ svg.leaflet-image-layer.leaflet-interactive path {
 	background-image: url(images/layers.png);
 	width: 36px;
 	height: 36px;
+	z-index: 990;
 	}
 .leaflet-retina .leaflet-control-layers-toggle {
 	background-image: url(images/layers-2x.png);

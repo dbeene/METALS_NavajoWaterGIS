@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Navajo WaterGIS 2.0 - Home</title>
+    <title>Navajo WaterGIS 2.1 - Home</title>
     <style>
         body {
             background-color: #dadada;
@@ -104,14 +104,10 @@
         /* Style for the text container */
         .text-container {
             max-width: 650px;
-            /* Set the maximum width */
             margin: 0 auto;
-            /* Center the container horizontally */
             padding: 20px;
-            /* Add some padding for spacing */
             box-sizing: border-box;
-            /* Include padding and border within the specified width */
-
+            position: right;
         }
 
         /* Header style */
@@ -287,7 +283,7 @@
         }
 
         /* Style for mobile devices*/
-        @media screen and (max-width: 820px) {
+        @media screen and (max-width: 959px) {
             .landing-container {
                 min-height: 30vh;
             }
@@ -336,7 +332,7 @@
             }
 
             #section-what-is {
-                /* Add styles for the "What is Navajo WaterGIS 2.0?" section, if needed */
+                /* Add styles for the "What is Navajo WaterGIS 2.1?" section, if needed */
                 margin-top: 5px;
                 /* Add margin to separate it from the navigation panel */
             }
@@ -424,31 +420,29 @@ function toggleContent(sectionId) {
 
 <body>
     <div class="top-bar">
-        <a href="platform.html" class="navajo-link">Navajo WaterGIS 2.0</a>
+        <a href="platform.html" class="navajo-link">Navajo WaterGIS 2.1</a>
 
     </div>
-    <div class="landing-container">
-        <a href="platform.html" class="enter-link">Navajo WaterGIS 2.0:<br>Launch The Web Map</a>
+    <div class="landing-container" id="section-top">
+        <a href="platform.html" class="enter-link">Navajo WaterGIS 2.1:<br>Launch The Web Map</a>
     </div>
     <div class="navigation-panel initial-position">
         <ul>
-            <li><a href="#section-what-is">What is Navajo WaterGIS 2.0?</a></li>
+            <li><a href="#section-top">Top</a></li>
             <li><a href="#section-background">Background</a></li>
             <li><a href="#section-data">The Data</a></li>
             <li><a href="#section-recommendations">Suitable Uses</a></li>
-
             <li><a href="#section-confidence">Confidence</a></li>
         </ul>
     </div>
     <div class="text-container content">
         <div class="bounce-arrow"><b>&#x2193</b></div>
-        <h2 class="header-text" id="section-what-is">What is Navajo WaterGIS 2.0?</h2>
-
+        <h2 class="header-text" id="section-what-is">What is Navajo WaterGIS 2.1?</h2>
         <p class="body-text">
             This interactive web map gives you access to the <i>most complete</i> spatial database of unregulated water
             sources
             on and around the Navajo Nation. Each of the 4,824 water source records in this app contains data for up to
-            47 water
+            49 water
             quality parameters, including radionuclides, metals, and other regulated contaminants. <br><br>
 
             We also assess each water source for its suitability for particular activities with water from these sources, indicating whether
@@ -466,8 +460,25 @@ function toggleContent(sectionId) {
             concentrations of contaminants in the source.<br><br>
 
             Access the site <a href="platform.html">here</a> or by clicking on the link at
-            the top of the page or keep reading for more background information.<br><br>
+            the top of the page or keep reading for more background information. Watch the video below for a brief tutorial.<br><br>
+            <!-- YouTube video -->
+            <div style="max-width: 610px; margin: 0 auto; text-align: center;">
+                <iframe width="610" height="343" src="https://www.youtube.com/embed/uwiFToJ2Hrw?feature=shared&vq=hd1080" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <br><br>
+            </div>          
+            <!--  -->
         </p>
+        <h3>Who is this site for?</h3>
+        <p class="body-text">
+        Anyone can use this site. However, because many Navajo residents may lack access to a computer or the internet, and because there is 
+        a substantial degree of technical information in the site that may necessitate deeper conversations between experts and community members,
+        the aim of Navajo WaterGIS is to support those conversations. The target audience of Navajo WaterGIS is people who regularly interface with Navajo community members.
+        </p>
+        <h3>What does this site show you?</h3>
+        <p class="body-text">
+        Navajo WaterGIS displays the locations and all available water quality parameters of unregulated water sources on and around the Navajo Nation. 
+        It also provides information about potential suitable uses of water from these sources, including household chores, watering gardens, and watering livestock.
+        </p>    
         <h2 id="section-background">Background</h2>
         <p class="body-text">
             In the United States, the use of unregulated water sources – defined as sources that do not meet
@@ -528,7 +539,7 @@ function toggleContent(sectionId) {
 
             <br>Some studies recorded uranium concentrations in units of activity
             (picocuries per liter), which were converted to mass
-            per unit volume (&mu;g/L) by dividing activity by 0.67. If multiple
+            per unit volume (&mu;g/L) by multiplying activity by 0.67. If multiple
             measurements were available per analyte per well, the
             maximum concentration was determined for radionuclides, metals, and
             metalloids, and the median concentration was
@@ -552,7 +563,7 @@ function toggleContent(sectionId) {
             assessments.
             Specifically, the <b>Navajo Nation Agricultural Water Supply and Livestock Watering standards</b>, the
             <b>USEPA
-                 Recreational/Camper Regional Screening Levels (RSLs)</b>, as well as <b>primary and secondary maximum
+                Recreational/camper Regional Screening Levels (RSLs)</b>, as well as <b>primary and secondary maximum
                 contaminant
                 levels (MCLs) for drinking water</b> defined by either the USEPA or Navajo Nation EPA if the regulatory
             limit
@@ -574,7 +585,7 @@ function toggleContent(sectionId) {
                             <i>Regulation</i>: The USEPA defines a secondary MCL of 0.05 to 0.2 mg/L for aluminum 
                             primarily because of taste, smell, and color associated with aluminum in drinking water.
                             The Navajo Nation sets an agricultural water supply standard for acid-soluble aluminum of 
-                            20,000 &mu;g/L. The USEPA also defines a recreational screening level (RSL) for scenarios
+                            20,000 &mu;g/L. The USEPA also defines a regional screening level (RSL) for scenarios
                             where a hiker or camper may come in contact with increased levels of aluminum in soil,
                             sediment, or surface water of 170,000 &mu;g/L.<br><br>
                         </p>
@@ -835,7 +846,7 @@ function toggleContent(sectionId) {
             A Center of Excellence In Environmental Health Disparities Research (1P50ES026102 & USEPA #83615701); University of New Mexico METALS Superfund Research Program (1P42ES025589); 
             and the Navajo Birth Cohort Study (U01 TS000135-05, NBCS/ECHO 1UG3OD023344).<br><br>
 
-            The material presented here has not been formally reviewed by the funding agencies. The views expressed are solely those of the authors of Navajo WaterGIS 2.0 and 
+            The material presented here has not been formally reviewed by the funding agencies. The views expressed are solely those of the authors of Navajo WaterGIS and 
             do not necessarily reflect those of the agencies.
         </p>
     </div>

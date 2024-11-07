@@ -11,8 +11,8 @@ window.onload = function () {
         }, 1000); // Delay for 1 second to ensure the fade-out effect
     }
 
-    // Automatically hide the loading overlay after 4 seconds (4000 milliseconds)
-    setTimeout(hideLoadingOverlay, 4000);
+    // Automatically hide the loading overlay after 2.5 seconds
+    setTimeout(hideLoadingOverlay, 2500);
 
     function clearMarkers() {
         map.eachLayer(function (layer) {
@@ -300,6 +300,80 @@ window.onload = function () {
     });
 
 
+    // Sidebar stuff
+    // Get reference to the sidebar closer element
+    var sidebarCloser = document.querySelector('.sidebar-closer');
+
+    // Add event listener to the sidebar closer element
+    sidebarCloser.addEventListener('click', function () {
+        console.log('Sidebar closer clicked'); // Add console log statement
+
+        // Get reference to the sidebar element
+        var sidebar = document.getElementById('Sidebar');
+
+        // Get reference to the sidebar opener element
+        var sidebarOpener = document.getElementById('sidebar-opener');
+
+        // Toggle visibility of the sidebar
+        if (sidebar.style.display === 'none') {
+            // If sidebar is hidden, show it
+            sidebar.style.display = 'block';
+            // Hide the sidebar opener
+            sidebarOpener.style.display = 'none';
+        } else {
+            // If sidebar is visible, hide it
+            sidebar.style.display = 'none';
+            // Show the sidebar opener
+            sidebarOpener.style.display = 'block';
+        }
+    });
+
+    // Get references to the sidebar opener and sidebar elements
+    var sidebarOpener = document.getElementById('sidebar-opener');
+    var sidebar = document.getElementById('Sidebar');
+
+    // Add event listener to the sidebar opener
+    sidebarOpener.addEventListener('click', function () {
+        // Toggle display of the sidebar
+        if (sidebar.style.display === 'none') {
+            sidebar.style.display = 'block';
+            sidebarOpener.style.display = 'none'; // Hide the sidebar opener
+        } else {
+            sidebar.style.display = 'none';
+            sidebarOpener.style.display = 'block'; // Show the sidebar opener
+        }
+    });
+
+    // Tooltip stuff
+    var tooltipTriggers = document.querySelectorAll('.tooltip-trigger');
+
+    tooltipTriggers.forEach(function (trigger) {
+        trigger.addEventListener('click', function (event) {
+            // Prevent the document click listener from running when the tooltip is clicked
+            event.stopPropagation();
+
+            // Close any already open tooltips
+            document.querySelectorAll('.tooltip-trigger.active').forEach(function (activeTrigger) {
+                if (activeTrigger !== trigger) { // Don't hide if it's the same trigger to allow toggle behavior
+                    activeTrigger.classList.remove('active');
+                }
+            });
+
+            // Toggle the current tooltip
+            this.classList.toggle('active');
+        });
+    });
+
+    // Close tooltips when clicking anywhere outside them
+    document.addEventListener('click', function (event) {
+        var isClickInsideTooltip = event.target.closest('.tooltip-trigger');
+        if (!isClickInsideTooltip) {
+            // Clicked outside any tooltip, close all
+            document.querySelectorAll('.tooltip-trigger.active').forEach(function (activeTrigger) {
+                activeTrigger.classList.remove('active');
+            });
+        }
+    });
 
     // City markers
     var cityMarkers = {
@@ -336,7 +410,6 @@ window.onload = function () {
                     className: "city-labels"
                 }).openTooltip();
             }
-
         });
 
         // AUMs
@@ -351,27 +424,6 @@ window.onload = function () {
                     layer.bindPopup(aumPopup);
                 }
             });
-
-            // Watersheds -- need to rework input data
-            // Add NHD Watersheds layer to map
-            // function wsStyle(feature) {
-            //     return {
-            //         fillColor: '#dbc38f',
-            //         weight: 1,
-            //         opacity: 0.5,
-            //         color: '#9c9076',
-            //         dashArray: 1.5,
-            //         fillOpacity: 0.75
-            //     };
-            // }
-            // $.getJSON("data/NHDWBDHU12.geojson", function (data) {
-            //     var watersheds = L.geoJson(data, {
-            //         style: wsStyle,
-            //         onEachFeature: function (feature, layer) {
-            //             var wsPopup = "<b>Subwatershed Name: </b>" + feature.properties.name
-            //             layer.bindPopup(wsPopup);
-            //         }
-            //     });
 
             // Chapters
             // Add NN layer to map -- render underneath circleMarkers
@@ -389,10 +441,10 @@ window.onload = function () {
             function myStyle(feature) {
                 return {
                     fillColor: getColor(feature.properties.Agency),
-                    weight: 1,
+                    weight: 1.5,
                     opacity: 1,
                     color: '#9c9076',
-                    dashArray: '1.5',
+                    dashArray: '2.5',
                     fillOpacity: 0.4
                 };
             }
@@ -419,15 +471,24 @@ window.onload = function () {
                     'Hybrid': USGS_USImageryTopo
                 }
 
-                var overlayMaps = {
-                    // 'Watersheds': watersheds,
-                    'Cities': nnCities,
-                    'AUMs': nnAUMs
-                    // 'Chapters': nnChapters
-                }
+                L.control.layers(baseMaps, null, { position: 'topleft' }).addTo(map);
 
+                //Sliders to add cities and AUMs
+                document.getElementById('toggleNnCities').addEventListener('change', function () {
+                    if (this.checked) {
+                        nnCities.addTo(map);
+                    } else {
+                        map.removeLayer(nnCities);
+                    }
+                });
 
-                L.control.layers(baseMaps, overlayMaps).addTo(map);
+                document.getElementById('toggleNnAUMs').addEventListener('change', function () {
+                    if (this.checked) {
+                        nnAUMs.addTo(map);
+                    } else {
+                        map.removeLayer(nnAUMs);
+                    }
+                });
             });
 
         });
@@ -436,7 +497,6 @@ window.onload = function () {
     "use strict"; //JS strict mode
     // Add control.scale to map
     L.control.scale().addTo(map);
-
 
     // Modal window 
     // Get the modal
@@ -466,7 +526,7 @@ window.onload = function () {
     }
 
     // create charts
-    d3.json('data/20231001analytesSel.json', function (error, data) {
+    d3.json('data/20240314analytesSel.json', function (error, data) {
         var wellData = data.features;
         _.each(wellData, function (d) {
             d.count = +d.count;
@@ -500,9 +560,8 @@ window.onload = function () {
         var recDim = ndx.dimension(function (d) { return d.properties.recConfidence; });
         var avoidDim = ndx.dimension(function (d) { return d.properties.Avoid; });
         var irrigationDim = ndx.dimension(function (d) { return d.properties.Irrigation; });
-        var householdDim = ndx.dimension(function (d) { return d.properties.Household; });
+        var domesticDim = ndx.dimension(function (d) { return d.properties.Domestic; });
         var livestockDim = ndx.dimension(function (d) { return d.properties.Livestock; });
-
 
         // Draw features according to use
         var allDim = ndx.dimension(function (d) { return d; });
@@ -522,11 +581,447 @@ window.onload = function () {
         var countPerRec = recDim.group().reduceCount();
         var avoidGroup = avoidDim.group();
         var irrigationGroup = irrigationDim.group();
-        var householdGroup = householdDim.group();
+        var domesticGroup = domesticDim.group();
         var livestockGroup = livestockDim.group();
 
-        // Specify charts
+        // Dims for slider and search box
+        var dataCoverageDim = ndx.dimension(function (d) { return d.properties.dataCoverage; });
+        var searchDimension = ndx.dimension(function (d) {
+            // Concatenate the properties of interest into a single searchable string
+            return [
+                d.properties.well_no,
+                d.properties.well_name,
+                d.properties.aka2,
+                d.properties.aka3,
+                d.properties.Chapter
+            ].join(" ").toLowerCase(); // case-insensitive search
+        });
 
+        // Define default markers
+        var clustersAll = L.markerClusterGroup();
+
+        function updateMapMarkers(option) {
+            clustersAll.clearLayers(); // Clear existing markers
+
+            dataCoverageDim.top(Infinity).forEach(d => {
+                var fillColor = "#404040"; // Default color
+
+                // Color markers based on assessment confedence
+                if (option === 'all' ||
+                    (option === 'avoid' && d.properties.Avoid === 1) ||
+                    (option === 'domestic' && d.properties.Domestic === 1) ||
+                    (option === 'irrigation' && d.properties.Irrigation === 1) ||
+                    (option === 'livestock' && d.properties.Livestock === 1)
+                ) {
+                    if (option != 'all') {
+                        switch (d.properties.recConfidence) {
+                            case "RED":
+                                fillColor = "#d7191c";
+                                break;
+                            case "YELLOW":
+                                fillColor = "#fdae61";
+                                break;
+                            case "GREEN":
+                                fillColor = "#1a9641";
+                                break;
+                        }
+                    }
+                }
+
+                // Create marker 
+                const markerOptions = {
+                    radius: 6.5,
+                    fillColor: fillColor,
+                    color: "black", // Set color to black 
+                    weight: 0.6,
+                    fillOpacity: 0.75,
+                };
+
+                const marker = L.circleMarker([d.properties.lat, d.properties.long], markerOptions);
+
+                // Define popup content based on 'd', similar to your original logic in displayMarkers
+                const popupContent = "<dl><dt> <h5><b><i>WELL NAME:<br>" + d.properties.well_name + "</i></b></h5>"
+                    + "<dt><span style='font-weight:bolder'></span></dt>" // Damn thing won't center without this
+
+                    // Conditional Recommendations with images
+                    + "<div class='popup-content'>" + 
+                    "<dt><span style='font-weight:bolder'><i><a href='index.html#section-data' target='_blank'>Suitable uses</a></i><br> </span></dt>"
+                    + (d.properties.Avoid == 1 ? '<img src="myCSS_styleFiles/images/avoid.png" height="75px"><h5><b>We recommend <i>AVOIDING</i> this water source.</b></h5>' :
+                        ((d.properties.Domestic == 1 ? '<h5><b>Chores</b></h5>' : "<br>") +
+                            (d.properties.Irrigation == 1 ? '<h5><b>Irrigation</b></h5>' : "<br>") +
+                            (d.properties.Livestock == 1 ? '<h5><b>Livestock</b></h5>' : "<br>")).replace(/, $/, "") // Remove trailing comma
+                    ) + "</dd>"
+                    + "<dl>"
+
+                    // Conditional Image Display with Confidence Level Text
+                    + "<dt><span style='font-weight:bolder'><i><a href='index.html#section-confidence' target='_blank'>Our Confidence</a></i><br> </span></dt>"
+                    + (d.properties.recConfidence === "RED" ? '<img src="myCSS_styleFiles/images/red.png" height="60px"><br>Our confidence level for this assessment is <i>LOW</i>. This may be due to missing data that we might have interpolated, the standard error of our interpolation, old observational data, or few laboratory samples. Information about our confience levels can be found <a href="index.html#section-confidence" target = "_blank">here</a>.' :
+                        (d.properties.recConfidence === "YELLOW" ? '<img src="myCSS_styleFiles/images/yellow.png" height="60px"><br>Our confidence level for this assessment is MODERATE. There is at least one laboratory sample available from a list of 10 key analytes to support our conclusion. Information about our confience levels can be found <a href="index.html#section-confidence" target = "_blank">here</a>.' :
+                            (d.properties.recConfidence === "GREEN" ? '<img src="myCSS_styleFiles/images/green.png" height="60px"><br>Our confidence level for this assessment is HIGH. There are sufficient field samples taken within the last decade to support our conclusion. Information about our confience levels can be found <a href="index.html#section-confidence" target = "_blank">here</a>.' : '')
+                        )
+                    ) + "</dd>"
+                    + "<br><br>Click <a href='index.html#section-data' target = '_blank'>here</a> for more information about our assessments."
+                    + "</dl></div>"
+
+                    // General Well Info
+                    + "<dt><span style='font-weight:bolder'><i><u>General Information</u></i></dt>"
+                    + "<dt><span style='font-weight:bolder'>Chapter: </span> " + d.properties.Chapter + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Agency: </span> " + d.properties.nn_agency + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Latitude: </span> " + d.properties.lat + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Longitude: </span> " + d.properties.long + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Well No.: </span> " + d.properties.well_no + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Well Name: </span> " + d.properties.well_name + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Alternate Name 1: </span> " + d.properties.aka2 + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Alternate Name 2: </span> " + d.properties.aka3 + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Owner: </span> " + d.properties.owner + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Depth (ft.): </span> " + d.properties.depth + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Public Water Sys. ID: </span> " + d.properties.pwsid + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>USGS ID: </span> " + d.properties.usgs_id + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Data Source(s): </span> " + d.properties.information_source + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>First Sampling Date: </span> " + d.properties.mindate + "</dt>"
+                    + "<dt><span style='font-weight:bolder'>Last Sampling Date: </span> " + d.properties.maxdate + "</dt>"
+                    + "</dl"
+
+                    // Primary Contaminants: Radionuclides
+                    + "<br><dt><span style='font-weight:bolder'><i><u>Primary Contaminants: Radionuclides</u></i></dt>"
+                    + "<dt><span style='font-weight:bolder'>Radium-226 (Ra-226) (pCi/L): </span> </dt> <dd>" + d.properties.Ra_226 + " (" + d.properties.Count_Ra_226 + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Radium-228 (Ra-228) (pCi/L): </span> </dt> <dd>" + d.properties.Ra_228 + " (" + d.properties.Count_Ra_228 + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Total Radium (Ra) (pCi/L): </span> </dt> <dd>" + d.properties.Ra_Total + " (" + d.properties.Count_Ra_Total + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Uranium (U) (&mu;g/L): </span> </dt> <dd>" + d.properties.U + " (" + d.properties.Count_U + " sample(s))<dd>"
+                    // Primary Contaminants: Inorganic Chemicals
+                    + "<br><dt><span style='font-weight:bolder'><i><u>Primary Contaminants: Inorganic Chemicals</u></i></dt>"
+                    + "<dt><span style='font-weight:bolder'>Arsenic (As) (&mu;g/L): </span> </dt> <dd>" + d.properties.As + " (" + d.properties.Count_As + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Barium (Ba) (&mu;g/L): </span> </dt> <dd>" + d.properties.Ba + " (" + d.properties.Count_Ba + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Beryllium (Be) (&mu;g/L): </span> </dt> <dd>" + d.properties.Be + " (" + d.properties.Count_Be + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Cadmium (Cd) (&mu;g/L): </span> </dt> <dd>" + d.properties.Cd + " (" + d.properties.Count_Cd + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Chromium (Cr) (&mu;g/L): </span> </dt> <dd>" + d.properties.Cr + " (" + d.properties.Count_Cr + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Copper (Cu) (&mu;g/L): </span> </dt> <dd>" + d.properties.Cu + " (" + d.properties.Count_Cu + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Mercury (Hg) (&mu;g/L): </span> </dt> <dd>" + d.properties.Hg + " (" + d.properties.Count_Hg + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Nitrate (NO3-) (Mg/L): </span> </dt> <dd>" + d.properties.Nitrate + " (" + d.properties.Count_Nitrate + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Nitrite (NO2-) (Mg/L): </span> </dt> <dd>" + d.properties.Nitrite + " (" + d.properties.Count_Nitrite + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Lead (Pb) (&mu;g/L): </span> </dt> <dd>" + d.properties.Pb + " (" + d.properties.Count_Pb + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Antimony (Sb) (&mu;g/L): </span> </dt> <dd>" + d.properties.Sb + " (" + d.properties.Count_Sb + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Selenium (Se) (&mu;g/L): </span> </dt> <dd>" + d.properties.Se + " (" + d.properties.Count_Se + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Thallium (Tl) (&mu;g/L): </span> </dt> <dd>" + d.properties.Tl + " (" + d.properties.Count_Tl + " sample(s))<dd>"
+                    // Primary Contaminants: Microorganisms
+                    + "<br><dt><span style='font-weight:bolder'><i><u>Primary Contaminants: Microorganisms</u></i></dt>"
+                    + "<dt><span style='font-weight:bolder'>Turbidity (NTU): </span> </dt> <dd>" + d.properties.Turbidity + " (" + d.properties.Count_Turbidity + " sample(s))<dd>"
+                    // Secondary Contaminants
+                    + "<br><dt><span style='font-weight:bolder'><i><u>Secondary Contaminants</u></i></dt>"
+                    + "<dt><span style='font-weight:bolder'>Aluminum (Al) (&mu;g/L): </span> </dt> <dd>" + d.properties.Al + " (" + d.properties.Count_Al + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Chloride (mg/L): </span> </dt> <dd>" + d.properties.Chloride + " (" + d.properties.Count_Chloride + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Corrosivity (LSI): </span> </dt> <dd>" + d.properties.Corrosivity + " (" + d.properties.Count_Corrosivity + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Iron (Fe) (&mu;g/L): </span> </dt> <dd>" + d.properties.Fe + " (" + d.properties.Count_Fe + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Fluoride (F-) (mg/L): </span> </dt> <dd>" + d.properties.Fluoride + " (" + d.properties.Count_Fluoride + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Manganese (Mn) (&mu;g/L): </span> </dt> <dd>" + d.properties.Mn + " (" + d.properties.Count_Mn + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>pH: </span> </dt> <dd>" + d.properties.pH + " (" + d.properties.Count_pH + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Sulfate (SO<sub>4</sub><sup>2-</sup>) (mg/L): </span> </dt> <dd>" + d.properties.Sulfate + " (" + d.properties.Count_Sulfate + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Total Dissolved Solids (TDS) (mg/L): </span> </dt> <dd>" + d.properties.TotalDissolvedSolids + " (" + d.properties.Count_TotalDissolvedSolids + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Zinc (Zn) (&mu;g/L): </span> </dt> <dd>" + d.properties.Zn + " (" + d.properties.Count_Zn + " sample(s))<dd>"
+                    // Other Water Chemistry
+                    + "<br><dt><span style='font-weight:bolder'><i><u>Other Water Chemistry</u></i></dt>"
+                    + "<dt><span style='font-weight:bolder'>Total Alkalinity: </span> </dt> <dd>" + d.properties.Alkalinity_Total + " (" + d.properties.Count_Alkalinity_Total + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Bicarbonate (mg/L): </span> </dt> <dd>" + d.properties.Bicarbonate + " (" + d.properties.Count_Bicarbonate + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Calcium (Ca) (mg/L): </span> </dt> <dd>" + d.properties.Ca + " (" + d.properties.Count_Ca + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Conductivity (&mu;s/cm): </span> </dt> <dd>" + d.properties.Conductivity + " (" + d.properties.Count_Conductivity + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Dissolved Oxygen (&mu;g/L): </span> </dt> <dd>" + d.properties.DissolvedOxygen + " (" + d.properties.Count_DissolvedOxygen + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Hardness (mg/L as CaCO3): </span> </dt> <dd>" + d.properties.Hardness + " (" + d.properties.Count_Hardness + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Sodium (Na) (mg/L): </span> </dt> <dd>" + d.properties.Na + " (" + d.properties.Count_Na + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Salinity (mg/L): </span> </dt> <dd>" + d.properties.Salinity + " (" + d.properties.Count_Salinity + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Specific Conductance (uS/cm at 25&deg;C): </span> </dt> <dd>" + d.properties.SpecificConductance + " (" + d.properties.Count_SpecificConductance + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Temperature (&deg;C): </span> </dt> <dd>" + d.properties.Temperature + " (" + d.properties.Count_Temperature + " sample(s))<dd>"
+                    // Other Analytes
+                    + "<br><dt><span style='font-weight:bolder'><i><u>Other Analytes</u></i></dt>"
+                    + "<dt><span style='font-weight:bolder'>Bromide (Br-) (mg/L): </span> </dt> <dd>" + d.properties.Bromide + " (" + d.properties.Count_Bromide + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Potassium (K) (mg/L): </span> </dt> <dd>" + d.properties.K + " (" + d.properties.Count_K + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Magnesium (Mg) (mg/L): </span> </dt> <dd>" + d.properties.Mg + " (" + d.properties.Count_Mg + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Molybdenum (Mo) (&mu;g/L): </span> </dt> <dd>" + d.properties.Mo + " (" + d.properties.Count_Mo + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Nickel (Ni) (&mu;g/L): </span> </dt> <dd>" + d.properties.Ni + " (" + d.properties.Count_Ni + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Phosphate (PO<sub>4</sub><sup>3-</sup>) (mg/L): </span> </dt> <dd>" + d.properties.Phosphate + " (" + d.properties.Count_Phosphate + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Tin (Sn) (&mu;g/L): </span> </dt> <dd>" + d.properties.Sn + " (" + d.properties.Count_Sn + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Strontium (Sr) (&mu;g/L): </span> </dt> <dd>" + d.properties.Sr + " (" + d.properties.Count_Sr + " sample(s))<dd>"
+                    + "<dt><span style='font-weight:bolder'>Vanadium (V) (&mu;g/L): </span> </dt> <dd>" + d.properties.V + " (" + d.properties.Count_V + " sample(s))<dd>"
+                    // More Information
+                    + "<br><br><dd><small><i>More information on primary and secondary water contaminants can be found <a href='https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations' target='_blank'>here</a>.</i></small><dd>"
+                    + "</dl>"
+                marker.bindPopup(popupContent);
+                clustersAll.addLayer(marker);
+            });
+            // Only add and fit bounds if there are markers to display
+            if (clustersAll.getLayers().length > 0) {
+                map.addLayer(clustersAll);
+                map.fitBounds(clustersAll.getBounds());
+            }
+        }
+
+        // Define updateApplicationState function here
+        function updateApplicationState(sliderValue) {
+            // Filter the dimension
+            dataCoverageDim.filterRange([sliderValue, Infinity]);
+
+            // Redraw all the DC.js charts
+            dc.redrawAll();
+
+            // Update Leaflet marker clusters
+            updateMapMarkers();
+
+            // Update the record counter
+            updateRecordCounter();
+        }
+
+        function updateRecordCounter() {
+        }
+
+        // Slider setup
+        document.getElementById('dataCoverageSlider').addEventListener('input', function () {
+            const value = parseFloat(this.value); // Convert the string value to a number
+            const coveragePercentage = (value * 100).toFixed(0); // Convert to percentage and round
+            document.getElementById('sliderLabel').textContent = `At least: ${coveragePercentage}% coverage`;
+            updateApplicationState(value);
+        });
+
+        // Set the default slider value to 2%
+        document.getElementById('dataCoverageSlider').value = "0.02";
+
+        // Update the label and application state to reflect the default slider value
+        const defaultValue = parseFloat(document.getElementById('dataCoverageSlider').value);
+        const defaultCoveragePercentage = (defaultValue * 100).toFixed(0);
+        document.getElementById('sliderLabel').textContent = `At least: ${defaultCoveragePercentage}% coverage`;
+        updateApplicationState(defaultValue);
+
+        // // Search function
+        function filterWellsBySearchTerm(searchTerm) {
+            searchDimension.filter(function (concatenatedProperties) {
+                return concatenatedProperties.includes(searchTerm.toLowerCase());
+            });
+            updateApplicationState();
+        }
+
+        // Attach event listeners to all search buttons using their class
+        document.querySelectorAll('.search-btn').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const searchContainer = this.closest('.search-container');
+                const searchTerm = searchContainer.querySelector('.search-input').value.toLowerCase().trim();
+                filterWellsBySearchTerm(searchTerm);
+            });
+        });
+
+        // Logic for min/max filters on analytes
+        var maxAlValue = d3.max(wellData, function(d) { return +d.properties.Al; });
+        var maxAsValue = d3.max(wellData, function(d) { return +d.properties.As; });
+        var maxBaValue = d3.max(wellData, function(d) { return +d.properties.Ba; });
+        var maxCdValue = d3.max(wellData, function(d) { return +d.properties.Cd; });
+        var maxCuValue = d3.max(wellData, function(d) { return +d.properties.Cu; });
+        var maxFeValue = d3.max(wellData, function(d) { return +d.properties.Fe; });
+        var maxMnValue = d3.max(wellData, function(d) { return +d.properties.Mn; });
+        var maxPbValue = d3.max(wellData, function(d) { return +d.properties.Pb; });
+        var maxSeValue = d3.max(wellData, function(d) { return +d.properties.Se; });
+        var maxUValue  = d3.max(wellData, function(d) { return +d.properties.U; });
+
+        // // Set default minimum and maximum values
+        document.getElementById('alLowerThreshold').value = 0;
+        document.getElementById('alUpperThreshold').value = maxAlValue;
+        document.getElementById('asLowerThreshold').value = 0;
+        document.getElementById('asUpperThreshold').value = maxAsValue;
+        document.getElementById('baLowerThreshold').value = 0;
+        document.getElementById('baUpperThreshold').value = maxBaValue;
+        document.getElementById('cdLowerThreshold').value = 0;
+        document.getElementById('cdUpperThreshold').value = maxCdValue;
+        document.getElementById('cuLowerThreshold').value = 0;
+        document.getElementById('cuUpperThreshold').value = maxCuValue;
+        document.getElementById('feLowerThreshold').value = 0;
+        document.getElementById('feUpperThreshold').value = maxFeValue;
+        document.getElementById('mnLowerThreshold').value = 0;
+        document.getElementById('mnUpperThreshold').value = maxMnValue;
+        document.getElementById('pbLowerThreshold').value = 0;
+        document.getElementById('pbUpperThreshold').value = maxPbValue;
+        document.getElementById('seLowerThreshold').value = 0;
+        document.getElementById('seUpperThreshold').value = maxSeValue;
+        document.getElementById('uLowerThreshold').value = 0;
+        document.getElementById('uUpperThreshold').value = maxUValue;
+ 
+        // Event listener for applying concentration thresholds
+        // Al
+        document.getElementById('applyAlFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('alLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('alUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            AlDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });   
+
+        // As
+        document.getElementById('applyAsFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('asLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('asUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            AsDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });   
+
+        // Ba
+        document.getElementById('applyBaFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('baLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('baUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            BaDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });   
+
+        // Cd
+        document.getElementById('applyCdFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('cdLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('cdUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            CdDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });  
+
+        // Cu
+        document.getElementById('applyCuFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('cuLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('cuUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            CuDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        }); 
+        
+        // Fe
+        document.getElementById('applyFeFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('feLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('feUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            FeDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });  
+
+        // Mn
+        document.getElementById('applyMnFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('mnLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('mnUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            BaDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });  
+
+        // Pb
+        document.getElementById('applyPbFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('pbLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('pbUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            BaDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });  
+
+        // Se
+        document.getElementById('applySeFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('seLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('seUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            BaDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });  
+
+        // U
+        document.getElementById('applyUFilter').addEventListener('click', function() {
+            var lowerThreshold = parseFloat(document.getElementById('uLowerThreshold').value);
+            var upperThreshold = parseFloat(document.getElementById('uUpperThreshold').value);
+            // Validate input (considering NaN as invalid)
+            if (isNaN(lowerThreshold) || isNaN(upperThreshold) || lowerThreshold > upperThreshold) {
+                alert("Please enter valid threshold values. The lower threshold must not exceed the upper threshold.");
+                return;
+            }
+            // Apply filter
+            BaDim.filter(function(d) {
+                return d >= lowerThreshold && d <= upperThreshold;
+            });
+            // Trigger redraw of charts and map markers
+            dc.redrawAll();
+            updateMapMarkers(); // Assuming this function is already defined
+        });  
+
+        // Specify charts
         var alCountChart = dc.barChart('#histogram1');
         var as_CountChart = dc.barChart('#histogram2');
         var baCountChart = dc.barChart('#histogram3');
@@ -540,8 +1035,28 @@ window.onload = function () {
         var recChart = dc.pieChart('#donut');
         var avoidChart = dc.pieChart('.avoidChart');
         var irrigationChart = dc.pieChart('.irrigationChart');
-        var householdChart = dc.pieChart('.householdChart');
+        var domesticChart = dc.pieChart('.domesticChart');
         var livestockChart = dc.pieChart('.livestockChart');
+
+        // // Define bins
+        // var numBins = 32; // Desired number of bins
+        // var alMin = d3.min(ndx.dimension(function(d) { return +d.properties.Al; }).top(Infinity), function(d) { return d.properties.Al; });
+        // var alMax = d3.max(ndx.dimension(function(d) { return +d.properties.Al; }).top(Infinity), function(d) { return d.properties.Al; });
+        // var range = alMax - alMin;
+        // var binWidth = range / numBins;     
+
+        // Create histogram bins
+        // var binWidth = 1000; // Define the width of each bin
+        // var AlBinnedDimension = ndx.dimension(function(d) {
+        //     return Math.floor(d.properties.Al / binWidth) * binWidth; // Bin data by floor division
+        // });
+        // var AlBinnedDimension = ndx.dimension(function(d) {
+        //     return binWidth * Math.floor(d.properties.Al / binWidth);
+        // });        
+
+        // Group binned dims
+        // var countPerAlBinned = AlBinnedDimension.group();
+
 
         // Declare data table
         var dataTable = dc.dataTable('#data-table');
@@ -551,6 +1066,11 @@ window.onload = function () {
             dc.filterAll();
             dc.renderAll();
         })
+
+        document.getElementById('dataCoverageSlider').addEventListener('input', function () {
+            const value = parseFloat(this.value);
+            updateApplicationState(value);
+        });
 
         // Default histograms
         // Aluminum
@@ -1030,17 +1550,17 @@ window.onload = function () {
             })
             .filter = function () { };
 
-        householdChart
+        domesticChart
             .ordinalColors(['#cccccc', '#007A86']) // Set colors for 0 and 1
-            .dimension(householdDim)
-            .group(householdGroup)
+            .dimension(domesticDim)
+            .group(domesticGroup)
             .width(150)
             .height(150)
             .radius(60)
             .minAngleForLabel(0.000001) // Set the minimum angle for the label to 0
             .label(function (d) {
                 if (d.key === 1) {
-                    return 'Household: ' + ((d.value / householdGroup.all().reduce(function (acc, obj) { return acc + obj.value; }, 0)) * 100).toFixed(2) + '%';
+                    return 'Chores: ' + ((d.value / domesticGroup.all().reduce(function (acc, obj) { return acc + obj.value; }, 0)) * 100).toFixed(2) + '%';
                 }
                 // Return an empty string for other values to hide their labels
                 return '';
@@ -1066,7 +1586,7 @@ window.onload = function () {
 
         avoidChart.render();
         irrigationChart.render();
-        householdChart.render();
+        domesticChart.render();
         livestockChart.render();
 
         // Check data for avoid chart
@@ -1075,23 +1595,23 @@ window.onload = function () {
         // Check data for irrigation chart
         console.log("Irrigation Data:", irrigationGroup.all());
 
-        // Check data for household chart
-        console.log("Household Data:", householdGroup.all());
+        // Check data for domestic chart
+        console.log("Domestic Data:", domesticGroup.all());
 
         // Check data for livestock chart
         console.log("Livestock Data:", livestockGroup.all());
 
-        var column2 = function (d) { return d.properties.Al.toFixed(3); };
-        var column3 = function (d) { return d.properties.As.toFixed(3); };
-        var column4 = function (d) { return d.properties.Ba.toFixed(3); };
-        var column5 = function (d) { return d.properties.Cd.toFixed(3); };
-        var column6 = function (d) { return d.properties.Cu.toFixed(3); };
-        var column7 = function (d) { return d.properties.Fe.toFixed(3); };
-        var column8 = function (d) { return d.properties.Mn.toFixed(3); };
-        var column9 = function (d) { return d.properties.Pb.toFixed(3); };
-        var column10 = function (d) { return d.properties.Se.toFixed(3); };
-        var column11 = function (d) { return d.properties.U.toFixed(3); };
-
+        // Read data from json to populate data table, handle null values and return "-"
+        var column2 = function (d) { return d.properties.Al !== null && d.properties.Al !== undefined ? d.properties.Al.toFixed(2) : "-"; };
+        var column3 = function (d) { return d.properties.As !== null && d.properties.As !== undefined ? d.properties.As.toFixed(2) : "-"; };
+        var column4 = function (d) { return d.properties.Ba !== null && d.properties.Ba !== undefined ? d.properties.Ba.toFixed(2) : "-"; };
+        var column5 = function (d) { return d.properties.Cd !== null && d.properties.Cd !== undefined ? d.properties.Cd.toFixed(2) : "-"; };
+        var column6 = function (d) { return d.properties.Cu !== null && d.properties.Cu !== undefined ? d.properties.Cu.toFixed(2) : "-"; };
+        var column7 = function (d) { return d.properties.Fe !== null && d.properties.Fe !== undefined ? d.properties.Fe.toFixed(2) : "-"; };
+        var column8 = function (d) { return d.properties.Mn !== null && d.properties.Mn !== undefined ? d.properties.Mn.toFixed(2) : "-"; };
+        var column9 = function (d) { return d.properties.Pb !== null && d.properties.Pb !== undefined ? d.properties.Pb.toFixed(2) : "-"; };
+        var column10 = function (d) { return d.properties.Se !== null && d.properties.Se !== undefined ? d.properties.Se.toFixed(2) : "-"; };
+        var column11 = function (d) { return d.properties.U !== null && d.properties.U !== undefined ? d.properties.U.toFixed(2) : "-"; };
 
         //default dataTable
         dataTable
@@ -1100,6 +1620,23 @@ window.onload = function () {
             .size(1000)
             .columns([
                 function (d) { return d.properties.well_no; },
+                // function (d) { return d. properties.well_name},
+                function (d) {
+                    // Start with well_name as the base string
+                    let result = d.properties.well_name;
+
+                    // Check if aka2 is not null and not undefined, then append with comma
+                    if (d.properties.aka2) {
+                        result += `, ${d.properties.aka2}`;
+                    }
+
+                    // Check if aka3 is not null and not undefined, then append with comma
+                    if (d.properties.aka3) {
+                        result += `, ${d.properties.aka3}`;
+                    }
+
+                    return result;
+                },
                 function (d) { return d.properties.Chapter },
                 function (d) { return d.properties.nn_agency },
                 function (d) { return d.properties.lat.toFixed(5); },
@@ -1120,9 +1657,10 @@ window.onload = function () {
                 table.select('tr.dc-table-group').remove();
 
                 // Create marker cluster groups
-                var clustersAll = L.markerClusterGroup();
+                // var clustersAll = L.markerClusterGroup();
+                updateMapMarkers();
                 var clustersAvoid = L.markerClusterGroup();
-                var clustersHousehold = L.markerClusterGroup();
+                var clustersDomestic = L.markerClusterGroup();
                 var clustersIrrigation = L.markerClusterGroup();
                 var clustersLivestock = L.markerClusterGroup();
 
@@ -1156,7 +1694,7 @@ window.onload = function () {
                         if (
                             option === 'all' ||
                             (option === 'avoid' && d.properties.Avoid === 1) ||
-                            (option === 'household' && d.properties.Household === 1) ||
+                            (option === 'domestic' && d.properties.Domestic === 1) ||
                             (option === 'irrigation' && d.properties.Irrigation === 1) ||
                             (option === 'livestock' && d.properties.Livestock === 1)
                         ) {
@@ -1196,16 +1734,16 @@ window.onload = function () {
                                 + "<div class='popup-content'>" + // Apply the CSS class to center-align content
                                 "<dt><span style='font-weight:bolder'><i><a href='index.html#section-data' target='_blank'>Suitable uses</a></i><br> </span></dt>"
                                 // + (d.properties.Avoid == 1 ? '<img src="myCSS_styleFiles/images/avoid.png" height="75px"><b>We recommend <i>AVOIDING</i> this water source.</b>' :
-                                //     ((d.properties.Household == 1 ? '<br><b>Household</b><br><img src="myCSS_styleFiles/images/broom.png" height="65px">' : "<br>") +
+                                //     ((d.properties.Domestic == 1 ? '<br><b>Domestic</b><br><img src="myCSS_styleFiles/images/broom.png" height="65px">' : "<br>") +
                                 //         (d.properties.Irrigation == 1 ? '<br><b>Irrigation</b><br><img src="myCSS_styleFiles/images/corn.png" height="65px">' : "<br>") +
                                 //         (d.properties.Livestock == 1 ? '<br><b>Livestock</b><br><img src="myCSS_styleFiles/images/goat.png" height="65px">' : "<br>")).replace(/, $/, "") // Remove trailing comma
                                 // ) + "</dd>"
                                 // + "<dl>"
 
                                 + (d.properties.Avoid == 1 ? '<img src="myCSS_styleFiles/images/avoid.png" height="75px"><h5><b>We recommend <i>AVOIDING</i> this water source.</b></h5>' :
-                                ((d.properties.Household == 1 ? '<h5><b>Household</b></h5>' : "<br>") +
-                                    (d.properties.Irrigation == 1 ? '<h5><b>Irrigation</b></h5>' : "<br>") +
-                                    (d.properties.Livestock == 1 ? '<h5><b>Livestock</b></h5>' : "<br>")).replace(/, $/, "") // Remove trailing comma
+                                    ((d.properties.Domestic == 1 ? '<h5><b>Chores</b></h5>' : "<br>") +
+                                        (d.properties.Irrigation == 1 ? '<h5><b>Irrigation</b></h5>' : "<br>") +
+                                        (d.properties.Livestock == 1 ? '<h5><b>Livestock</b></h5>' : "<br>")).replace(/, $/, "") // Remove trailing comma
                                 ) + "</dd>"
                                 + "<dl>"
 
@@ -1302,7 +1840,8 @@ window.onload = function () {
                                 // More Information
                                 + "<br><br><dd><small><i>More information on primary and secondary water contaminants can be found <a href='https://www.epa.gov/ground-water-and-drinking-water/national-primary-drinking-water-regulations' target='_blank'>here</a>.</i></small><dd>"
                                 + "</dl>"
-                            );//close bind popup
+                            );
+
                             activeClusterGroup.addLayer(marker);
 
                             // Increment marker count
@@ -1318,6 +1857,7 @@ window.onload = function () {
                     map.addLayer(activeClusterGroup);
                     map.fitBounds(activeClusterGroup.getBounds());
                 }
+
                 // Call displayMarkers to initialize with 'all' option
                 displayMarkers('all');
 
@@ -1400,7 +1940,7 @@ window.onload = function () {
                     displayMarkers(document.querySelector('input[name="marker-option"]:checked').value);
                 });
 
-                householdChart.on('filtered', function (chart, filter) {
+                domesticChart.on('filtered', function (chart, filter) {
                     clearMarkers();
                     // Update the markers when the histogram filter changes
                     displayMarkers(document.querySelector('input[name="marker-option"]:checked').value);
@@ -1419,10 +1959,24 @@ window.onload = function () {
 
             });//close on pretransition
 
+        // Add static legend under radio buttons
+        document.querySelectorAll('input[name="marker-option"]').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                var legendStatic = document.querySelector('.static-legend-flex'); // Ensure this matches your legend's class name
+                if (this.value !== 'all') {
+                    legendStatic.style.display = 'flex'; // Use 'flex' to maintain the Flexbox layout when visible
+                } else {
+                    legendStatic.style.display = 'none';
+                }
+            });
+        });
+
+
+
 
         dc.renderAll();
         ;//close data table
-    });//close d3.json      
+    });//close d3.json   
 }
 
 $(document).ready(function () {
@@ -1431,5 +1985,4 @@ $(document).ready(function () {
         $("#myNavbar").toggleClass("in");
     });
 });
-
 
